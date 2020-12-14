@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import shop.beggar.admin.action.AdminAction;
+import shop.beggar.admin.action.MemberManagementAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
@@ -33,7 +35,15 @@ private static final long serialVersionUID = 1L;
 		
 		//화면 경로 설정
 		if (command.equals("/")) {
-			Action action = new HomeAction();
+			Action action = new AdminAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/memberManagement.do")) {
+			Action action = new MemberManagementAction();
 			
 			try {
 				forward = action.execute(request, response);
