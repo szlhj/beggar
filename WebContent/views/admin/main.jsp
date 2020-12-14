@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<a href="/admin/memberManagement.do">회원관리</a>
 </body>
 </html>
