@@ -6,7 +6,7 @@
     	MemberVo vo = (MemberVo) request.getAttribute("vo");
     	String shId = null;
     	
-    	if (vo == null) {
+    	if (vo == null || vo.getId() == null) {
     		shId = "";
     	} else {
     		shId = vo.getId();
