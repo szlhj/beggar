@@ -22,8 +22,8 @@ import shop.beggar.common.RegExp;
 
 /**
  * @PackageName		: shop.beggar.beggar.member.action
- * @FileName		: ModifyAction.java
- * @Since			: 2020. 12. 3.
+ * @FileName		: MidifyProcAction.java
+ * @Since			: 2020. 12. 14.
  * @Author			: HJLee
  * @Description		: 회원변경 화면 경로 지정
  * =====================================================================================
@@ -31,7 +31,7 @@ import shop.beggar.common.RegExp;
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 3.		HJLee				최초 작성
+ * 2020. 12. 14.		HJLee				최초 작성
  *
  */
 public class ModifyProcAction implements Action{
