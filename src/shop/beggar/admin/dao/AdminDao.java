@@ -1,10 +1,11 @@
-﻿package shop.beggar.admin.dao;
+package shop.beggar.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Pagenation;
 import static shop.beggar.common.JdbcUtil.close;
@@ -86,6 +87,45 @@ public class AdminDao {
 			while (rs.next()) {
 				count = rs.getInt(1);
 			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+//	vo.setItem_name(item_name);
+//	vo.setCatagore(categore);
+//	vo.setCode(code);
+//	vo.setPrice(price);
+//	vo.setDiscount(discount);
+//	vo.setStok(stok);
+//	vo.setColor(color);
+//	vo.setItem_number(item_number);
+//	vo.setItem_rating(item_rating);
+//	vo.setSize(size);
+//	vo.setExplanation(explanation);
+	
+	public int itemAdd(ItemVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("insert into inf_goods_tb (item_name, categore, code, price, discount, stok, color, item_number, item_rating, size, explanation) values (?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt.setString(1, vo.getItem_name());
+			pstmt.setString(2, vo.getCategore());
+			pstmt.setString(3, vo.getCode());
+			pstmt.setString(4, vo.getPrice());
+			pstmt.setString(5, vo.getDiscount());
+			pstmt.setString(6, vo.getStok());
+			pstmt.setString(7, vo.getColor());
+			pstmt.setString(8, vo.getItem_number());
+			pstmt.setString(9, vo.getItem_rating());
+			pstmt.setString(10, vo.getSize());
+			pstmt.setString(11, vo.getExplanation());
+			count = pstmt.executeUpdate();
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();

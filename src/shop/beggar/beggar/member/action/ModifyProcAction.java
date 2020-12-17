@@ -25,13 +25,13 @@ import shop.beggar.common.RegExp;
  * @FileName		: MidifyProcAction.java
  * @Since			: 2020. 12. 14.
  * @Author			: HJLee
- * @Description		: íšŒì›ë³€ê²½ í™”ë©´ ê²½ë¡œ ì§€ì •
+ * @Description		: È¸¿øº¯°æ È­¸é °æ·Î ÁöÁ¤
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 14.		HJLee				ìµœì´ˆ ì‘ì„±
+ * 2020. 12. 14.		HJLee				ÃÖÃÊ ÀÛ¼º
  *
  */
 public class ModifyProcAction implements Action{
@@ -52,10 +52,10 @@ public class ModifyProcAction implements Action{
 		String pwdc = request.getParameter("pwdc");
 		if( !RegExp.isValidExp(pwd, REGEXP_PWD)
 				|| !pwd.equals(pwdc))
-				 { //ë¹„ë°€ë²ˆí˜¸ë§Œ ê²€ì‚¬í•¨
-			response.setContentType("text/html;charset=UTF-8"); //ë‹µë³€ì¤„ í˜ì´ì§€ ì†ì„±
+				 { //ºñ¹Ğ¹øÈ£¸¸ °Ë»çÇÔ
+			response.setContentType("text/html;charset=UTF-8"); //´äº¯ÁÙ ÆäÀÌÁö ¼Ó¼º
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('ì˜ëª»ëœ í˜•ì‹ì˜ ë¹„ë°€ë²ˆí˜¸ì…ë‹ˆë‹¤.');"
+			out.println("<script>alert('Àß¸øµÈ Çü½ÄÀÇ ºñ¹Ğ¹øÈ£ÀÔ´Ï´Ù.');"
 					+ "location.href='/';</script>");
 			out.close();
 			return null;
@@ -88,7 +88,7 @@ public class ModifyProcAction implements Action{
 				|| !RegExp.isValidExp(email, REGEXP_EMAIL)) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('ì˜ëª»ëœ ì •ë³´ì…ë‹ˆë‹¤.');location.href='/';</script>");
+			out.println("<script>alert('Àß¸øµÈ Á¤º¸ÀÔ´Ï´Ù.');location.href='/';</script>");
 			out.close();
 			return null;
 		}
@@ -100,11 +100,11 @@ public class ModifyProcAction implements Action{
 		mfVo.setEmail_fl(email_fl);
 		mfVo.setSms_fl(sms_fl);
 		
-		if(!svc.modifyMember(mfVo)) { //ë°ì´í„°ì €ì¥ ì‹¤íŒ¨í•œê²½ìš°
-			response.setContentType("text/html;charset=UTF-8"); //ë‹µë³€ì¤„ í˜ì´ì§€ ì†ì„±
+		if(!svc.modifyMember(mfVo)) { //µ¥ÀÌÅÍÀúÀå ½ÇÆĞÇÑ°æ¿ì
+			response.setContentType("text/html;charset=UTF-8"); //´äº¯ÁÙ ÆäÀÌÁö ¼Ó¼º
 			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('ì˜ëª»ëœ ì ‘ê·¼ì…ë‹ˆë‹¤.');location.href='/';</script>");
-			out.println("<script>alert('íšŒì› ì •ë³´ ìˆ˜ì •ì„ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.');"
+//			out.println("<script>alert('Àß¸øµÈ Á¢±ÙÀÔ´Ï´Ù.');location.href='/';</script>");
+			out.println("<script>alert('È¸¿ø Á¤º¸ ¼öÁ¤À» ½ÇÆĞÇÏ¿´½À´Ï´Ù.');"
 					+ "history.back();</script>");
 			out.close();
 			return null;

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 import shop.beggar.admin.dao.AdminDao;
+import shop.beggar.beggar.member.dao.MemberDao;
+import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Pagenation;
 
@@ -22,8 +24,6 @@ import static shop.beggar.common.JdbcUtil.*;
  * 2020. 12. 6.		HJLee				최초 작성
  *
  */
-
-
 public class AdminService {
 	public ArrayList<MemberVo> getArticleList(Pagenation pagenation,String query) {
 		AdminDao dao= AdminDao.getInstance();
@@ -41,5 +41,26 @@ public class AdminService {
 		int count = dao.getArticleCount();
 		close(con);
 		return count;
+	}
+
+	public boolean itemAdd(ItemVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.itemAdd(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
 	}
 }
