@@ -17,6 +17,7 @@ import shop.beggar.beggar.member.action.LoginProcAction;
 import shop.beggar.beggar.member.action.LogoutAction;
 import shop.beggar.beggar.member.action.MemberShipAction;
 import shop.beggar.beggar.member.action.ModifyAction;
+import shop.beggar.beggar.member.action.ModifyProcAction;
 import shop.beggar.beggar.member.action.RegisterAction;
 import shop.beggar.beggar.member.action.RegisterProcAction;
 import shop.beggar.beggar.member.action.RemoveAction;
@@ -76,6 +77,14 @@ public class MemberController extends HttpServlet {
 			}
 		} else if (command.equals("/modifyAction.do")) {  //회원상세 변경
 			Action action = new ModifyAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/modifyProc.do")) {  //회원상세 변경
+			Action action = new ModifyProcAction();
 			
 			try {
 				forward = action.execute(request, response);

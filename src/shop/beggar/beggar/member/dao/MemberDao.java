@@ -173,4 +173,65 @@ public class MemberDao {
 		return count;
 	}
 	
+	public MemberVo modifyMemberInfo(MemberVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = con.prepareStatement("select a.id, b.name,b.phone,b.email,b.sms_fl,b.email_fl from inf_mber_tb a INNER JOIN inf_mber_privcy_tb b  where a.mber_sq = b.mber_sq and a.mber_sq=?");
+			pstmt.setInt(1, vo.getMber_sq());
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo.setId(rs.getString("id")); //별칭을 붙여도 컬럼명만으로 들어감
+				vo.setName(rs.getString("name"));
+				vo.setPhone(rs.getString("phone"));
+				vo.setEmail(rs.getString("email"));
+				vo.setSms_fl(rs.getBoolean("sms_fl"));
+				vo.setEmail_fl(rs.getBoolean("email_fl"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
+	}
+	
+	public int modifyMember(MemberVo vo) { //이름 정보 수정 함
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			if (vo.getPwd() != null) {
+			pstmt = con.prepareStatement
+					("update inf_mber_tb set pwd=? where mber_sq=?"); //member 테이블에 들고온 id에 있는 컬럼name에 데이터를 입력한 값으로 수정함
+			pstmt.setString(1, vo.getPwd()); //첫번째 ?에 Membervo에 
+			pstmt.setInt(2, vo.getMber_sq());
+			count = pstmt.executeUpdate();
+			} else {
+				count++;
+			}
+			
+			if (count > 0) {
+				pstmt = con.prepareStatement
+						("update inf_mber_privcy_tb set phone = ? , email = ? , email_fl =? , sms_fl =? where mber_sq =?");
+				pstmt.setString(1, vo.getPhone());
+				pstmt.setString(2, vo.getEmail());
+				pstmt.setBoolean(3, vo.isEmail_fl());
+				pstmt.setBoolean(4, vo.isSms_fl());
+				pstmt.setInt(5, vo.getMber_sq());
+				count = pstmt.executeUpdate();
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
 }
