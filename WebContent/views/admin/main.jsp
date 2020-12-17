@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<a href="/admin/memberManagement.do">ȸ������</a>
+	<a href="/admin/memberManagement.do">회원관리</a>
+	<a href="/admin/itemList.do">상품목록</a>
+	<a href="/admin/itemAdd.do">상품등록</a>
 </body>
 </html>
