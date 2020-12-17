@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+html {
+	font-size: 10px;
+}
+
+body {
+	margin: 0;
+	font-family: 'Noto Sans KR' !important;
+}
+
+a {
+	text-decoration: none;
+	color: white;
+}
+
+/* @media screen and (max-width: 768px) {
+	
+} */

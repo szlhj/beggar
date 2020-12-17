@@ -1,4 +1,4 @@
-﻿package shop.beggar.admin.dao;
+package shop.beggar.admin.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
