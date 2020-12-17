@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import shop.beggar.admin.action.AdminAction;
+import shop.beggar.admin.action.ItemListAction;
 import shop.beggar.admin.action.MemberManagementAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
@@ -44,6 +45,14 @@ private static final long serialVersionUID = 1L;
 			}
 		}else if (command.equals("/memberManagement.do")) {
 			Action action = new MemberManagementAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/itemList.do")) {
+			Action action = new ItemListAction();
 			
 			try {
 				forward = action.execute(request, response);
