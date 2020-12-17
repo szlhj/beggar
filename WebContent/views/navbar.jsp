@@ -48,6 +48,7 @@
 				%>
 				<li><a href="" onMouseOver='this.innerHTML="장바구니"' onMouseOut='this.innerHTML="CART"'>CART</a></li>
 				<li><a href="" onMouseOver='this.innerHTML="주문조회"' onMouseOut='this.innerHTML="ORDER INQUIRY"'>ORDER INQUIRY</a></li>
+				<li><a href="/board/" onMouseOver='this.innerHTML="게시판"' onMouseOut='this.innerHTML="BOARD"'>게시판</a></li>
 			</ul>
 		</div>
 	</nav>
