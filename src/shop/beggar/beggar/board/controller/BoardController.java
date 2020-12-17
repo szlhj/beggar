@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import shop.beggar.beggar.board.action.BoardAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
 import shop.beggar.beggar.board.action.ProductRelatedAction;
+import shop.beggar.beggar.board.action.WriteBoardAction;
 import shop.beggar.beggar.home.action.HomeAction;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
@@ -33,7 +35,15 @@ public class BoardController extends HttpServlet {
 		
 		//화면 경로 설정
 		if (command.equals("/")) {
-			Action action = new HomeAction();
+			Action action = new BoardAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/writeBoard.do")) { //글쓰기
+			Action action = new WriteBoardAction();
 			
 			try {
 				forward = action.execute(request, response);
