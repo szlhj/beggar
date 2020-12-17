@@ -21,6 +21,7 @@ public class MemberManagementAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		String pn = request.getParameter("pn");
+		
 		if(!RegExp.isValidExp(pn, REGEXP_NUMBER)) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -28,7 +29,9 @@ public class MemberManagementAction implements Action{
 			out.close();
 			return null;
 		}
+		
 		int page = Integer.parseInt(pn);
+		
 		if(page<1) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
