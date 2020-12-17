@@ -1,44 +1,46 @@
 package shop.beggar.beggar.vo;
 
 public class ItemVo {
-	private int item_sq;// »óÇ°ÀÏ·Ã¹øÈ£
-	private int price;// »óÇ°°¡°Ý
-	private int discount;// »óÇ°ÇÒÀÎÀ²
-	private int stok;// Àç°í
-	private boolean del_fl;// »óÇ°»èÁ¦¿©ºÎ
-	private boolean dttm;// »óÇ°»ý¼ºÀÏÀÚ
-	private String catagore;// »óÇ°Ä«Å×°í¸®¹øÈ£
-	private String code;// »óÇ°ÄÚµå
-	private String color;// »óÇ°ÄÃ·¯
-	private String item_name;// »óÇ°¸í
-	private String item_number;// »óÇ° ³Ñ¹ö¸µ
-	private String item_rating;// »óÇ° µî±Þ
-	private String size;// »óÇ°»çÀÌÁî
-	private String imgaddress;// ÀÌ¹ÌÁö ÁÖ¼Ò
-	private String explanation;// ¼³¸í
+	private String item_sq;// ï¿½ï¿½Ç°ï¿½Ï·Ã¹ï¿½È£
+	private String price;// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+	private String discount;// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String stok;// ï¿½ï¿½ï¿½
+	private boolean del_fl;// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private boolean dttm;// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String categore;// ï¿½ï¿½Ç°Ä«ï¿½×°ï¿½ï¿½ï¿½È£
+	private String code;// ï¿½ï¿½Ç°ï¿½Úµï¿½
+	private String color;// ï¿½ï¿½Ç°ï¿½Ã·ï¿½
+	private String item_name;// ï¿½ï¿½Ç°ï¿½ï¿½
+	private String item_number;// ï¿½ï¿½Ç° ï¿½Ñ¹ï¿½ï¿½ï¿½
+	private String item_rating;// ï¿½ï¿½Ç° ï¿½ï¿½ï¿½
+	private String size;// ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+	private String explanation;// ï¿½ï¿½ï¿½ï¿½
+	private String show_fl;
+	private String filePath;
+	private String preview;
 	
-	public int getItem_sq() {
+	public String getItem_sq() {
 		return item_sq;
 	}
-	public void setItem_sq(int item_sq) {
+	public void setItem_sq(String item_sq) {
 		this.item_sq = item_sq;
 	}
-	public int getPrice() {
+	public String getPrice() {
 		return price;
 	}
-	public void setPrice(int price) {
+	public void setPrice(String price) {
 		this.price = price;
 	}
-	public int getDiscount() {
+	public String getDiscount() {
 		return discount;
 	}
-	public void setDiscount(int discount) {
+	public void setDiscount(String discount) {
 		this.discount = discount;
 	}
-	public int getStok() {
+	public String getStok() {
 		return stok;
 	}
-	public void setStok(int stok) {
+	public void setStok(String stok) {
 		this.stok = stok;
 	}
 	public boolean isDel_fl() {
@@ -53,11 +55,11 @@ public class ItemVo {
 	public void setDttm(boolean dttm) {
 		this.dttm = dttm;
 	}
-	public String getCatagore() {
-		return catagore;
+	public String getCategore() {
+		return categore;
 	}
-	public void setCatagore(String catagore) {
-		this.catagore = catagore;
+	public void setCategore(String categore) {
+		this.categore = categore;
 	}
 	public String getCode() {
 		return code;
@@ -95,11 +97,24 @@ public class ItemVo {
 	public void setSize(String size) {
 		this.size = size;
 	}
-	public String getImgaddress() {
-		return imgaddress;
+	
+	public String getShow_fl() {
+		return show_fl;
 	}
-	public void setImgaddress(String imgaddress) {
-		this.imgaddress = imgaddress;
+	public void setShow_fl(String show_fl) {
+		this.show_fl = show_fl;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
+	}
+	public String getPreview() {
+		return preview;
+	}
+	public void setPreview(String preview) {
+		this.preview = preview;
 	}
 	public String getExplanation() {
 		return explanation;
@@ -107,6 +122,8 @@ public class ItemVo {
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
 	}
+	
+	
 	
 	
 	
