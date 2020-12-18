@@ -26,6 +26,6 @@
 </head>
 <body>
 	<jsp:include page="/views/navbar.jsp"></jsp:include>
-	<jsp:include page="/views/item/itemPage.jsp"></jsp:include>
+<%-- 	<jsp:include page="/views/item/itemPage.jsp"></jsp:include> --%>
 </body>
 </html>

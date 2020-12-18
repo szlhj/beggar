@@ -38,7 +38,7 @@ public class ItemAddProcAction implements Action{
 		
 		
 		String item_name = request.getParameter("item_name");
-		String categore = request.getParameter("categore");
+		String category = request.getParameter("category");
 		String code = request.getParameter("code");
 		String price = request.getParameter("price");
 		String discount = request.getParameter("discount");
@@ -74,11 +74,11 @@ public class ItemAddProcAction implements Action{
 //		
 		ItemVo vo = new ItemVo();
 		vo.setItem_name(item_name);
-		vo.setCategore(categore);
+		vo.setCategory(category);
 		vo.setCode(code);
-		vo.setPrice(price);
-		vo.setDiscount(discount);
-		vo.setStok(stok);
+		vo.setPrice(Integer.parseInt(price));
+		vo.setDiscount(Integer.parseInt(discount));
+		vo.setStok(Integer.parseInt(stok));
 		vo.setColor(color);
 		vo.setItem_number(item_number);
 		vo.setItem_rating(item_rating);

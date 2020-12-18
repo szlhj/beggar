@@ -114,11 +114,11 @@ public class AdminDao {
 		try {
 			pstmt = con.prepareStatement("insert into inf_goods_tb (item_name, categore, code, price, discount, stok, color, item_number, item_rating, size, explanation) values (?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, vo.getItem_name());
-			pstmt.setString(2, vo.getCategore());
+			pstmt.setString(2, vo.getCategory());
 			pstmt.setString(3, vo.getCode());
-			pstmt.setString(4, vo.getPrice());
-			pstmt.setString(5, vo.getDiscount());
-			pstmt.setString(6, vo.getStok());
+			pstmt.setInt(4, vo.getPrice());
+			pstmt.setInt(5, vo.getDiscount());
+			pstmt.setInt(6, vo.getStok());
 			pstmt.setString(7, vo.getColor());
 			pstmt.setString(8, vo.getItem_number());
 			pstmt.setString(9, vo.getItem_rating());
