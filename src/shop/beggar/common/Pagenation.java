@@ -37,7 +37,7 @@ public class Pagenation {
 		this.totalArticleCount = totalArticleCount;
 //		this.startArticleNumber = (nowPageNumber -1) * ARTICLE_COUNT_PER_PAGE; //페이지의 시작 글 번호
 //-----------------------------------------------------------------------------------------
-		this.startArticleNumber = (nowPageNumber * ARTICLE_COUNT_PER_PAGE) - (ARTICLE_COUNT_PER_PAGE - 1); //페이지의 시작 글 번호
+		this.startArticleNumber = (nowPageNumber * ARTICLE_COUNT_PER_PAGE) - (ARTICLE_COUNT_PER_PAGE ); //페이지의 시작 글 번호
 		this.endArticleNumber = this.startArticleNumber + ARTICLE_COUNT_PER_PAGE - 1;
 //-----------------------------------------------------------------------------------------		
 		this.totalPageCount = (int) Math.ceil((double) totalArticleCount / ARTICLE_COUNT_PER_PAGE); //페이지 게수 (현재 전체 글을)
