@@ -14,7 +14,7 @@ import shop.beggar.common.LoginManager;
  * @FileName		: LogoutAction.java
  * @Since			: 2020. 12. 7.
  * @Author			: HJLee
- * @Description		: 
+ * @Description		: logout 로직
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
