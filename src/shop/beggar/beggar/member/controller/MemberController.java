@@ -75,7 +75,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/modifyAction.do")) {  //회원상세 변경
+		} else if (command.equals("/modifyAction.do")) {  //회원상세 변경 이동
 			Action action = new ModifyAction();
 			
 			try {
