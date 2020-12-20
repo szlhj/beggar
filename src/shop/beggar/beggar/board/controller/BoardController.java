@@ -9,10 +9,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import shop.beggar.beggar.board.action.BoardAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
 import shop.beggar.beggar.board.action.ProductRelatedAction;
+import shop.beggar.beggar.board.action.WriteBoardAction;
 import shop.beggar.beggar.home.action.HomeAction;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
@@ -33,14 +35,22 @@ public class BoardController extends HttpServlet {
 		
 		//화면 경로 설정
 		if (command.equals("/")) {
-			Action action = new HomeAction();
+			Action action = new BoardAction();
 			
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/frequently.do")) { //자주하는 질문
+		} else if (command.equals("/writeBoard")) { //글쓰기
+			Action action = new WriteBoardAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/frequently")) { //자주하는 질문
 			Action action = new FrequentlyAction();
 			
 			try {
@@ -48,7 +58,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/productRelated.do")) { //제품관련
+		} else if (command.equals("/productRelated")) { //제품관련
 			Action action = new ProductRelatedAction();
 			
 			try {
@@ -56,7 +66,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/oneAndOneQuestion.do")) { //1:1문의
+		} else if (command.equals("/oneAndOneQuestion")) { //1:1문의
 			Action action = new OneAndOneQuestionAction();
 			
 			try {
@@ -64,7 +74,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/myQuestion.do")) { //내가 쓴 글 보기
+		} else if (command.equals("/myQuestion")) { //내가 쓴 글 보기
 			Action action = new MyQuestionAction();
 			
 			try {

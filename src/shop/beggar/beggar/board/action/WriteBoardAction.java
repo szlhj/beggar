@@ -8,23 +8,23 @@ import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.beggar.board.action
- * @FileName		: BoardAction.java
- * @Since			: 2020. 12. 3.
+ * @FileName		: WriteBoardAction.java
+ * @Since			: 2020. 12. 17.
  * @Author			: HJLee
- * @Description		: 게사판 메인 화면 경로 지정
+ * @Description		: 글쓰기 폼으로 이동
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 3.		HJLee				최초 작성
+ * 2020. 12. 17.		HJLee				최초 작성
  *
  */
-public class BoardAction implements Action{
+public class WriteBoardAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/board/board.jsp");
+		forward.setPath("/views/board/writing.jsp");
 		return forward;
 	}
 }
