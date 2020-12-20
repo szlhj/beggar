@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 
+<link rel="stylesheet" href="/views/css/registerMember.css" type="text/css">
+<link rel="stylesheet" href="/views/css/ress.css" type="text/css">
+<link rel="stylesheet" href="/views/css/navbar.css" type="text/css">
+
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
 
 <script type="text/javascript">
@@ -105,18 +109,25 @@
 </head>
 <body>
 <div>
-	<form action="/member/RegisterProcAction.do" method="post" id="reform">
-		<input type="text" id="id" name="id" placeholder="아이디"/><span id="idMessage"></span><br>
-		<input type="password" id="pwd" name="pwd" placeholder="비밀번호"/><span id="pwdMessage"></span><br>
-		<input type="password" id="pwdc" name="pwdc" placeholder="비밀번호 확인"/><span id="pwdcMessage"></span><br>
-		<input type="text" id="name" name="name" placeholder="이름"/><br>
-		<input type="tel" id="tel" name="tel" placeholder="전화번호"/><br>
-		<input type="email" id="email" name="email" placeholder="이메일"/><br>
-		<input type="checkbox" id="email_fl" name="email_fl" />이메일체크<br>
-		<input type="checkbox" id="sms_fl" name="sms_fl" />SMS체크<br>
-	</form>
-	<button onclick="join()">가입</button>
-	<button onclick="cancle()">취소</button>
+	<div>
+		<jsp:include page="/views/navbar.jsp"></jsp:include>
+	</div>
+	<div>
+		<section>
+			<form action="/member/RegisterProcAction" method="post" id="reform">
+				<input type="text" id="id" name="id" placeholder="아이디"/><span id="idMessage"></span><br>
+				<input type="password" id="pwd" name="pwd" placeholder="비밀번호"/><span id="pwdMessage"></span><br>
+				<input type="password" id="pwdc" name="pwdc" placeholder="비밀번호 확인"/><span id="pwdcMessage"></span><br>
+				<input type="text" id="name" name="name" placeholder="이름"/><br>
+				<input type="tel" id="tel" name="tel" placeholder="전화번호"/><br>
+				<input type="email" id="email" name="email" placeholder="이메일"/><br>
+				<input type="checkbox" id="email_fl" name="email_fl" />이메일체크<br>
+				<input type="checkbox" id="sms_fl" name="sms_fl" />SMS체크<br>
+			</form>
+			<button onclick="join()">가입</button>
+			<button onclick="cancle()">취소</button>
+		</section>
+	</div>
 </div>
 </body>
 </html>
