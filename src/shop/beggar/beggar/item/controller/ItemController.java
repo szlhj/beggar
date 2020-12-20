@@ -10,7 +10,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import shop.beggar.beggar.item.action.DetailAction;
+import shop.beggar.beggar.item.action.DummyAction;
 import shop.beggar.beggar.item.action.MainItemAction;
+import shop.beggar.beggar.item.action.PurchaseAction;
+import shop.beggar.beggar.item.action.ShopBasketAction;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
@@ -29,7 +32,7 @@ public class ItemController extends HttpServlet {
 		ActionForward forward = null;
 		
 		//화면 경로 설정
-		if (command.equals("/mainItem.do")) {
+		if (command.equals("/mainItem")) {
 			Action action = new MainItemAction();
 			
 			try {
@@ -37,8 +40,32 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/detail.do")) { //상세화면
+		} else if (command.equals("/detail")) { //상세화면
 			Action action = new DetailAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/dummy")) { //상세화면
+			Action action = new DummyAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/shopBasket")) { //상세화면
+			Action action = new ShopBasketAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/purchase")) { //상세화면
+			Action action = new PurchaseAction();
 			
 			try {
 				forward = action.execute(request, response);

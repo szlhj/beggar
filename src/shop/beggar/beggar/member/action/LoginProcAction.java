@@ -76,6 +76,7 @@ public class LoginProcAction implements Action{
 //		request.setAttribute("mber_sq", voInfo.getMber_sq());// 세션에 mber_sq 넣기
 		HttpSession session = request.getSession();
 		session.setAttribute("vo", voInfo);
+		session.setMaxInactiveInterval(60*60);
 		
 		
 		ActionForward forward = new ActionForward();
