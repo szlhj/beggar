@@ -28,7 +28,7 @@
 			
 		</table>
 	</div>
-	<button onclick="location.href='/board/writeBoard.do'">작성</button>
+	<button onclick="location.href='/board/writeBoard'">작성</button>
 	<button onclick="location.href='/'">취소</button>
 </body>
 </html>

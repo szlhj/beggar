@@ -20,6 +20,32 @@ public class ItemVo {
 	private String explanation;
 	private String preview;
 	private String filepath;
+	private int admin_sq;
+	private String admin_name;
+	/**
+	 * @return the admin_sq
+	 */
+	public int getAdmin_sq() {
+		return admin_sq;
+	}
+	/**
+	 * @param admin_sq the admin_sq to set
+	 */
+	public void setAdmin_sq(int admin_sq) {
+		this.admin_sq = admin_sq;
+	}
+	/**
+	 * @return the admin_name
+	 */
+	public String getAdmin_name() {
+		return admin_name;
+	}
+	/**
+	 * @param admin_name the admin_name to set
+	 */
+	public void setAdmin_name(String admin_name) {
+		this.admin_name = admin_name;
+	}
 	/**
 	 * @return the item_sq
 	 */

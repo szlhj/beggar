@@ -32,7 +32,7 @@ public class ItemController extends HttpServlet {
 		ActionForward forward = null;
 		
 		//화면 경로 설정
-		if (command.equals("/mainItem.do")) {
+		if (command.equals("/mainItem")) {
 			Action action = new MainItemAction();
 			
 			try {
@@ -40,7 +40,7 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/detail.do")) { //상세화면
+		} else if (command.equals("/detail")) { //상세화면
 			Action action = new DetailAction();
 			
 			try {
@@ -48,7 +48,7 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/dummy.do")) { //상세화면
+		} else if (command.equals("/dummy")) { //상세화면
 			Action action = new DummyAction();
 			
 			try {

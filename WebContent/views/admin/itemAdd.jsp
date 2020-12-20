@@ -8,11 +8,12 @@
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
 
+
 <script type="text/javascript">
 	function join() {
 
 		var $item_name = $('#item_name');
-		var $categore = $('#categore');
+// 		var $categore = $('#categore');
 		var $code = $('#code');
 		var $price = $('#price');
 		var $discount = $('#discount');
@@ -28,11 +29,11 @@
  			$item_name.focus;
  			return;
  		}
- 		if (!$categore.val()) {
- 			alert('카테고리를 입력 하세요.');
- 			$categore.focus;
- 			return;
- 		}
+//  		if (!$categore.val()) {
+//  			alert('카테고리를 입력 하세요.');
+//  			$categore.focus;
+//  			return;
+//  		}
  		if (!$code.val()) {
  			alert('상품코드를 입력 하세요.');
  			$code.focus;
@@ -76,13 +77,6 @@
  			return;
  		}
 		
-		
-		if (!$explanation.val()) {
- 			alert('상품의 설명을 입력하세요.');
- 			$explanation.discount;
- 			return;
- 		}
-		
 		saveContent();
 	}
 	function cancle() {
@@ -95,10 +89,20 @@
 	<div>
 		<div>
 			<section>
-				<form action="/admin/itemAddProc.do" method="post"
-					id="editorForm">
+				<form action="/admin/itemAddProc" method="post" id="editorForm">
 					상품이름<input type="text" id="item_name" name="item_name" /><br>
-					카테고리<input type="text" id="categore" name="categore" /><br>
+<!-- 					카테고리<input type="text" id="category" name="category" /><br> -->
+					카테고리
+					<select id="category" name="category">
+						<option value="1" selected>NEW IN(뉴어라이벌)</option>
+						<option value="2">EARRINGS(이어링)</option>
+						<option value="3">NECKLACES(네크리스)</option>
+						<option value="4">BRACELETS(브레이슬릿)</option>
+						<option value="5">RINGS(링)</option>
+						<option value="6">ANKLETS(앵클릿)</option>
+						<option value="7">BEST(베스트 셀러)</option>
+					</select>
+					<br>
 					상품코드<input type="text" id="code" name="code" /><br>
 					가격<input type="text" id="price" name="price" /><br>
 					상품 할인율<input type="text" id="discount" name="discount" /><br>
@@ -107,10 +111,8 @@
 					상품넘버링<input type="text" id="item_number" name="item_number" /><br>
 					상품 등급<input type="text" id="item_rating" name="item_rating" /><br>
 					사이즈<input type="text" id="size" name="size" /><br>
-					설명<input type="text" id="explanation" name="explanation" /><br>
 					<div>
-						<jsp:include page="/editor/editorSkinForRegister.jsp"
-							flush="false" />
+						<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
 					</div>
 
 				</form>

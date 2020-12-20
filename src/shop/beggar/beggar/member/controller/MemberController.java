@@ -51,7 +51,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/registerAction.do")) {  //회원가입
+		} else if (command.equals("/registerAction")) {  //회원가입
 			Action action = new RegisterAction();
 			
 			try {
@@ -59,7 +59,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/RegisterProcAction.do")) {  //회원가입 로직
+		} else if (command.equals("/RegisterProcAction")) {  //회원가입 로직
 			Action action = new RegisterProcAction();
 			
 			try {
@@ -67,7 +67,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/removeAction.do")) {  //회원탈퇴
+		} else if (command.equals("/removeAction")) {  //회원탈퇴
 			Action action = new RemoveAction();
 			
 			try {
@@ -75,7 +75,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/modifyAction.do")) {  //회원상세 변경
+		} else if (command.equals("/modifyAction")) {  //회원상세 변경
 			Action action = new ModifyAction();
 			
 			try {
@@ -83,7 +83,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/modifyProc.do")) {  //회원상세 변경
+		} else if (command.equals("/modifyProc")) {  //회원상세 변경
 			Action action = new ModifyProcAction();
 			
 			try {
@@ -91,7 +91,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/mberShipAction.do")) {  //멤버십
+		} else if (command.equals("/mberShipAction")) {  //멤버십
 			Action action = new MemberShipAction();
 			
 			try {
@@ -100,7 +100,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		} else if (command.equals("/loginAction.do")) {  //로그인
+		} else if (command.equals("/loginAction")) {  //로그인
 			Action action = new LoginAction();
 			
 			try {
@@ -109,7 +109,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		} else if (command.equals("/loginProcAction.do")) {  //로그인
+		} else if (command.equals("/loginProcAction")) {  //로그인
 			Action action = new LoginProcAction();
 			
 			try {
@@ -118,7 +118,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		} else if (command.equals("/logoutAction.do")) {  //로그인
+		} else if (command.equals("/logoutAction")) {  //로그인
 			Action action = new LogoutAction();
 			
 			try {
@@ -127,7 +127,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		} else if (command.equals("/registerProc.do")) {  //회원가입 상세
+		} else if (command.equals("/registerProc")) {  //회원가입 상세
 			Action action = new RegisterProcAction();
 			
 			try {
@@ -135,7 +135,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/searchId.do")) {  //아이디 찾기
+		} else if (command.equals("/searchId")) {  //아이디 찾기
 			Action action = new SearchIdAction();
 			
 			try {
@@ -143,7 +143,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/searchIdProcAction.do")) {  //아이디 찾기 로직
+		} else if (command.equals("/searchIdProcAction")) {  //아이디 찾기 로직
 			Action action = new SearchIdProcAction();
 			
 			try {
@@ -151,7 +151,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/searchPwd.do")) {  //비밀번호 찾기
+		} else if (command.equals("/searchPwd")) {  //비밀번호 찾기
 			Action action = new SearchPwdAction();
 			
 			try {
@@ -159,7 +159,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/searchPwdProc.do")) {  //비밀번호 찾기
+		} else if (command.equals("/searchPwdProc")) {  //비밀번호 찾기
 			Action action = new SearchPwdProcAction();
 			
 			try {
@@ -167,7 +167,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/changePwd.do")) {  //비밀번호 찾기
+		} else if (command.equals("/changePwd")) {  //비밀번호 찾기
 			Action action = new ChangePwdAction();
 			
 			try {
@@ -175,7 +175,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/changePwdProc.do")) {  //비밀번호 찾기
+		} else if (command.equals("/changePwdProc")) {  //비밀번호 찾기
 			Action action = new ChangePwdProcAction();
 			
 			try {

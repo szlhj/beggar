@@ -94,7 +94,7 @@
 </head>
 <body>
 회원정보 수정 Form
-<form action="/member/modifyProc.do" method="post" id="mfForm">
+<form action="/member/modifyProc" method="post" id="mfForm">
 아이디 <%=mvo.getId() %> <br />
 새로운비밀번호<input type="password" id="pwd" name="pwd"/><br />
 새로운비밀번호 확인 <input type="password" id="pwdc" name="pwdc" /> <br />

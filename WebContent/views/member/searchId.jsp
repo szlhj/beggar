@@ -56,7 +56,7 @@
 </head>
 <body>
 	<%if (numPageCount == null) { %>
-		<form action="/member/searchIdProcAction.do" method="post" id="searchForm" />
+		<form action="/member/searchIdProcAction" method="post" id="searchForm" />
 			<input type="text" id="searchName" name="searchName" placeholder="이름" /><br>
 			<input type="email" id="searchEmail" name="searchEmail" placeholder="이메일" /><br>
 			<input type="tel" id="searchTel" name="searchTel" placeholder="전화번호" /><br>
@@ -64,7 +64,7 @@
 		<button type="button" onclick="search()">찾기</button>
 		<button type="button" onclick="cancle()">취소</button>
 	<%} else { %>
-		<form action="/member/loginAction.do" method="post" id="shIdForm">
+		<form action="/member/loginAction" method="post" id="shIdForm">
 			<%if (searchId == null || searchId.equals("")) { %>
 				아이디가 존재하지 않습니다.
 			<%} else { %>

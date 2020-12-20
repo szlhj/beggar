@@ -2,29 +2,41 @@ package shop.beggar.admin.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import shop.beggar.admin.service.AdminService;
+import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemAddAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: ModifyAction.java
+ * @Since			: 2020. 12. 18.
  * @Author			: HJLee
- * @Description		: ªÛ«∞µÓ∑œ »≠∏È ∞Ê∑Œ º≥¡§
+ * @Description		: Í¥ÄÎ¶¨Ïûê ÌöåÏõê Í∞ÄÏûÖ Í≤ΩÎ°ú
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				√÷√  ¿€º∫
+ * 2020. 12. 18.		HJLee				ÏµúÏ¥à ÏûëÏÑ±
  *
  */
-public class ItemAddAction implements Action{
+public class AdminModifyAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HttpSession session = request.getSession();
+		AdminVo vo = (AdminVo) session.getAttribute("adminVo");
+		
+		AdminService svc = new AdminService();
+		AdminVo infoVo = svc.adminInfoAll(vo);
+		
+		request.setAttribute("vo", infoVo);
+		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/itemAdd.jsp");
+		forward.setPath("/views/admin/modify.jsp");
 		return forward;
 	}
 }
