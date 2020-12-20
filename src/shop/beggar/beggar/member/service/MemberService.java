@@ -128,4 +128,32 @@ public class MemberService {
 		
 		return isSuccess;
 	}
+	
+	public MemberVo modifyMemberInfo(MemberVo vo) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		MemberVo voInfo = dao.modifyMemberInfo(vo);
+		
+		close(con);
+		
+		return voInfo;
+	}
+	
+	public boolean modifyMember(MemberVo memberVo) {
+		MemberDao dao = MemberDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.modifyMember(memberVo);
+		boolean isSuccess = true;
+		if(count > 0 ) {
+			commit(con); //0보다 크면 커밋
+		} else {
+			rollback(con);  //작으면 롤백함
+			isSuccess = false;
+		}
+		close(con);
+		return isSuccess;
+	}
 }
