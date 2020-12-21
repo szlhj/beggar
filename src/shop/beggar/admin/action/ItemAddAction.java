@@ -11,13 +11,13 @@ import shop.beggar.common.ActionForward;
  * @FileName		: ItemAddAction.java
  * @Since			: 2020. 12. 19.
  * @Author			: HJLee
- * @Description		: ªÛ«∞µÓ∑œ »≠∏È ∞Ê∑Œ º≥¡§
+ * @Description		: ÏÉÅÌíàÎì±Î°ù ÌôîÎ©¥ Í≤ΩÎ°ú ÏÑ§Ï†ï
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				√÷√  ¿€º∫
+ * 2020. 12. 19.		HJLee				ÏµúÏ¥à ÏûëÏÑ±
  *
  */
 public class ItemAddAction implements Action{
