@@ -281,7 +281,7 @@ public class AdminDao {
 //		admin_dttm, admin_name, admin_email, admin_phone, admin_memo
 		
 		try {
-			pstmt = con.prepareStatement("select * from inf_admin_tb where admin_sq=? order by dttm desc");
+			pstmt = con.prepareStatement("select * from inf_admin_tb where admin_sq=? order by admin_dttm desc");
 			pstmt.setInt(1, vo.getAdmin_sq());
 			
 			rs = pstmt.executeQuery();
@@ -398,7 +398,7 @@ public class AdminDao {
 				
 				count = pstmt.executeUpdate();
 			} else {
-				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, explanatio=?, admin_sq=?, dttm=now() where item_sq=?");
+				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, explanation=?, admin_sq=?, dttm=now() where item_sq=?");
 				pstmt.setString(1, vo.getItem_name());
 				pstmt.setString(2, vo.getCategory());
 				pstmt.setString(3, vo.getCode());
