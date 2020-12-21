@@ -1,3 +1,4 @@
+<%@page import="shop.beggar.common.Parser"%>
 <%@page import="shop.beggar.beggar.vo.ItemVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -6,6 +7,8 @@
 	String pn = (String) request.getAttribute("pn");
 	
 	String category = itemVo.getCategory();
+	
+	String content = Parser.chgToHtml(itemVo.getExplanation());
 %>
 <!DOCTYPE html>
 <html>
@@ -14,6 +17,10 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+
+<script type="text/javascript">
+	var content = '<%=content%>';
+</script>
 
 <script type="text/javascript">
 	function modify() {
@@ -83,11 +90,11 @@
  			return;
  		}
 		
-// 		saveContent();
-		$('#editorForm').submit();
+		saveContent();
+// 		$('#editorForm').submit();
 	}
 	function cancle() {
-		location.href = "/admin/";
+		location.href = "/admin/itemList?pn=" + <%=pn%>;
 	}
 	function show(isShow) {
 		location.href = "/admin/itemShow?isShow=" + isShow + "&pn=" + <%=pn%> + "&sq=" + <%=itemVo.getItem_sq()%>;
@@ -126,9 +133,12 @@
 				<div>
 					<textarea rows="20" cols="100" readonly="readonly"><%=itemVo.getExplanation() %></textarea>
 				</div>
-<!-- 				<div> -->
-<%-- 					<jsp:include page="/editor/editorSkinForModify.jsp" flush="false" /> --%>
-<!-- 				</div> -->
+				<div id="asdf">
+					<%=Parser.chgToHtml(itemVo.getExplanation()) %>
+				</div>
+				<div>
+					<jsp:include page="/editor/editorSkinForModify.jsp" flush="false" />
+				</div>
 			</form>
 			<button onclick="modify()">수정</button>
 			<%if (itemVo.isShow_fl() == true) { %>
