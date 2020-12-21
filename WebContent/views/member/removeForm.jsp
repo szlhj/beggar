@@ -21,7 +21,7 @@
 </head>
 <body>
 	<div>
-		<form action="/removeAction.do" method="post" id="mrform">
+		<form action="/removeAction" method="post" id="mrform">
 			<input type="password" id="pwd" name="pwd" >
 		</form>
 	</div>

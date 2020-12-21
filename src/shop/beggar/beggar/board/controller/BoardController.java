@@ -42,7 +42,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/writeBoard.do")) { //글쓰기
+		} else if (command.equals("/writeBoard")) { //글쓰기
 			Action action = new WriteBoardAction();
 			
 			try {
@@ -50,7 +50,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/frequently.do")) { //자주하는 질문
+		} else if (command.equals("/frequently")) { //자주하는 질문
 			Action action = new FrequentlyAction();
 			
 			try {
@@ -58,7 +58,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/productRelated.do")) { //제품관련
+		} else if (command.equals("/productRelated")) { //제품관련
 			Action action = new ProductRelatedAction();
 			
 			try {
@@ -66,7 +66,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/oneAndOneQuestion.do")) { //1:1문의
+		} else if (command.equals("/oneAndOneQuestion")) { //1:1문의
 			Action action = new OneAndOneQuestionAction();
 			
 			try {
@@ -74,7 +74,7 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/myQuestion.do")) { //내가 쓴 글 보기
+		} else if (command.equals("/myQuestion")) { //내가 쓴 글 보기
 			Action action = new MyQuestionAction();
 			
 			try {

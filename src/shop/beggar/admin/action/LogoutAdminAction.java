@@ -2,29 +2,35 @@ package shop.beggar.admin.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemAddAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: LogoutAdminAction.java
+ * @Since			: 2020. 12. 18.
  * @Author			: HJLee
- * @Description		: ªÛ«∞µÓ∑œ »≠∏È ∞Ê∑Œ º≥¡§
+ * @Description		: Î°úÍ∑∏ÏïÑÏõÉ Î°úÏßÅ
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				√÷√  ¿€º∫
+ * 2020. 12. 18.		HJLee				ÏµúÏ¥à ÏûëÏÑ±
  *
  */
-public class ItemAddAction implements Action{
+public class LogoutAdminAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/itemAdd.jsp");
+		forward.setPath("/admin/");
+		forward.setRedirect(true);
 		return forward;
 	}
 }

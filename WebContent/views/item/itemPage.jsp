@@ -21,23 +21,23 @@
 </head>
 <script>
 	function dummy() {
-		location.href="/item/dummy.do";
+		location.href="/item/dummy";
 	}
 </script>
     <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-    <button onclick="location.href='/item/mainItem.do?category=0'">홈배너</button>
+    <button onclick="location.href='/item/mainItem?category=0'">홈배너</button>
     <button onclick="location.href='/'">홈</button>
     <button onclick="dummy()">dummy넣기</button>
 <body>
 <table>
 	<tr>
-		<td><a href="/item/mainItem.do?category=1">NEW IN</a></td>
-		<td><a href="/item/mainItem.do?category=2">EARRINGS</a></td>
-		<td><a href="/item/mainItem.do?category=3">NECKLACES</a></td>
-		<td><a href="/item/mainItem.do?category=4">BRACELETS</a></td>
-		<td><a href="/item/mainItem.do?category=5">RINGS</a></td>
-		<td><a href="/item/mainItem.do?category=6">ANKLETS</a></td>
-		<td><a href="/item/mainItem.do?category=7">BEST</a></td>
+		<td><a href="/item/mainItem?category=1">NEW IN</a></td>
+		<td><a href="/item/mainItem?category=2">EARRINGS</a></td>
+		<td><a href="/item/mainItem?category=3">NECKLACES</a></td>
+		<td><a href="/item/mainItem?category=4">BRACELETS</a></td>
+		<td><a href="/item/mainItem?category=5">RINGS</a></td>
+		<td><a href="/item/mainItem?category=6">ANKLETS</a></td>
+		<td><a href="/item/mainItem?category=7">BEST</a></td>
 	</tr>
 </table>
 <!-- 홈화면 기준은 날짜 별로 기준인것 같음 모든항목 출력인듯하고 -->
@@ -53,7 +53,7 @@
 	<th>상품할인가격</th>
 </tr>
 <% for (int i = 0; i <list.size(); i++) {%>
-  <tr onclick="location.href='/item/detail.do?item_sq=<%=list.get(i).getItem_sq()%>'">
+  <tr onclick="location.href='/item/detail?item_sq=<%=list.get(i).getItem_sq()%>'">
     <th><%=list.get(i).getFilepath() %></th>
     <th><%=list.get(i).getPreview() %></th>
     <th><%=list.get(i).getItem_name() %></th>
@@ -72,7 +72,7 @@
 </table>
 
 <%if (pagenation.getStartPageNumber() != 1) {%>
-<a href="/item/mainItem.do?pn=<%=pagenation.getStartPageNumber() - 1 %>&category=<%=category%>"> < </a>
+<a href="/item/mainItem?pn=<%=pagenation.getStartPageNumber() - 1 %>&category=<%=category%>"> < </a>
 <% } %>
 
 <% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
@@ -83,7 +83,7 @@
 	<%} %>
 <%} %>
 <%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-		<a href="/item/mainItem.do?pn=<%=pagenation.getEndPageNumber() + 1 %>&category=<%=category%>"> > </a>
+		<a href="/item/mainItem?pn=<%=pagenation.getEndPageNumber() + 1 %>&category=<%=category%>"> > </a>
 <% }%>
 
 <%--     <th><%=list.get(i).getPreview() %></th> --%>
@@ -98,7 +98,7 @@
 <div class="row row-cols-1 row-cols-md-4">
 <% for (int i = 0; i <list.size(); i++) {%>
 	<div class="col mb-3">
-		<div class="card" onclick="location.href='/item/detail.do?item_sq=<%=list.get(i).getItem_sq()%>'">
+		<div class="card" onclick="location.href='/item/detail?item_sq=<%=list.get(i).getItem_sq()%>'">
   			<img src="..." class="card-img-top" alt="...">
   			<div class="card-body">
     			<h5 class="card-title">이름<%=list.get(i).getItem_name() %></h5>

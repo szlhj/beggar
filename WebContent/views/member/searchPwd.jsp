@@ -28,7 +28,7 @@
 
 </head>
 <body>
-	<form action="/member/searchPwdProc.do" method="post" id="shPwdForm">
+	<form action="/member/searchPwdProc" method="post" id="shPwdForm">
 		<input type="text" id="shId" name="shId" placeholder="아이디" /><br>
 		<input type="text" id="shName" name="shName" placeholder="이름" /><br>
 		<input type="text" id="shEmail" name="shEmail" placeholder="이메일" /><br>

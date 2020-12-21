@@ -8,23 +8,23 @@ import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemAddAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: EditCheckAction.java
+ * @Since			: 2020. 12. 20.
  * @Author			: HJLee
- * @Description		: ªÛ«∞µÓ∑œ »≠∏È ∞Ê∑Œ º≥¡§
+ * @Description		: ÏóêÎîîÌÑ∞ Ï≤¥ÌÅ¨Î•º ÏúÑÌïú ÌéòÏù¥ÏßÄ
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				√÷√  ¿€º∫
+ * 2020. 12. 20.		HJLee				ÏµúÏ¥à ÏûëÏÑ±
  *
  */
-public class ItemAddAction implements Action{
+public class EditCheckAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/itemAdd.jsp");
+		forward.setPath("/views/admin/a.jsp");
 		return forward;
 	}
 }

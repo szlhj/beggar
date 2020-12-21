@@ -54,7 +54,7 @@
 랜덤 비밀번호 <%=randomPwd %>
 아이디 <%=mber_sq %>
 <hr>
-	<form action="/member/changePwdProc.do" method="post" id="chPwdForm">
+	<form action="/member/changePwdProc" method="post" id="chPwdForm">
 		<input type="password" id="extantPwd" name="extantPwd" placeholder="현재 비밀번호" /><br>
 		<input type="password" id="newPwd" name="newPwd" placeholder="새로운 비밀번호" /><br>
 		<input type="password" id="newPwdc" name="newPwdc" placeholder="새로운 비밀번호 확인" /><br>

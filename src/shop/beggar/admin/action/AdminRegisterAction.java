@@ -8,23 +8,23 @@ import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemAddAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: MemberAdminRegisterAction.java
+ * @Since			: 2020. 12. 18.
  * @Author			: HJLee
- * @Description		: ªÛ«∞µÓ∑œ »≠∏È ∞Ê∑Œ º≥¡§
+ * @Description		: Í¥ÄÎ¶¨Ïûê ÌöåÏõê Í∞ÄÏûÖ Í≤ΩÎ°ú ÏÑ§Ï†ï
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				√÷√  ¿€º∫
+ * 2020. 12. 18.		HJLee				ÏµúÏ¥à ÏûëÏÑ±
  *
  */
-public class ItemAddAction implements Action{
+public class AdminRegisterAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/itemAdd.jsp");
+		forward.setPath("/views/admin/register.jsp");
 		return forward;
 	}
 }
