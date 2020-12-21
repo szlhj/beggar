@@ -41,7 +41,7 @@
 				<%
 					} else {
 				%>
-				<li><a href="/mymenu/myPage" onMouseOver='this.innerHTML="나의메뉴"' onMouseOut='this.innerHTML="MY MENU"'>MY MENU</a></li>
+				<li><a href="/member/myPage" onMouseOver='this.innerHTML="나의메뉴"' onMouseOut='this.innerHTML="MY MENU"'>MY MENU</a></li>
 				<li><a href="/member/logoutAction" onMouseOver='this.innerHTML="로그아웃"' onMouseOut='this.innerHTML="LOGOUT"'>LOGOUT</a></li>
 				<%
 					}
