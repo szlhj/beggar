@@ -28,6 +28,6 @@
 	<jsp:include page="/views/navbar.jsp"></jsp:include>
 <%-- 	<jsp:include page="/views/item/itemPage.jsp"></jsp:include> --%>
 	
-	<button onclick="location.href='/admin/'">°ü¸®ÀÚ È¨</button>
+	<button onclick="location.href='/admin/'">ê´€ë¦¬ìž í™ˆ</button>
 </body>
 </html>
