@@ -1,4 +1,4 @@
-package shop.beggar.admin.action;
+﻿package shop.beggar.admin.action;
 
 import java.io.PrintWriter;
 
@@ -51,7 +51,7 @@ public class LoginAdminProcAction implements Action {
 		AdminVo adminVo = svc.adminLoginInfo(vo);
 		
 		if(adminVo == null 
-				|| BCrypt.checkpw(adminPwd, adminVo.getAdminPwd())) {
+				|| !BCrypt.checkpw(adminPwd, adminVo.getAdminPwd())) {
 			response.setContentType("text/html;charset=UTF-8;");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('로그인 정보를 확인 하세요.');history.back();</script>");
