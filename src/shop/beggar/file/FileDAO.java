@@ -21,7 +21,20 @@ import java.util.ArrayList;
  *
  */
 public class FileDAO {
-	private Connection conn;
+	
+	private Connection con;
+
+//	private static class LazyHolder {
+//		private static final FileDAO INSTANCE = new FileDAO();
+//	}
+//
+//	public static FileDAO getInstance() {
+//		return LazyHolder.INSTANCE;
+//	}
+//
+//	public void setConnection(Connection con) {
+//		this.con = con;
+//	}
 	
 	public FileDAO() {
 		try {
@@ -29,17 +42,18 @@ public class FileDAO {
 			String dbID = "beggar";
 			String dbPassword = "1111";
 			Class.forName("org.mariadb.jdbc.Driver");
-			conn = DriverManager.getConnection(dbURL, dbID, dbPassword);
+			con = DriverManager.getConnection(dbURL, dbID, dbPassword);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	public int upload(String fileName, String fileRealName) {
 		String sql = "insert into file (fileName, fileRealName) values (?, ?)";
 		
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, fileName);
 			pstmt.setString(2, fileRealName);
 			return pstmt.executeUpdate();
@@ -54,7 +68,7 @@ public class FileDAO {
 		String sql = "update file set downloadCount = (select max(downloadCount) + 1 from file where fileRealName=?) where fileRealName=?";
 		
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			pstmt.setString(1, fileRealName);
 			pstmt.setString(2, fileRealName);
 			return pstmt.executeUpdate();
@@ -69,7 +83,7 @@ public class FileDAO {
 		ArrayList<FileDTO> list = new ArrayList<FileDTO>();
 		
 		try {
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {

@@ -20,9 +20,7 @@
 
 <script type="text/javascript">
 	var content = '<%=content%>';
-</script>
-
-<script type="text/javascript">
+	
 	function modify() {
 
 		var $item_name = $('#item_name');
@@ -42,11 +40,6 @@
  			$item_name.focus;
  			return;
  		}
-//  		if (!$categore.val()) {
-//  			alert('카테고리를 입력 하세요.');
-//  			$categore.focus;
-//  			return;
-//  		}
  		if (!$code.val()) {
  			alert('상품코드를 입력 하세요.');
  			$code.focus;
@@ -91,7 +84,6 @@
  		}
 		
 		saveContent();
-// 		$('#editorForm').submit();
 	}
 	function cancle() {
 		location.href = "/admin/itemList?pn=" + <%=pn%>;
@@ -107,7 +99,7 @@
 <body>
 	<div>
 		<section>
-			<form action="/admin/itemModifyView?pn=<%=pn %>" method="post" id="editorForm">
+			<form action="/admin/itemModifyProc?pn=<%=pn %>" method="post" id="editorForm">
 				상품일련번호<input type="text" id="item_sq" name="item_sq" value="<%=itemVo.getItem_sq() %>" readonly="readonly" /><br>
 				상품이름<input type="text" id="item_name" name="item_name" value="<%=itemVo.getItem_name() %>" /><br>
 				카테고리
@@ -130,7 +122,7 @@
 				상품 등급<input type="text" id="item_rating" name="item_rating" value="<%=itemVo.getItem_rating() %>" /><br>
 				사이즈<input type="text" id="size" name="size" value="<%=itemVo.getSize() %>" /><br>
 				<div>
-					<%=content %>
+					<jsp:include page="/editor/editorSkinForModify.jsp" flush="false" />
 				</div>
 			</form>
 			<button onclick="modify()">수정</button>
