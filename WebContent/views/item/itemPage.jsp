@@ -29,19 +29,17 @@
     <button onclick="location.href='/'">홈</button>
     <button onclick="dummy()">dummy넣기</button>
 <body>
-<table>
-	<tr>
-		<td><a href="/item/mainItem?category=1">NEW IN</a></td>
-		<td><a href="/item/mainItem?category=2">EARRINGS</a></td>
-		<td><a href="/item/mainItem?category=3">NECKLACES</a></td>
-		<td><a href="/item/mainItem?category=4">BRACELETS</a></td>
-		<td><a href="/item/mainItem?category=5">RINGS</a></td>
-		<td><a href="/item/mainItem?category=6">ANKLETS</a></td>
-		<td><a href="/item/mainItem?category=7">BEST</a></td>
-	</tr>
-</table>
+	<ul>
+		<li><a class="ct_one" href="/item/mainItem?category=1">NEW IN</a></li>
+		<li><a class="ct_two" href="/item/mainItem?category=2">EARRINGS</a></li>
+		<li><a class="ct_three" href="/item/mainItem?category=3">NECKLACES</a></li>
+		<li><a class="ct_four" href="/item/mainItem?category=4">BRACELETS</a></li>
+		<li><a class="ct_five" href="/item/mainItem?category=5">RINGS</a></li>
+		<li><a class="ct_six" href="/item/mainItem?category=6">ANKLETS</a></li>
+		<li><a class="ct_seven" href="/item/mainItem?category=7">BEST</a></li>
+	</ul>
 <!-- 홈화면 기준은 날짜 별로 기준인것 같음 모든항목 출력인듯하고 -->
-<table>
+<!-- <table>
 <tr>
 	<th>상품이미지주소</th>
 	<th>상품프리뷰</th>
@@ -51,8 +49,8 @@
 	<th>상품할인율</th>
 	<th>상품시퀀스번호</th>
 	<th>상품할인가격</th>
-</tr>
-<% for (int i = 0; i <list.size(); i++) {%>
+</tr> -->
+<%-- <% for (int i = 0; i <list.size(); i++) {%>
   <tr onclick="location.href='/item/detail?item_sq=<%=list.get(i).getItem_sq()%>'">
     <th><%=list.get(i).getFilepath() %></th>
     <th><%=list.get(i).getPreview() %></th>
@@ -64,27 +62,13 @@
     <td><%=list.get(i).getPrice() - (list.get(i).getPrice() * list.get(i).getDiscount() /100)%></td>
   </tr>
 <!--   <tr> -->
-<%--     <td><%=list.get(i).getDisprice() %></td> --%>
+    <td><%=list.get(i).getDisprice() %></td>
     
 <!--   </tr> -->
-<% } %>
+<% } %> --%>
 
-</table>
+<!-- </table> -->
 
-<%if (pagenation.getStartPageNumber() != 1) {%>
-<a href="/item/mainItem?pn=<%=pagenation.getStartPageNumber() - 1 %>&category=<%=category%>"> < </a>
-<% } %>
-
-<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
-	<%if (i != Integer.parseInt(pn)) {%>
-		<a href="/item/mainItem.do?pn=<%=i %>&category=<%=category%>"> <%=i%> </a>
-	<%} else  {%>
-		<%=i %>
-	<%} %>
-<%} %>
-<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-		<a href="/item/mainItem?pn=<%=pagenation.getEndPageNumber() + 1 %>&category=<%=category%>"> > </a>
-<% }%>
 
 <%--     <th><%=list.get(i).getPreview() %></th> --%>
 <%--     <th><%=list.get(i).getCategory() %></th> --%>
@@ -109,6 +93,23 @@
 		</div>
 	</div>
 <% } %>
+</div>
+
+<div class="pagenations">
+<%if (pagenation.getStartPageNumber() != 1) {%>
+<a class="page_prev" href="/?pn=<%=pagenation.getStartPageNumber() - 1 %>&category=<%=category%>"> < </a>
+<% } %>
+
+<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
+	<%if (i != Integer.parseInt(pn)) {%>
+		<a class="page_num" href="/?pn=<%=i %>&category=<%=category%>"> <%=i%> </a>
+	<%} else  {%>
+		<p class="page_frt"><%=i %></p>
+	<%} %>
+<%} %>
+<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
+		<a class="page_next" href="/?pn=<%=pagenation.getEndPageNumber() + 1 %>&category=<%=category%>"> > </a>
+<% }%>
 </div>
 </body>
 </html>
