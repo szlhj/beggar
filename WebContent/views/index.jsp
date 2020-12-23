@@ -4,9 +4,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%
-    	LoginManager lm = LoginManager.getInstance();
-    	String id = lm.getMemberId(session);
-    	
     	MemberVo vo = (MemberVo) session.getAttribute("vo");
     	
     	int mber_sq = 0;
@@ -25,9 +22,9 @@
 
 </head>
 <body>
-	<jsp:include page="/views/navbar.jsp"></jsp:include>
-<%-- 	<jsp:include page="/views/item/itemPage.jsp"></jsp:include> --%>
+	<jsp:include page="/views/navbar.jsp" />
+	<jsp:include page="/views/item/itemPage.jsp"></jsp:include>
 	
-	<button onclick="location.href='/admin/'">°ü¸®ÀÚ È¨</button>
+	<button onclick="location.href='/admin/'">ê´€ë¦¬ìž í™ˆ</button>
 </body>
 </html>

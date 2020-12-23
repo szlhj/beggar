@@ -8,23 +8,23 @@ import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemAddAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: FileExAction.java
+ * @Since			: 2020. 12. 21.
  * @Author			: HJLee
- * @Description		: 상품등록 화면 경로 설정
+ * @Description		: 파일 업로드 및 다운로드 예제
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				최초 작성
+ * 2020. 12. 21.		HJLee				최초 작성
  *
  */
-public class ItemAddAction implements Action{
+public class FileExAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/itemAdd.jsp");
+		forward.setPath("/views/admin/file/fileExample.jsp");
 		return forward;
 	}
 }

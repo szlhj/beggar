@@ -48,7 +48,7 @@ public class AdminModifyProcAction implements Action {
 		AdminVo vo = new AdminVo();
 		vo.setAdminId(adminId);
 		if (adminPwd != null) {
-			vo.setAdminPwd(BCrypt.hashpw(adminPwdc, BCrypt.gensalt(12)));
+			vo.setAdminPwd(BCrypt.hashpw(adminPwd, BCrypt.gensalt(12)));
 		}
 		vo.setAdminEmail(adminEmail);
 		vo.setAdminPhone(adminPhone);

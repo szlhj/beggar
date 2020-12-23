@@ -13,7 +13,7 @@ import shop.beggar.common.ActionForward;
  * @FileName		: ItemDetailAction.java
  * @Since			: 2020. 12. 19.
  * @Author			: HJLee
- * @Description		: 관리자 아이템 상세 화면 경로설정
+ * @Description		: 관리자 상품 상세 화면 경로설정
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
