@@ -13,7 +13,6 @@
 	function join() {
 
 		var $item_name = $('#item_name');
-// 		var $categore = $('#categore');
 		var $code = $('#code');
 		var $price = $('#price');
 		var $discount = $('#discount');
@@ -29,11 +28,6 @@
  			$item_name.focus;
  			return;
  		}
-//  		if (!$categore.val()) {
-//  			alert('카테고리를 입력 하세요.');
-//  			$categore.focus;
-//  			return;
-//  		}
  		if (!$code.val()) {
  			alert('상품코드를 입력 하세요.');
  			$code.focus;

@@ -18,16 +18,15 @@ import shop.beggar.admin.action.ItemDelAction;
 import shop.beggar.admin.action.ItemDetailAction;
 import shop.beggar.admin.action.ItemListAction;
 import shop.beggar.admin.action.ItemModifyProcAction;
+import shop.beggar.admin.action.ItemModifyViewAction;
 import shop.beggar.admin.action.ItemShowAction;
 import shop.beggar.admin.action.LoginAdminProcAction;
 import shop.beggar.admin.action.LogoutAdminAction;
 import shop.beggar.admin.action.AdminRegisterAction;
 import shop.beggar.admin.action.MemberManagementAction;
-import shop.beggar.admin.action.BoardListAction;
 import shop.beggar.admin.action.AdminRegisterProcAction;
-import shop.beggar.admin.action.BoardAddAction;
-import shop.beggar.admin.action.BoardAddProcAction;
 import shop.beggar.admin.action.EditCheckAction;
+import shop.beggar.admin.action.FileExAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
@@ -171,16 +170,16 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/editCheck")) { //에디터 시험을 위해 만들었음
-			Action action = new EditCheckAction();
+		} else if (command.equals("/itemModifyView")) {
+			Action action = new ItemModifyViewAction();
 			
 			try {
 				forward = action.execute(request, response);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/boardList")) { 
-			Action action = new BoardListAction();
+		} else if (command.equals("/fileUpAndDown")) {  //파일 업로드 및 다운로드 예제
+			Action action = new FileExAction();
 			
 			try {
 				forward = action.execute(request, response);
@@ -204,7 +203,6 @@ private static final long serialVersionUID = 1L;
 				e.printStackTrace();
 			}
 		}
-		
 		
 		if (forward != null) {
 			if (forward.isRedirect()) {
