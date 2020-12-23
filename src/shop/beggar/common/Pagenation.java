@@ -18,7 +18,7 @@ package shop.beggar.common;
  *
  */
 public class Pagenation {
-	private final int ARTICLE_COUNT_PER_PAGE = 10; //현재 페이지 글 개수
+	private final int ARTICLE_COUNT_PER_PAGE = 20; //현재 페이지 글 개수
 	private final int PAGE_COUNT_PER_GROUP = 5; //페이지 번호 표시
 	private int nowPageNumber; //현제페이지 번호
 	private int totalArticleCount; //전체 글 개수
