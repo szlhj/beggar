@@ -10,24 +10,24 @@ import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemDetailAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: ItemModifyViewAction.java
+ * @Since			: 2020. 12. 21.
  * @Author			: HJLee
- * @Description		: 관리자 상품 상세 화면 경로설정
+ * @Description		: 상품 상세 화면 보여주기
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				최초 작성
+ * 2020. 12. 21.		HJLee				최초 작성
  *
  */
-public class ItemDetailAction implements Action {
+public class ItemModifyViewAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		String item_sq = request.getParameter("item_sq");
 		String pn = request.getParameter("pn");
+		String item_sq = request.getParameter("item_sq");
 		
 		AdminService svc = new AdminService();
 		ItemVo vo = new ItemVo();
@@ -38,7 +38,7 @@ public class ItemDetailAction implements Action {
 		request.setAttribute("pn", pn);
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/itemDetail.jsp");
+		forward.setPath("/views/admin/itemDetailModify.jsp");
 		return forward;
 	}
 }

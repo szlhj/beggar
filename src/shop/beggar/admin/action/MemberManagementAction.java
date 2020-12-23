@@ -35,6 +35,10 @@ public class MemberManagementAction implements Action{
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
 		String pn = request.getParameter("pn");
+		if (pn == null) {
+			pn = "1";
+		}
+		
 		int page = Integer.parseInt(pn);
 		
 		if(!RegExp.isValidExp(pn, REGEXP_NUMBER)
