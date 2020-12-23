@@ -1,0 +1,67 @@
+@charset "UTF-8";
+.row {
+	width: 960px;
+	margin : 0 auto;
+}
+.pagenations {
+	width: 960px;
+	margin : 0 auto;
+}
+
+.col {
+	width: 220px;
+}
+
+div {
+	text-align : center;
+}
+
+ul {
+	display : flex;
+	justify-content: space-evenly;
+	margin: 0 auto;
+	width: 1200px;
+	list-style: none;
+	padding-left: 0px;
+	padding : 20px;
+	
+}
+.ct_one {
+	padding : 40px;
+}
+.ct_two {
+	padding : 40px;
+}
+.ct_three {
+	padding : 40px;
+}
+.ct_four {
+	padding : 40px;
+}
+.ct_five {
+	padding : 40px;
+}
+.ct_six {
+	padding : 40px;
+}
+.ct_seven {
+	padding : 40px;
+}
+
+.page_prev {
+	font-size: 20px;
+	padding : 20px;
+}
+.page_frt {
+	display: inline;
+	font-size: 20px;
+	padding : 20px;
+}
+.page_num {
+	font-size: 20px;
+	padding : 20px;
+}
+.page_next {
+	font-size: 20px;
+	padding : 20px;
+}
