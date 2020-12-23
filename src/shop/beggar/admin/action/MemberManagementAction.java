@@ -16,26 +16,38 @@ import shop.beggar.common.ActionForward;
 import shop.beggar.common.Pagenation;
 import shop.beggar.common.ActionForward;
 
+/**
+ * @PackageName		: shop.beggar.admin.action
+ * @FileName		: MemberManagementAction.java
+ * @Since			: 2020. 12. 18.
+ * @Author			: HJLee
+ * @Description		: 회원 리스트 보기
+ * =====================================================================================
+ * 								   Modification History
+ * =====================================================================================
+ * Date				Author				Note
+ * -------------------------------------------------------------------------------------
+ * 2020. 12. 18.		HJLee				최초 작성
+ *
+ */
 public class MemberManagementAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// TODO Auto-generated method stub
+		
+		
 		String pn = request.getParameter("pn");
 		
-		if(!RegExp.isValidExp(pn, REGEXP_NUMBER)) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>location.href='/admin/memberManagement.do?pn=1';</script>");
-			out.close();
-			return null;
+		if (pn == null) {
+			pn = "1";
 		}
-		
 		int page = Integer.parseInt(pn);
 		
-		if(page<1) {
+		if(!RegExp.isValidExp(pn, REGEXP_NUMBER)
+				|| page < 1) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>location.href='/admin/memberManagement.do?pn=1';</script>");
+			out.println("<script>location.href='/admin/memberManagement?pn=1';</script>");
 			out.close();
 			return null;
 		}
@@ -43,10 +55,10 @@ public class MemberManagementAction implements Action{
 		String filter = request.getParameter("filter");
 		String keyword = request.getParameter("keyword");
 		String query="";
-		if(filter ==null||filter.equals("")) {
+		if(filter == null || filter.equals("")) {
 			filter="id";
 		}
-		if(keyword !=null&&!keyword.equals("")) {
+		if(keyword != null && !keyword.equals("")) {
 			if(filter.equals("id")) {
 				query= " and (id like '%" + keyword + "%')";
 			}else if(filter.equals("name")) {
@@ -65,7 +77,7 @@ public class MemberManagementAction implements Action{
 		if(page>pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>location.href='/admin/memberManagement.do?pn="+pagenation.getTotalPageCount()+"';</script>");
+			out.println("<script>location.href='/admin/memberManagement?pn="+pagenation.getTotalPageCount()+"';</script>");
 			out.close();
 			return null;
 		}

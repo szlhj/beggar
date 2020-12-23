@@ -10,10 +10,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import shop.beggar.admin.action.AdminAction;
+import shop.beggar.admin.action.AdminModifyAction;
+import shop.beggar.admin.action.AdminModifyProcAction;
 import shop.beggar.admin.action.ItemAddAction;
 import shop.beggar.admin.action.ItemAddProcAction;
+import shop.beggar.admin.action.ItemDelAction;
+import shop.beggar.admin.action.ItemDetailAction;
 import shop.beggar.admin.action.ItemListAction;
+import shop.beggar.admin.action.ItemModifyProcAction;
+import shop.beggar.admin.action.ItemShowAction;
+import shop.beggar.admin.action.LoginAdminProcAction;
+import shop.beggar.admin.action.LogoutAdminAction;
+import shop.beggar.admin.action.AdminRegisterAction;
 import shop.beggar.admin.action.MemberManagementAction;
+import shop.beggar.admin.action.BoardListAction;
+import shop.beggar.admin.action.AdminRegisterProcAction;
+import shop.beggar.admin.action.BoardAddAction;
+import shop.beggar.admin.action.BoardAddProcAction;
+import shop.beggar.admin.action.EditCheckAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
@@ -37,7 +51,7 @@ private static final long serialVersionUID = 1L;
 		ActionForward forward = null;
 		
 		//화면 경로 설정
-		if (command.equals("/")) {
+		if (command.equals("/") || command.equals("")) {
 			Action action = new AdminAction();
 			
 			try {
@@ -45,7 +59,7 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/memberManagement.do")) {
+		} else if (command.equals("/memberManagement")) { //
 			Action action = new MemberManagementAction();
 			
 			try {
@@ -53,7 +67,47 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/itemList.do")) {
+		} else if (command.equals("/LoginAdminProc")) { //
+			Action action = new LoginAdminProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/registerAdmin")) {
+			Action action = new AdminRegisterAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/registerAdminProc")) {
+			Action action = new AdminRegisterProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/modifyAdmin")) {
+			Action action = new AdminModifyAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/modifyAdminProc")) {
+			Action action = new AdminModifyProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/itemList")) {
 			Action action = new ItemListAction();
 			
 			try {
@@ -61,7 +115,15 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/itemAdd.do")) {
+		} else if (command.equals("/itemDetail")) {
+			Action action = new ItemDetailAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/itemAdd")) {
 			Action action = new ItemAddAction();
 			
 			try {
@@ -69,7 +131,7 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}else if (command.equals("/itemAddProc.do")) {
+		} else if (command.equals("/itemAddProc")) {
 			Action action = new ItemAddProcAction();
 			
 			try {
@@ -77,7 +139,72 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/itemModifyProc")) {
+			Action action = new ItemModifyProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/logoutAdmin")) {
+			Action action = new LogoutAdminAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/itemShow")) {
+			Action action = new ItemShowAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/itemDel")) {
+			Action action = new ItemDelAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/editCheck")) { //에디터 시험을 위해 만들었음
+			Action action = new EditCheckAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardList")) { 
+			Action action = new BoardListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardAdd")) { 
+			Action action = new BoardAddAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardAddProc")) { 
+			Action action = new BoardAddProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		
 		
 		if (forward != null) {
 			if (forward.isRedirect()) {

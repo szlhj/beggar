@@ -54,7 +54,7 @@
 	
 	<section>
 		<div class="login_box">
-			<form action="/member/loginProcAction.do" method="post" onsubmit="return validateCheck()">
+			<form action="/member/loginProcAction" method="post" onsubmit="return validateCheck()">
 				<input type="text" id="id" name="id" placeholder="아이디" value="<%=shId %>" /><br>
 				<input type="password" id="pwd" name="pwd" placeholder="비밀번호" /><br>
 				<button class="login_button" type="submit">로그인</button>

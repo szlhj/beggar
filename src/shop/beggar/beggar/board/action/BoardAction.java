@@ -24,7 +24,7 @@ public class BoardAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/board/main.jsp");
+		forward.setPath("/views/board/board.jsp");
 		return forward;
 	}
 }

@@ -1,27 +1,24 @@
 package shop.beggar.admin.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import shop.beggar.admin.service.AdminService;
-import shop.beggar.beggar.member.service.MemberService;
+import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.beggar.vo.ItemVo;
-import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
-import shop.beggar.common.BCrypt;
-import shop.beggar.common.RegExp;
-
-import static shop.beggar.common.RegExp.*;
-
-import java.io.PrintWriter;
+import shop.beggar.common.Parser;
 
 /**
  * @PackageName		: shop.beggar.beggar.member.action
  * @FileName		: RegisterProcAction.java
  * @Since			: 2020. 12. 9.
  * @Author			: HJLee
- * @Description		: 회원가입 로직
+ * @Description		: 상품등록 로직
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
@@ -38,7 +35,7 @@ public class ItemAddProcAction implements Action{
 		
 		
 		String item_name = request.getParameter("item_name");
-		String categore = request.getParameter("categore");
+		String category = request.getParameter("category");
 		String code = request.getParameter("code");
 		String price = request.getParameter("price");
 		String discount = request.getParameter("discount");
@@ -47,65 +44,36 @@ public class ItemAddProcAction implements Action{
 		String item_number = request.getParameter("item_number");
 		String item_rating = request.getParameter("item_rating");
 		String size = request.getParameter("size");
-		String explanation = request.getParameter("explanation");
+		String explanation = request.getParameter("content");
 		
-//		if (!RegExp.isValidExp(item_name, REGEXP_ID)
-//				|| !RegExp.isValidExp(pwd, REGEXP_PWD)
-//				|| !RegExp.isValidExp(name, REGEXP_NAME)
-//				|| !RegExp.isValidExp(phone, REGEXP_NUMBER)
-//				|| !RegExp.isValidExp(email, REGEXP_EMAIL)
-//				|| !pwd.equals(pwdc)) {
-//			response.setContentType("text/html;charset=UTF-8");
-//			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('잘못된 접근입니다.');location.href='/';</script>");
-//			out.close();
-//			return null;
-//		}
-//		
-//		boolean email_fl = false;
-//		boolean sms_fl = false;
-//		
-//		if (email_fl_string != null && email_fl_string.equals("Y")) {
-//			email_fl = true;
-//		}
-//		if (sms_fl_string != null && sms_fl_string.equals("Y")) {
-//			sms_fl = true;
-//		}
-//		
+		
 		ItemVo vo = new ItemVo();
 		vo.setItem_name(item_name);
-		vo.setCategore(categore);
+		vo.setCategory(category);
 		vo.setCode(code);
-		vo.setPrice(price);
-		vo.setDiscount(discount);
-		vo.setStok(stok);
+		vo.setPrice(Integer.parseInt(price));
+		vo.setDiscount(Integer.parseInt(discount));
+		vo.setStok(Integer.parseInt(stok));
 		vo.setColor(color);
 		vo.setItem_number(item_number);
 		vo.setItem_rating(item_rating);
 		vo.setSize(size);
-		vo.setExplanation(explanation);
+		vo.setExplanation(Parser.chgToStr(explanation));
+		
+		HttpSession session = request.getSession();
+		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
 		
 		AdminService svc = new AdminService();
-		if (!svc.itemAdd(vo)) {
+		if (!svc.itemAdd(vo, adminVo.getAdmin_sq())) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('상품등록에 실패하였습니다.');location.href='/';</script>");
 			out.close();
 			return null;
 		}
-//		
-//		MemberService svc = new MemberService();
-//		if (!svc.registerMember(vo)) {
-//			response.setContentType("text/html;charset=UTF-8");
-//			PrintWriter out = response.getWriter();
-//			out.println("<script>alert('회원가입에 실패하였습니다.');location.href='/';</script>");
-//			out.close();
-//			return null;
-//		}
-//		
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/main.jsp");
+		forward.setPath("/admin/");
 		forward.setRedirect(true);
 		return forward;
 	}

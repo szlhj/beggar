@@ -5,24 +5,36 @@
 	pageEncoding="UTF-8"%>
 <%
 	ArrayList<MemberVo> list = (ArrayList<MemberVo>) request.getAttribute("list");
-Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
-String pn = request.getParameter("pn");
+	Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
+	String pn = request.getParameter("pn");
+	
+	String filter = request.getParameter("filter");
+	String keyword = request.getParameter("keyword");
+	
+	if (keyword == null) {
+		keyword = "";
+	}
+	if (filter == null) {
+		filter = "code";
+	}
+	if (pn == null) {
+		pn = "1";
+	}
 %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>회원관리</title>
-<script src="https://code.jquery.com/jquery-3.5.1.js"
-	integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
-	crossorigin="anonymous"></script>
+
+<script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
 
 <script type="text/javascript">
 	function searchArticle() {
-		var filter = $('#filter option:selected').val();
-		var keyword = $('#keyword').val();
-		location.href = "/admin/memberManagement.do?pn=1&filter=" + filter
-				+ "&keyword=" + encodeURI(keyword);
+		var filter = $('#filter option:selected');
+		var keyword = $('#keyword');
+		location.href = "/admin/memberManagement?pn=1&filter=" + filter.val()
+				+ "&keyword=" + encodeURI(keyword.val());
 	}
 </script>
 </head>
@@ -34,8 +46,10 @@ String pn = request.getParameter("pn");
 	</select>
 	<input name="keyword" id="keyword">
 	<button onclick="searchArticle()">검색</button>
+	
+	<button onclick="location.href='/admin/'">관리자 홈으로</button>
 
-	<table>
+	<table border=1>
 		<tr>
 			<td>번호</td>
 			<td>아이디</td>
@@ -45,7 +59,7 @@ String pn = request.getParameter("pn");
 		<%
 			for (int i = 0; i < list.size(); i++) {
 		%>
-		<tr sq=<%=list.get(i).getMber_sq()%>'">
+		<tr sq=<%=list.get(i).getMber_sq()%>>
 			<td><%=list.get(i).getMber_sq()%></td>
 			<td><%=list.get(i).getId()%></td>
 			<td><%=list.get(i).getName()%></td>
@@ -59,7 +73,7 @@ String pn = request.getParameter("pn");
 		if (pagenation.getStartPageNumber() != 1) {
 	%>
 	<a
-		href="/admin/memberManagement.do?pn=<%=pagenation.getStartPageNumber() - 1%>"><</a>
+		href="/admin/memberManagement?pn=<%=pagenation.getStartPageNumber() - 1%>"><</a>
 	<%
 		}
 	%>
@@ -67,7 +81,7 @@ String pn = request.getParameter("pn");
 		for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) {
 		if (i != Integer.parseInt(pn)) {
 	%>
-	<a href="/admin/memberManagement.do?pn=<%=i%> "><%=i%></a>
+	<a href="/admin/memberManagement?pn=<%=i%> "><%=i%></a>
 	<%
 		} else {
 	%>
@@ -80,7 +94,7 @@ String pn = request.getParameter("pn");
 		if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {
 	%>
 	<a
-		href="/admin/memberManagement.do?pn=<%=pagenation.getEndPageNumber() + 10%>">></a>
+		href="/admin/memberManagement?pn=<%=pagenation.getEndPageNumber() + 10%>">></a>
 	<%
 		}
 	%>

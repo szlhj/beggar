@@ -1,10 +1,16 @@
 package shop.beggar.beggar.item.action;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import shop.beggar.beggar.item.service.ItemService;
+import shop.beggar.beggar.vo.ItemVo;
+import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
+import shop.beggar.common.Pagenation;
 
 /**
  * @PackageName		: shop.beggar.beggar.item.action
@@ -23,8 +29,35 @@ import shop.beggar.common.ActionForward;
 public class MainItemAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		String category = request.getParameter("category");
+		String pn = request.getParameter("pn");
+		
+		if (category == null || category.equals("")) {
+			category = "0";
+		}
+		
+		if (pn == null || pn.equals("")) {
+			pn = "1";
+		}
+		
+		int page = Integer.parseInt(pn);
+		
+		ItemVo vo = new ItemVo();
+		vo.setCategory(category);
+		
+		ItemService svc = new ItemService();
+		Pagenation pagenation = new Pagenation(page,svc.getArticleCount(category));
+					
+				
+		ArrayList<ItemVo> list = svc.getItemPageInfo(pagenation, category);
+		request.setAttribute("category", category);
+		request.setAttribute("pagenation", pagenation);
+		request.setAttribute("list", list);
+		request.setAttribute("pn", pn);
+		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/item/itemPage.jsp");
+//		forward.setPath("/views/item/itemPage.jsp");
+		forward.setPath("/views/item/itemPage.jsp?category="+category);
 		return forward;
 	}
 }

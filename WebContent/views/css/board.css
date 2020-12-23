@@ -1,0 +1,19 @@
+@charset "UTF-8";
+.board {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+/* 	background-color: rgb(0, 255, 64)w; */
+}
+
+.board_sideMenu {
+	font-size: 1.5rem;
+	list-style: none;
+	display: flex;
+	color: white;
+	padding-right: .8em;
+}
+
+.board_sideMenu li {
+	padding: 1em .4em;
+}

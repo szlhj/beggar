@@ -114,7 +114,7 @@
 	</div>
 	<div>
 		<section>
-			<form action="/member/RegisterProcAction.do" method="post" id="reform">
+			<form action="/member/RegisterProcAction" method="post" id="reform">
 				<input type="text" id="id" name="id" placeholder="아이디"/><span id="idMessage"></span><br>
 				<input type="password" id="pwd" name="pwd" placeholder="비밀번호"/><span id="pwdMessage"></span><br>
 				<input type="password" id="pwdc" name="pwdc" placeholder="비밀번호 확인"/><span id="pwdcMessage"></span><br>
