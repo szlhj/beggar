@@ -25,6 +25,9 @@ import shop.beggar.admin.action.LogoutAdminAction;
 import shop.beggar.admin.action.AdminRegisterAction;
 import shop.beggar.admin.action.MemberManagementAction;
 import shop.beggar.admin.action.AdminRegisterProcAction;
+import shop.beggar.admin.action.BoardAddAction;
+import shop.beggar.admin.action.BoardAddProcAction;
+import shop.beggar.admin.action.BoardListAction;
 import shop.beggar.admin.action.EditCheckAction;
 import shop.beggar.admin.action.FileExAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
@@ -196,6 +199,14 @@ private static final long serialVersionUID = 1L;
 			}
 		} else if (command.equals("/boardAddProc")) { 
 			Action action = new BoardAddProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardList")) { 
+			Action action = new BoardListAction();
 			
 			try {
 				forward = action.execute(request, response);
