@@ -12,28 +12,31 @@
 <title>아이템 디테일 화면</title>
 </head>
 <body>
+	<jsp:include page="/views/navbar.jsp" />
+	<jsp:include page="/views/item/navigation.jsp"></jsp:include>
+
 <table>
 	<tr>
-		<td><%=ivo.getFilepath() %></td>
-		<td><%=ivo.getPreview() %></td>
-		<td><%=ivo.getItem_name() %></td>
+		<td>상품파일경로<%=ivo.getFilepath() %></td>
+		<td>상품프리뷰<%=ivo.getPreview() %></td>
+		<td>상품명<%=ivo.getItem_name() %></td>
 	</tr>
 	<tr>
-		<td><%=ivo.getCode() %></td>
-		<td><%=ivo.getColor() %></td>
+		<td>상품코드<%=ivo.getCode() %></td>
+		<td>상품색깔<%=ivo.getColor() %></td>
 	</tr>
 	<tr>
-		<td><%=ivo.getItem_number() %></td>
-		<td><%=ivo.getItem_rating() %></td>
+		<td>상품번호<%=ivo.getItem_number() %></td>
+		<td>상품<%=ivo.getItem_rating() %></td>
 	</tr>
 	<tr>
-		<td><%=ivo.getSize() %></td>
+		<td>상품사이즈<%=ivo.getSize() %></td>
 	</tr>
 	<tr>
-		<td><%=ivo.getPrice() %></td>
+		<td>상품가격<%=ivo.getPrice() %></td>
 	</tr>
 	<tr>
-		<td><%=ivo.getPrice() - (ivo.getPrice() * ivo.getDiscount() /100)%></td>
+		<td>상품할인된 가격<%=ivo.getPrice() - (ivo.getPrice() * ivo.getDiscount() /100)%></td>
 	</tr>
 	<%if(ivo.getStok() == 0 ) {%>
 	<tr>
