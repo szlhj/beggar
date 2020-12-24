@@ -30,13 +30,13 @@
     <button onclick="dummy()">dummy넣기</button>
 <body>
 	<ul>
-		<li><a class="ct_one" href="/item/mainItem?category=1">NEW IN</a></li>
-		<li><a class="ct_two" href="/item/mainItem?category=2">EARRINGS</a></li>
-		<li><a class="ct_three" href="/item/mainItem?category=3">NECKLACES</a></li>
-		<li><a class="ct_four" href="/item/mainItem?category=4">BRACELETS</a></li>
-		<li><a class="ct_five" href="/item/mainItem?category=5">RINGS</a></li>
-		<li><a class="ct_six" href="/item/mainItem?category=6">ANKLETS</a></li>
-		<li><a class="ct_seven" href="/item/mainItem?category=7">BEST</a></li>
+		<li><a class="ct ct_one" href="/item/mainItem?category=1">NEW IN</a></li>
+		<li><a class="ct ct_two" href="/item/mainItem?category=2">EARRINGS</a></li>
+		<li><a class="ct ct_three" href="/item/mainItem?category=3">NECKLACES</a></li>
+		<li><a class="ct ct_four" href="/item/mainItem?category=4">BRACELETS</a></li>
+		<li><a class="ct ct_five" href="/item/mainItem?category=5">RINGS</a></li>
+		<li><a class="ct ct_six" href="/item/mainItem?category=6">ANKLETS</a></li>
+		<li><a class="ct ct_seven" href="/item/mainItem?category=7">BEST</a></li>
 	</ul>
 <!-- 홈화면 기준은 날짜 별로 기준인것 같음 모든항목 출력인듯하고 -->
 <!-- <table>

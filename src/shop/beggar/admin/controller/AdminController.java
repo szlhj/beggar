@@ -186,6 +186,22 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/boardAdd")) { 
+			Action action = new BoardAddAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardAddProc")) { 
+			Action action = new BoardAddProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		
 		if (forward != null) {

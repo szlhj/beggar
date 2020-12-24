@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import shop.beggar.admin.dao.AdminDao;
 import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.beggar.member.dao.MemberDao;
+import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Pagenation;
@@ -43,6 +44,15 @@ public class AdminService {
 		close(con);
 		return list;
 	}
+	public ArrayList<BoardVo> getBoardArticleList(Pagenation pagenation,String query) {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		ArrayList<BoardVo> list = dao.getBoardArticleList(pagenation, query);
+		close(con);
+		return list;
+	}
+	
 	
 	public int getArticleCount() {
 		AdminDao dao= AdminDao.getInstance();
@@ -61,6 +71,14 @@ public class AdminService {
 		close(con);
 		return count;
 	}
+	public int getBoardArticleCount() {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.getBoardArticleCount();
+		close(con);
+		return count;
+	}
 
 	public boolean itemAdd(ItemVo vo, int admin_sq) {
 		boolean isSuccess = true;
@@ -70,6 +88,26 @@ public class AdminService {
 		dao.setConnection(con);
 		
 		int count = dao.itemAdd(vo, admin_sq);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	public boolean boardAdd(BoardVo vo, int admin_sq) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.boardAdd(vo, admin_sq);
 		
 		if (count > 0) {
 			commit(con);

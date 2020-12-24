@@ -117,7 +117,9 @@
 		<a href="/admin/itemList">상품목록</a>
 		<a href="/admin/itemAdd">상품등록</a>
 		<a href="/admin/logoutAdmin">관리자 로그아웃</a>
-		<a href="/admin/editCheck">에디터 확인</a>
+		<a href="/admin/fileUpAndDown">파일 up/down</a>
+		<a href="/admin/boardList">게시판리스트</a>
+		<a href="/admin/boardAdd">게시판작성</a>
 		<button onclick="/admin/">취소</button>
 	<%} %>
 </body>

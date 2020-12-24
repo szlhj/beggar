@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import shop.beggar.admin.vo.AdminVo;
+import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Pagenation;
@@ -117,6 +118,40 @@ public class AdminDao {
 		
 		return list;
 	}
+	public ArrayList<BoardVo> getBoardArticleList(Pagenation pagenation, String query) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<BoardVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement("select * from inf_board_tb where 1=1"+query+" LIMIT ?,?");
+			pstmt.setInt(1, pagenation.getStartArticleNumber());
+			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				BoardVo vo = new BoardVo();
+				vo.setBoard_sq(rs.getInt("board_sq"));
+				vo.setPerson_sq(rs.getInt("admin_sq"));
+				vo.setBoard_number(rs.getString("board_number"));
+				vo.setCount(rs.getInt("count"));
+				vo.setDel_fl(rs.getInt("del_fl"));
+				vo.setDttm(rs.getString("dttm"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString("content"));
+				
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	
 
 	public int getArticleCount() {
 		PreparedStatement pstmt = null;
@@ -157,6 +192,27 @@ public class AdminDao {
 		return count;
 	}
 	
+	public int getBoardArticleCount() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("select count(*) from inf_board_tb");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	
 	public int itemAdd(ItemVo vo, int admin_sq) {
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -174,6 +230,27 @@ public class AdminDao {
 			pstmt.setString(10, vo.getSize());
 			pstmt.setString(11, vo.getExplanation());
 			pstmt.setInt(12, admin_sq);
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	public int boardAdd(BoardVo vo, int admin_sq) {	
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, admin_sq, count) values (?,?,?,?,?,0)");
+			pstmt.setString(1, vo.getBoard_number());
+			pstmt.setString(2, vo.getGoods_info());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setInt(5, vo.getAdmin_sq());
 			
 			count = pstmt.executeUpdate();
 			
