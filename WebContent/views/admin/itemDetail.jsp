@@ -23,75 +23,8 @@
 </script>
 
 <script type="text/javascript">
-	function modify() {
-
-		var $item_name = $('#item_name');
-		var $categore = $('#categore');
-		var $code = $('#code');
-		var $price = $('#price');
-		var $discount = $('#discount');
-		var $stok = $('#stok');
-		var $color = $('#color');
-		var $item_number = $('#item_number');
-		var $item_rating = $('#item_rating');
-		var $size = $('#size');
-		var $explanation = $('#explanation');
-
- 		if (!$item_name.val()) {
- 			alert('상품이름을 입력 하세요.');
- 			$item_name.focus;
- 			return;
- 		}
-//  		if (!$categore.val()) {
-//  			alert('카테고리를 입력 하세요.');
-//  			$categore.focus;
-//  			return;
-//  		}
- 		if (!$code.val()) {
- 			alert('상품코드를 입력 하세요.');
- 			$code.focus;
- 			return;
- 		}
- 		if (!$price.val()) {
- 			alert('상품가격을 입력 하세요.');
- 			$price.focus;
- 			return;
- 		}
- 		if (!$discount.val()) {
- 			alert('상품할인율을 입력 하세요.(0~100)');
- 			$discount.discount;
- 			return;
- 		}
-
- 		if (!$stok.val()) {
- 			alert('상품의 재고를 입력 하세요.');
- 			$stok.discount;
- 			return;
- 		}
-
- 		if (!$color.val()) {
- 			alert('상품의 컬러를 입력 하세요.');
-			$color.discount;
- 			return;
- 		}
- 		if (!$item_number.val()) {
- 			alert('상품의 넘버를 입력하세요.');
- 			$item_number.discount;
- 			return;
- 		}
- 		if (!$item_rating.val()) {
- 			alert('상품의 등급을 입력하세요.');
- 			$item_rating.discount;
- 			return;
- 		}
- 		if (!$size.val()) {
- 			alert('상품의 사이즈를 입력하세요.');
- 			$size.discount;
- 			return;
- 		}
-		
-		saveContent();
-// 		$('#editorForm').submit();
+	function modifyView() {
+		$('#viewForm').submit();
 	}
 	function cancle() {
 		location.href = "/admin/itemList?pn=" + <%=pn%>;
@@ -107,7 +40,7 @@
 <body>
 	<div>
 		<section>
-			<form action="/admin/itemModifyView?pn=<%=pn %>" method="post" id="editorForm">
+			<form action="/admin/itemModifyView?pn=<%=pn %>" method="post" id="viewForm">
 				상품일련번호<input type="text" id="item_sq" name="item_sq" value="<%=itemVo.getItem_sq() %>" readonly="readonly" /><br>
 				상품이름<input type="text" id="item_name" name="item_name" value="<%=itemVo.getItem_name() %>" /><br>
 				카테고리
@@ -133,7 +66,7 @@
 					<%=content %>
 				</div>
 			</form>
-			<button onclick="modify()">수정</button>
+			<button onclick="modifyView()">수정</button>
 			<%if (itemVo.isShow_fl() == true) { %>
 				<button onclick="show(false)">등록중지</button>
 			<%} else { %>
