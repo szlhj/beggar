@@ -13,7 +13,15 @@ a {
 	text-decoration: none;
 	color: white;
 }
+.sideMenu {
+	text-decoration: none;
+	color: white;
+}
 
+.sideMenu:hover {
+	text-decoration: none;
+	color: white;
+}
 /* @media screen and (max-width: 768px) {
 	
 } */
