@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import shop.beggar.admin.vo.AdminVo;
+import shop.beggar.admin.vo.FileVo;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
@@ -217,7 +218,7 @@ public class AdminDao {
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("insert into inf_goods_tb (item_name, category, code, price, discount, stok, color, item_number, item_rating, size, explanation, admin_sq) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt = con.prepareStatement("insert into inf_goods_tb (item_name, category, code, price, discount, stok, color, item_number, item_rating, size, explanation, admin_sq, filepath) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, vo.getItem_name());
 			pstmt.setString(2, vo.getCategory());
 			pstmt.setString(3, vo.getCode());
@@ -230,6 +231,7 @@ public class AdminDao {
 			pstmt.setString(10, vo.getSize());
 			pstmt.setString(11, vo.getExplanation());
 			pstmt.setInt(12, admin_sq);
+			pstmt.setString(13, vo.getFilepath());
 			
 			count = pstmt.executeUpdate();
 			
@@ -241,6 +243,32 @@ public class AdminDao {
 		}
 		return count;
 	}
+	
+	public int searchItemSq(ItemVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("select item_sq from inf_goods_tb where code=? and item_name=? and item_number=? and item_rating=?");
+			pstmt.setString(1, vo.getCode());
+			pstmt.setString(2, vo.getItem_name());
+			pstmt.setString(3, vo.getItem_number());
+			pstmt.setString(4, vo.getItem_rating());
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+	
 	public int boardAdd(BoardVo vo, int admin_sq) {	
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -532,6 +560,85 @@ public class AdminDao {
 			pstmt.setBoolean(1, vo.isDel_fl());
 			pstmt.setInt(2, admin_sq);
 			pstmt.setInt(3, vo.getItem_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+//------------------------------------------------------------------------------
+//	 file upload관련 Dao 시작
+	public int fileUpload(FileVo vo, String path) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("insert into inf_file_tb (fileName, fileRealName, item_sq) values (?, ?, ?)");
+			pstmt.setString(1, vo.getFileName());
+			pstmt.setString(2, vo.getFileRealName());
+			pstmt.setInt(3, vo.getItem_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	
+	//다운로드 수 증가
+	public int fileHit(String fileRealName) {
+		try {
+			PreparedStatement pstmt = con.prepareStatement("update inf_file_tb set downloadCount = (select max(downloadCount) + 1 from file where fileRealName=?) where fileRealName=?");
+			pstmt.setString(1, fileRealName);
+			pstmt.setString(2, fileRealName);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	//file table의 내용 가져오기
+	public ArrayList<FileVo> getList() {
+		ArrayList<FileVo> list = new ArrayList<FileVo>();
+		
+		try {
+			PreparedStatement pstmt = con.prepareStatement("select * from inf_file_tb");
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				FileVo file = new FileVo();
+				file.setFileName(rs.getString("fileName"));
+				file.setFileRealName(rs.getString("FileRealName"));
+				list.add(file);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+//	 file upload관련 Dao 종료
+//------------------------------------------------------------------------------
+	
+	public int fileItemSq(int item_sq, String newFileRealName) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_file_tb set item_sq=? where fileRealName=?");
+			pstmt.setInt(1, item_sq);
+			pstmt.setString(2, newFileRealName);
 			
 			count = pstmt.executeUpdate();
 			

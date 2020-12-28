@@ -63,6 +63,12 @@
 				상품 등급<input type="text" id="item_rating" name="item_rating" value="<%=itemVo.getItem_rating() %>" /><br>
 				사이즈<input type="text" id="size" name="size" value="<%=itemVo.getSize() %>" /><br>
 				<div>
+<!-- 					<input type="file" id="input_img" /> -->
+					<div class="img_wrap">
+						<img id="img" style="width: 200px; height: 200px;" src="<%=itemVo.getFilepath() %>" />
+					</div>
+				</div>
+				<div>
 					<%=content %>
 				</div>
 			</form>

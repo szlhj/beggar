@@ -30,6 +30,7 @@ import shop.beggar.admin.action.BoardAddProcAction;
 import shop.beggar.admin.action.BoardListAction;
 import shop.beggar.admin.action.EditCheckAction;
 import shop.beggar.admin.action.FileExAction;
+import shop.beggar.admin.action.FileUploadAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
@@ -183,6 +184,14 @@ private static final long serialVersionUID = 1L;
 			}
 		} else if (command.equals("/fileUpAndDown")) {  //파일 업로드 및 다운로드 예제
 			Action action = new FileExAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/fileUpload")) {  //파일 업로드 및 다운로드 예제
+			Action action = new FileUploadAction();
 			
 			try {
 				forward = action.execute(request, response);
