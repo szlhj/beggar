@@ -22,6 +22,15 @@ public class ItemVo {
 	private String filepath;
 	private int admin_sq;
 	private String admin_name;
+	private int mber_sq;
+	
+	
+	public int getMber_sq() {
+		return mber_sq;
+	}
+	public void setMber_sq(int mber_sq) {
+		this.mber_sq = mber_sq;
+	}
 	/**
 	 * @return the admin_sq
 	 */

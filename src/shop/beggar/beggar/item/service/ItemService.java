@@ -76,5 +76,20 @@ public class ItemService {
 		return voInfo;
 	}
 	
+	public boolean registerCart(ItemVo vo) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.registerCart(vo);
+		boolean isSuccess = true;
+		if(count > 0) {
+			commit(con);//0보다 크면 커밋
+		} else {
+			rollback(con);  //작으면 롤백함
+			isSuccess = false;
+		}
+		close(con);
+		return isSuccess;
+	}
 	
 }
