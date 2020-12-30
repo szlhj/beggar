@@ -32,8 +32,12 @@
 	}
 	function searchArticle(){
 		var filter = $('#filter option:selected');
-		location.href = "/admin/boardList?pn=1&filter=" + filter.val();
-		}
+		var firstTime = $('#firstTime');
+		var lastTime = $('#lastTime');
+		location.href = "/admin/boardList?pn=1&filter=" + filter.val()
+		+ "&firstTime=" + firstTime.val()
+		+ "&lastTime=" + lastTime.val();
+	}
 </script>
 
 </head>
@@ -43,8 +47,14 @@
 		<option value="" <%="".equals(filter)?"selected":"" %>></option> 
 		<option value="1"  <%="1".equals(filter)?"selected":"" %>>공지사항</option>
 		<option value="2" <%="2".equals(filter)?"selected":"" %>>1:1문의</option>
+		<option value="3" <%="3".equals(filter)?"selected":"" %>>제품관련문의</option>
+		<option value="4" <%="4".equals(filter)?"selected":"" %>>내가쓴글보기</option>
 	</select>
+	날짜
+	<input type="date" name="firstTime" id="firstTime"> ~
+	<input type="date" name="lastTime" id="lastTime">
 	<button onclick="searchArticle()">검색</button>
+	<br>
 
 	<button onclick="location.href='/admin/'">관리자 홈으로</button>
 	<button onclick="location.href='/'">홈으로</button>
@@ -52,7 +62,7 @@
 	<table border="1">
 		<tr>
 			<th>구분</th>
-			<th>번호</th>
+			<th>글번호</th>
 			<th>제목</th>
 			<th>작성자</th>
 			<th>생성일자</th>
@@ -60,12 +70,24 @@
 		</tr>
 		<%for (int i = 0; i < list.size(); i++) { %>
 			<tr onclick="location.href='/admin/boardDetail?board_sq=<%=list.get(i).getBoard_sq() %>&pn=<%=pn %>'">
+				<%if(list.get(i).getMber_id()==null||list.get(i).getMber_id().equals("")){%>
+				<%list.get(i).setMber_id("관리자"); %>
+				<%} %>
 				
-				<td><%=list.get(i).getBoard_number() %></td>
+				<%String Board_numberName =""; %>
+				<%if(list.get(i).getBoard_number().equals("1")){ %>
+				<%Board_numberName = "공지사항";%>
+				<%}else if(list.get(i).getBoard_number().equals("2")){ %>
+				<%Board_numberName = "1:1문의";%>
+				<%}else if(list.get(i).getBoard_number().equals("3")){ %>
+				<%Board_numberName = "제품관련문의";%>
+				<%} %>
+				
+				<td><%=Board_numberName %></td>
 				<td><%=list.get(i).getBoard_sq() %></td>
 				<td><%=list.get(i).getTitle() %></td>
-				<td><%=list.get(i).getAdmin_sq() %></td>
-				<td><%=list.get(i).getDttm()%></td>
+				<td><%=list.get(i).getMber_id() %></td>
+				<td><%=list.get(i).getDttm() %></td>
 				<td><%=list.get(i).getCount() %></td>
 				
 			</tr>

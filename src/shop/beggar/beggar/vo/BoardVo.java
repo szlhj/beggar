@@ -13,7 +13,36 @@ public class BoardVo {
 	private String title; //제목
 	private String content; // 내용
 	private int admin_sq;// 관리자 번호
+	private int mber_sq;// 맴버 번호
+	private String admin_id;//관리자 아이디
+	private String mber_id;//맴버 아이디
+	private boolean isDel_fl;
 	
+	
+	public int getMber_sq() {
+		return mber_sq;
+	}
+	public void setMber_sq(int mber_sq) {
+		this.mber_sq = mber_sq;
+	}
+	public String getAdmin_id() {
+		return admin_id;
+	}
+	public void setAdmin_id(String admin_id) {
+		this.admin_id = admin_id;
+	}
+	public String getMber_id() {
+		return mber_id;
+	}
+	public void setMber_id(String mber_id) {
+		this.mber_id = mber_id;
+	}
+	public boolean isDel_fl() {
+		return isDel_fl;
+	}
+	public void setDel_fl(boolean isDel_fl) {
+		this.isDel_fl = isDel_fl;
+	}
 	public int getAdmin_sq() {
 		return admin_sq;
 	}

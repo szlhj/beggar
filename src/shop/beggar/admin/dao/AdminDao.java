@@ -52,7 +52,7 @@ public class AdminDao {
 		ResultSet rs = null;
 		ArrayList<MemberVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from inf_mber_tb a inner JOIN inf_mber_privcy_tb b where a.mber_sq=b.mber_sq and 1=1"+query+" LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from (inf_mber_tb a inner JOIN inf_mber_privcy_tb b on a.mber_sq=b.mber_sq) where 1=1"+query+" LIMIT ?,?");
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
 			rs = pstmt.executeQuery();
@@ -124,14 +124,15 @@ public class AdminDao {
 		ResultSet rs = null;
 		ArrayList<BoardVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from inf_board_tb where 1=1"+query+" LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" order by mber_sq LIMIT ?,?");
+			//select * from (inf_board_tb a, inf_mber_tb b a.mber_sq=b.mber_sq) 
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
 				vo.setBoard_sq(rs.getInt("board_sq"));
-				vo.setPerson_sq(rs.getInt("admin_sq"));
+				vo.setMber_id(rs.getString("id"));
 				vo.setBoard_number(rs.getString("board_number"));
 				vo.setCount(rs.getInt("count"));
 				vo.setDel_fl(rs.getInt("del_fl"));
@@ -273,12 +274,12 @@ public class AdminDao {
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, admin_sq, count) values (?,?,?,?,?,0)");
+			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, mber_sq, count) values (?,?,?,?,?,0)");
 			pstmt.setString(1, vo.getBoard_number());
 			pstmt.setString(2, vo.getGoods_info());
 			pstmt.setString(3, vo.getTitle());
 			pstmt.setString(4, vo.getContent());
-			pstmt.setInt(5, vo.getAdmin_sq());
+			pstmt.setInt(5, vo.getMber_sq());
 			
 			count = pstmt.executeUpdate();
 			
@@ -481,6 +482,37 @@ public class AdminDao {
 		}
 		return vo;
 	}
+	
+	public BoardVo getBoardDetail(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where board_sq=?");
+			pstmt.setInt(1, vo.getBoard_sq());
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+			//	vo.setItem_sq(rs.getInt("item_sq"));
+				vo.setBoard_sq(rs.getInt("board_sq"));
+				vo.setMber_id(rs.getString("id"));
+				vo.setDel_fl(rs.getBoolean("del_fl"));
+				vo.setBoard_number(rs.getString("board_number"));
+				vo.setGoods_info(rs.getString("goods_info"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString(Parser.chgToHtml("content")));
+				vo.setDttm(rs.getString("dttm"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vo;
+	}
+	
 	
 	public int itemModify(ItemVo vo, int admin_sq) {
 		PreparedStatement pstmt = null;
