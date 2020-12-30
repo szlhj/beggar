@@ -51,6 +51,7 @@ public class LoginAdminProcAction implements Action {
 		AdminVo adminVo = svc.adminLoginInfo(vo);
 		
 		if(adminVo == null 
+				|| adminVo.getAdmin_sq() == 0
 				|| !BCrypt.checkpw(adminPwd, adminVo.getAdminPwd())) {
 			response.setContentType("text/html;charset=UTF-8;");
 			PrintWriter out = response.getWriter();

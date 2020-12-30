@@ -1,3 +1,4 @@
+<%@page import="shop.beggar.common.Parser"%>
 <%@page import="shop.beggar.common.Pagenation"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="shop.beggar.beggar.vo.ItemVo"%>
@@ -25,9 +26,8 @@
 	}
 </script>
     <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-    <button onclick="location.href='/item/mainItem?category=0'">홈배너</button>
-    <button onclick="location.href='/'">홈</button>
-    <button onclick="dummy()">dummy넣기</button>
+<!--     <button onclick="location.href='/item/mainItem?category=0'">홈배너</button> -->
+<!--     <button onclick="dummy()">dummy넣기</button> -->
 <body>
 <!-- 홈화면 기준은 날짜 별로 기준인것 같음 모든항목 출력인듯하고 -->
 
@@ -35,11 +35,11 @@
 <% for (int i = 0; i <list.size(); i++) {%>
 	<div class="col mb-3 item">
 		<div class="card" onclick="location.href='/item/detail?item_sq=<%=list.get(i).getItem_sq()%>'">
-  			<img src="..." class="card-img-top" alt="...">
+  			<img src="<%=list.get(i).getFilepath() %>" class="card-img-top" alt="...">
   			<div class="card-body">
     			<h5 class="card-title">이름<%=list.get(i).getItem_name() %></h5>
     			<p class="card-text">가격<%=list.get(i).getPrice() %></p>
-    			<p class="card-text">할인가격<%=list.get(i).getPrice() - (list.get(i).getPrice() * list.get(i).getDiscount() /100)%></p>
+    			<p class="card-text">할인가격<%=Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount())%></p>
 				<p class="card-text">할인율<%=list.get(i).getDiscount() %></p>
   			</div>
 		</div>

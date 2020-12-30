@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import shop.beggar.admin.dao.AdminDao;
 import shop.beggar.admin.vo.AdminVo;
+import shop.beggar.admin.vo.FileVo;
 import shop.beggar.beggar.member.dao.MemberDao;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
@@ -53,7 +54,6 @@ public class AdminService {
 		return list;
 	}
 	
-	
 	public int getArticleCount() {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
@@ -100,6 +100,16 @@ public class AdminService {
 		
 		return isSuccess;
 	}
+	
+	public int searchItemSq(ItemVo vo) {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.searchItemSq(vo);
+		close(con);
+		return count;
+	}
+	
 	public boolean boardAdd(BoardVo vo, int admin_sq) {
 		boolean isSuccess = true;
 		
@@ -107,7 +117,7 @@ public class AdminService {
 		Connection con = getConnection();
 		dao.setConnection(con);
 		
-		int count = dao.boardAdd(vo, admin_sq);
+		int count = dao.boardAdd(vo);
 		
 		if (count > 0) {
 			commit(con);
@@ -219,6 +229,15 @@ public class AdminService {
 		close(con);
 		return infoVo;
 	}
+	public BoardVo getBoardDetail(BoardVo vo) {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		BoardVo infoVo = dao.getBoardDetail(vo);
+		close(con);
+		return infoVo;
+	}
+	
 
 	public boolean itemModify(ItemVo vo, int admin_sq) {
 		boolean isSuccess = true;
@@ -261,6 +280,26 @@ public class AdminService {
 		
 		return isSuccess;
 	}
+	public boolean boardModify(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.boardModify(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
 
 	public boolean itemDel(ItemVo vo, int admin_sq) {
 		boolean isSuccess = true;
@@ -270,6 +309,55 @@ public class AdminService {
 		dao.setConnection(con);
 		
 		int count = dao.itemDel(vo, admin_sq);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+//------------------------------------------------------------------------------
+//	 file upload관련 service 시작
+	public boolean fileUpload(FileVo vo, String path) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.fileUpload(vo, path);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
+	
+
+//	 file upload관련 service 종료
+//------------------------------------------------------------------------------
+
+
+	public boolean fileItemSq(int item_sq, String newFileRealName) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.fileItemSq(item_sq, newFileRealName);
 		
 		if (count > 0) {
 			commit(con);

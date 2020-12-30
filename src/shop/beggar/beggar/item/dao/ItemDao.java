@@ -47,7 +47,7 @@ public class ItemDao {
 		ArrayList<ItemVo> list = new ArrayList<>();
 		try {
 			if(category.equals("0")) {
-				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,item_sq,category from inf_item_tb where del_fl=0 and show_fl=1 LIMIT ?,?");
+				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,item_sq,category from inf_goods_tb where del_fl=0 and show_fl=1 LIMIT ?,?");
 		//			pstmt.setInt(1, pagenation.getStartArticleNumber());
 				pstmt.setInt(1, pagenation.getStartArticleNumber());
 				pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
@@ -65,7 +65,7 @@ public class ItemDao {
 					list.add(vo);
 					}
 			} else {
-				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,category,item_sq from inf_item_tb a where del_fl=0 and show_fl=1 and category='" + category + "' LIMIT ?,?");
+				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,category,item_sq from inf_goods_tb a where del_fl=0 and show_fl=1 and category='" + category + "' LIMIT ?,?");
 				pstmt.setInt(1, pagenation.getStartArticleNumber());
 				pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
 				rs = pstmt.executeQuery();
@@ -98,13 +98,13 @@ public class ItemDao {
 		int count = 0;
 		try {
 			if(category.equals("0")) {
-			pstmt = con.prepareStatement("select count(*) from inf_item_tb where del_fl=0 and show_fl=1");
+			pstmt = con.prepareStatement("select count(*) from inf_goods_tb where del_fl=0 and show_fl=1");
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
 			}
 			} else {
-				pstmt = con.prepareStatement("select count(*) from inf_item_tb where del_fl=0 and show_fl=1 and category="+ category);
+				pstmt = con.prepareStatement("select count(*) from inf_goods_tb where del_fl=0 and show_fl=1 and category="+ category);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					count = rs.getInt(1);
@@ -124,7 +124,7 @@ public class ItemDao {
 		int count = 0;
 		try {
 			pstmt = con.prepareStatement    //bbs.nextval 은 bbs라는 시퀀스를 따로 만들어 둔 상태에서 ex)게시판 번호 같이 순서대로 올라가는 번호를 입력할때 따로 만들어두고 사용 (순서대로 1씩오름)
-					("insert into inf_item_tb(price,discount,stok,del_fl,show_fl,category,code,color,item_name,item_number,item_rating,size,explanation,preview,filepath) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					("insert into inf_goods_tb(price,discount,stok,del_fl,show_fl,category,code,color,item_name,item_number,item_rating,size,explanation,preview,filepath) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, vo.getPrice());		//mber_sq에 id가 들어감
 			pstmt.setInt(2, vo.getDiscount());
 			pstmt.setInt(3, vo.getStok());
@@ -154,7 +154,7 @@ public class ItemDao {
 		ResultSet rs = null;
 		
 		try {
-			pstmt = con.prepareStatement("select item_sq , price, discount , stok , dttm , category , code , color, item_name, item_number, item_rating, size , explanation , preview, filepath from inf_item_tb where del_fl=0 and show_fl and item_sq=?");
+			pstmt = con.prepareStatement("select item_sq , price, discount , stok , dttm , category , code , color, item_name, item_number, item_rating, size , explanation , preview, filepath from inf_goods_tb where del_fl=0 and show_fl=1 and item_sq=?");
 			pstmt.setInt(1, vo.getItem_sq());
 			rs = pstmt.executeQuery();
 			
@@ -183,6 +183,23 @@ public class ItemDao {
 		}
 		
 		return vo;
+	}
+	
+	public int registerCart(ItemVo vo) {  //장바구니 정보를 db 테이블에 저장
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement    
+					("insert into inf_cart_tb(item_sq,mber_sq) values(?,?)");
+			pstmt.setInt(1, vo.getItem_sq());		//mber_sq에 id가 들어감
+			pstmt.setInt(2, vo.getMber_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
 	}
 	
 }

@@ -52,15 +52,55 @@ public class MemberManagementAction implements Action{
 		
 		String filter = request.getParameter("filter");
 		String keyword = request.getParameter("keyword");
+		String firstTime= request.getParameter("firstTime");
+		String lastTime= request.getParameter("lastTime");
+		
 		String query="";
+		String firstTimeQuery="";
+		String lastTimeQuery="";
+		String idQuery="";
+		String nameQuery="";
+		
+//		if(firstTime != null && !firstTime.equals("")) {
+//			int firstTimeInt=Integer.parseInt(firstTime);
+//			int firstTimeYear = firstTimeInt/10000;
+//			int firstTimeMonth = (firstTimeInt%10000)/100;
+//			int firstTimeDay = firstTimeInt%100;
+//			
+//			firstTime = (firstTimeYear + "-" + firstTimeMonth + "-" + firstTimeDay);
+//		}
+//		
+//		if(lastTime != null && !lastTime.equals("")) {
+//			int lastTimeInt=Integer.parseInt(lastTime);
+//			int lastTimeYear = lastTimeInt/10000;
+//			int lastTimeMonth = (lastTimeInt%10000)/100;
+//			int lastTimeDay = lastTimeInt%100;
+//			lastTime = (lastTimeYear + "-" + lastTimeMonth + "-" + lastTimeDay);
+//		}
+		
+		if(firstTime == null || firstTime.equals("")) {
+			firstTimeQuery = "";
+		}
+		else {
+			firstTimeQuery = " and '"+firstTime+"'<=a.dttm";
+		}
+		
+		if(lastTime == null || lastTime.equals("")) {
+			lastTimeQuery="";
+		}
+		else {
+			lastTimeQuery = " and a.dttm<='"+lastTime+"'";
+		}
+		
 		if(filter == null || filter.equals("")) {
 			filter="id";
 		}
+		
 		if(keyword != null && !keyword.equals("")) {
 			if(filter.equals("id")) {
-				query= " and (id like '%" + keyword + "%')";
+				idQuery= " and (id like '%" + keyword + "%')";
 			}else if(filter.equals("name")) {
-				query= " and (name like '%" + keyword + "%')";
+				nameQuery= " and (name like '%" + keyword + "%')";
 			}else {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
@@ -69,6 +109,8 @@ public class MemberManagementAction implements Action{
 				return null;
 			}
 		}
+		
+		query = firstTimeQuery+lastTimeQuery+idQuery+nameQuery;
 		
 		AdminService svc = new AdminService();
 		Pagenation pagenation = new Pagenation(page,svc.getArticleCount());

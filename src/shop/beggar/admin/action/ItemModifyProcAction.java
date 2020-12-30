@@ -31,6 +31,8 @@ public class ItemModifyProcAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		HttpSession session = request.getSession();
+		
 		String item_name = request.getParameter("item_name");
 		String category = request.getParameter("category");
 		String code = request.getParameter("code");
@@ -43,8 +45,20 @@ public class ItemModifyProcAction implements Action {
 		String size = request.getParameter("size");
 		String explanation = request.getParameter("content");
 		
+		String newFileRealName = (String) session.getAttribute("fileImgNamePathRealName");
+		String domain = (String) session.getAttribute("fileImgNameDomain");
+		String pathFolder = (String) session.getAttribute("fileImgNamePathFoldery");
+		
 		String pn = request.getParameter("pn");
 		String item_sq = request.getParameter("item_sq");
+		
+		if (item_sq == null || item_sq.equals("")) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('잘못된 접근 입니다.');location.href='/admin';</script>");
+			out.close();
+			return null;
+		}
 		
 		ItemVo vo = new ItemVo();
 		vo.setItem_sq(Integer.parseInt(item_sq));
@@ -61,8 +75,8 @@ public class ItemModifyProcAction implements Action {
 		if (explanation != null) {
 			vo.setExplanation(Parser.chgToStr(explanation));
 		}
+		vo.setFilepath(domain + pathFolder + newFileRealName);
 		
-		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
 		
 		AdminService svc = new AdminService();
@@ -70,6 +84,14 @@ public class ItemModifyProcAction implements Action {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('상품수정에 실패하였습니다.');history.back();</script>");
+			out.close();
+			return null;
+		}
+		
+		if (!svc.fileItemSq(Integer.parseInt(item_sq), newFileRealName)) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('상품이미지 등록에 실패하였습니다.');location.href='/';</script>");
 			out.close();
 			return null;
 		}

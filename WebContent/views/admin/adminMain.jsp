@@ -111,6 +111,7 @@
 	<%} else { %>
 		<%if (admin_supper == true) { %>
 			<a href="/admin/registerAdmin">관리자등록</a>
+			<a href="/admin/listAdmin">관리자 리스트</a>
 		<%} %>
 		<a href="/admin/modifyAdmin">관리자수정</a>
 		<a href="/admin/memberManagement">회원관리</a>

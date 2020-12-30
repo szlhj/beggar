@@ -1,5 +1,7 @@
+<%@page import="shop.beggar.admin.vo.AdminVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+	
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +61,7 @@
 						<option value="0" selected></option>
 						<option value="1">공지사항</option>
 						<option value="2">1:1문의</option>
+						<option value="3">제품관련문의</option>
 					</select>
 					<br>
 					상품번호<input type="text" id="goods_info" name="goods_info" /><br>

@@ -1,12 +1,36 @@
 @charset "UTF-8";
-.pagenations {
-	width: 960px;
-	margin : 0 auto;
+.items {
+	width: 1200px;
+	display: flex;
+	flex-direction:row;
+	margin :0 auto;
+	padding: 0;
+	text-align :center;
+}
+.item_left {
+	float:left;
+	width: 50%;
+	text-align : center;
+}
+.item_right {
+	float:right;
+	width: 50%;
+	text-align : center;
 }
 
-.item {
-	width: 500px;
-	text-align : center;
+.itemTable {
+	float:right;
+	width: 400px;
+	height: 600px;
+}
+.itemTds {
+	width: 50%;
+}
+
+.item_footer{
+	margin :0 auto;
+	text-align: center;
+	padding: 50px;
 }
 .card-img-top {
 	height: 200px;
@@ -30,7 +54,6 @@
 }
 .ct {
 	font-size: 20px;
-	color: black;
 }
 .ct_one {
 	padding : 40px;

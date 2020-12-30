@@ -7,8 +7,11 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import shop.beggar.common.RegExp;
 import shop.beggar.admin.service.AdminService;
+import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.beggar.item.service.ItemService;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
@@ -37,7 +40,19 @@ public class BoardListAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		String pn = request.getParameter("pn");
-
+		
+		HttpSession session = request.getSession();
+		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
+		MemberVo mberVo = (MemberVo) session.getAttribute("memberVo");
+		
+		String id="0";
+		
+		if(mberVo == null) {
+			id="관리자";
+		}else {
+			id=mberVo.getId();
+		}
+		
 		if (pn == null) {
 			pn = "1";
 		}
@@ -53,12 +68,37 @@ public class BoardListAction implements Action {
 		}
 
 		String filter = request.getParameter("filter");
+		String firstTime= request.getParameter("firstTime");
+		String lastTime= request.getParameter("lastTime");
+		
 		String query = "";
-		if (filter == null || filter.equals("")) {
-			query = "";
-		} else {
-			query = " and (board_number= '" + filter + "')";
+		String firstTimeQuery="";
+		String lastTimeQuery="";
+		String board_numberQuery="";
+		
+		if(firstTime == null || firstTime.equals("")) {
+			firstTimeQuery = "";
 		}
+		else {
+			firstTimeQuery = " and '"+firstTime+"'<=dttm";
+		}
+		
+		if(lastTime == null || lastTime.equals("")) {
+			lastTimeQuery="";
+		}
+		else {
+			lastTimeQuery = " and dttm<='"+lastTime+"'";
+		}
+		if (filter == null || filter.equals("")) {
+			board_numberQuery = "";
+		}else if(filter.equals("4")) {
+			board_numberQuery = " and (id= '" + id + "')";
+		}else{
+			board_numberQuery = " and (board_number= '" + filter + "')";
+		}
+		
+		query = firstTimeQuery+lastTimeQuery+board_numberQuery;
+		
 		AdminService svc = new AdminService();
 		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount());
 		if (page > pagenation.getTotalPageCount()) {

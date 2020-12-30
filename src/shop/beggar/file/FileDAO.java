@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
+import shop.beggar.admin.vo.FileVo;
+
 /**
  * @PackageName		: shop.beggar.common.file
  * @FileName		: FileDAO.java
@@ -49,11 +51,9 @@ public class FileDAO {
 		
 	}
 	
-	public int upload(String fileName, String fileRealName) {
-		String sql = "insert into file (fileName, fileRealName) values (?, ?)";
-		
+	public int fileUpload(String fileName, String fileRealName) {
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement("insert into file (fileName, fileRealName) values (?, ?)");
 			pstmt.setString(1, fileName);
 			pstmt.setString(2, fileRealName);
 			return pstmt.executeUpdate();
@@ -64,11 +64,9 @@ public class FileDAO {
 		return -1;
 	}
 	
-	public int hit(String fileRealName) {
-		String sql = "update file set downloadCount = (select max(downloadCount) + 1 from file where fileRealName=?) where fileRealName=?";
-		
+	public int fileHit(String fileRealName) {
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement("update file set downloadCount = (select max(downloadCount) + 1 from file where fileRealName=?) where fileRealName=?");
 			pstmt.setString(1, fileRealName);
 			pstmt.setString(2, fileRealName);
 			return pstmt.executeUpdate();
@@ -78,19 +76,17 @@ public class FileDAO {
 		return -1;
 	}
 	
-	public ArrayList<FileDTO> getList() {
-		String sql = "select * from file";
-		ArrayList<FileDTO> list = new ArrayList<FileDTO>();
+	public ArrayList<FileVo> getList() {
+		ArrayList<FileVo> list = new ArrayList<FileVo>();
 		
 		try {
-			PreparedStatement pstmt = con.prepareStatement(sql);
+			PreparedStatement pstmt = con.prepareStatement("select * from file");
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				FileDTO file = new FileDTO();
+				FileVo file = new FileVo();
 				file.setFileName(rs.getString("fileName"));
 				file.setFileRealName(rs.getString("FileRealName"));
-				file.setDownloadCount(rs.getInt("downloadCount"));
 				list.add(file);
 			}
 		} catch (Exception e) {

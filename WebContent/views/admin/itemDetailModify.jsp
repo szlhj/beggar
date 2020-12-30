@@ -95,10 +95,57 @@
 		location.href = "/admin/itemDel?isDel=" + isDel + "&pn=" + <%=pn%> + "&sq=" + <%=itemVo.getItem_sq()%>;
 	}
 </script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+ 	$('#input_img').on('change', function (){
+		var data = new FormData();
+		data.append("file", $('#input_img').prop('files')[0]);
+		console.log(data);
+		$.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/admin/fileUpload",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (result) {
+                console.log("SUCCESS : ", "");//result.data.url);
+//                 $('#objectUrl').attr("disabled", true) 
+//                 $('#objectUrl').val(result.data.url)
+                
+                $("#img").attr("src", "");
+//                 handleImgFileSelect;
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+            }
+        });
+ 	
+ 	});
+ });
+</script>
+
 </head>
 <body>
 	<div>
 		<section>
+			
+			<button onclick="modify()">수정</button>
+			<%if (itemVo.isShow_fl() == true) { %>
+				<button onclick="show(false)">등록중지</button>
+			<%} else { %>
+				<button onclick="show(true)">등록하기</button>
+			<%} %>
+			<%if (itemVo.isDel_fl() == true) { %>
+				<button onclick="del(false)">다시한번?</button>
+			<%} else { %>
+				<button onclick="del(true)">삭제하기</button>
+			<%} %>
+			<button onclick="cancle()">취소</button>
+			
 			<form action="/admin/itemModifyProc?pn=<%=pn %>" method="post" id="editorForm">
 				상품일련번호<input type="text" id="item_sq" name="item_sq" value="<%=itemVo.getItem_sq() %>" readonly="readonly" /><br>
 				상품이름<input type="text" id="item_name" name="item_name" value="<%=itemVo.getItem_name() %>" /><br>
@@ -122,9 +169,16 @@
 				상품 등급<input type="text" id="item_rating" name="item_rating" value="<%=itemVo.getItem_rating() %>" /><br>
 				사이즈<input type="text" id="size" name="size" value="<%=itemVo.getSize() %>" /><br>
 				<div>
+					<input type="file" id="input_img" />
+					<div class="img_wrap">
+						<img id="img" style="width: 200px; height: 200px;" src="<%=itemVo.getFilepath() %>" />
+					</div>
+				</div><br>
+				<div>
 					<jsp:include page="/editor/editorSkinForModify.jsp" flush="false" />
 				</div>
 			</form>
+			
 			<button onclick="modify()">수정</button>
 			<%if (itemVo.isShow_fl() == true) { %>
 				<button onclick="show(false)">등록중지</button>
@@ -137,6 +191,7 @@
 				<button onclick="del(true)">삭제하기</button>
 			<%} %>
 			<button onclick="cancle()">취소</button>
+			
 		</section>
 	</div>
 </body>
