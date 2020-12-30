@@ -53,7 +53,7 @@ public class Download extends HttpServlet {
 		}
 		
 		//파일 다운로드가 끝나고 파일카운트에 1 증가
-		new FileDAO().hit(fileName);
+		new FileDAO().fileHit(fileName);
 		
 		servletOutPutStream.flush();
 		servletOutPutStream.close();

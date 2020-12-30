@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 
 import shop.beggar.admin.vo.AdminVo;
+import shop.beggar.admin.vo.FileVo;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
@@ -51,7 +52,7 @@ public class AdminDao {
 		ResultSet rs = null;
 		ArrayList<MemberVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from inf_mber_tb a inner JOIN inf_mber_privcy_tb b where a.mber_sq=b.mber_sq and 1=1"+query+" LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from (inf_mber_tb a inner JOIN inf_mber_privcy_tb b on a.mber_sq=b.mber_sq) where 1=1"+query+" LIMIT ?,?");
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
 			rs = pstmt.executeQuery();
@@ -123,14 +124,15 @@ public class AdminDao {
 		ResultSet rs = null;
 		ArrayList<BoardVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from inf_board_tb where 1=1"+query+" LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" order by mber_sq LIMIT ?,?");
+			//select * from (inf_board_tb a, inf_mber_tb b a.mber_sq=b.mber_sq) 
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
 				vo.setBoard_sq(rs.getInt("board_sq"));
-				vo.setPerson_sq(rs.getInt("admin_sq"));
+				vo.setMber_id(rs.getString("id"));
 				vo.setBoard_number(rs.getString("board_number"));
 				vo.setCount(rs.getInt("count"));
 				vo.setDel_fl(rs.getInt("del_fl"));
@@ -217,7 +219,7 @@ public class AdminDao {
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("insert into inf_goods_tb (item_name, category, code, price, discount, stok, color, item_number, item_rating, size, explanation, admin_sq) values (?,?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt = con.prepareStatement("insert into inf_goods_tb (item_name, category, code, price, discount, stok, color, item_number, item_rating, size, explanation, admin_sq, filepath) values (?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setString(1, vo.getItem_name());
 			pstmt.setString(2, vo.getCategory());
 			pstmt.setString(3, vo.getCode());
@@ -230,6 +232,7 @@ public class AdminDao {
 			pstmt.setString(10, vo.getSize());
 			pstmt.setString(11, vo.getExplanation());
 			pstmt.setInt(12, admin_sq);
+			pstmt.setString(13, vo.getFilepath());
 			
 			count = pstmt.executeUpdate();
 			
@@ -241,16 +244,42 @@ public class AdminDao {
 		}
 		return count;
 	}
+	
+	public int searchItemSq(ItemVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("select item_sq from inf_goods_tb where code=? and item_name=? and item_number=? and item_rating=?");
+			pstmt.setString(1, vo.getCode());
+			pstmt.setString(2, vo.getItem_name());
+			pstmt.setString(3, vo.getItem_number());
+			pstmt.setString(4, vo.getItem_rating());
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+	
 	public int boardAdd(BoardVo vo, int admin_sq) {	
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, admin_sq, count) values (?,?,?,?,?,0)");
+			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, mber_sq, count) values (?,?,?,?,?,0)");
 			pstmt.setString(1, vo.getBoard_number());
 			pstmt.setString(2, vo.getGoods_info());
 			pstmt.setString(3, vo.getTitle());
 			pstmt.setString(4, vo.getContent());
-			pstmt.setInt(5, vo.getAdmin_sq());
+			pstmt.setInt(5, vo.getMber_sq());
 			
 			count = pstmt.executeUpdate();
 			
@@ -454,12 +483,43 @@ public class AdminDao {
 		return vo;
 	}
 	
+	public BoardVo getBoardDetail(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where board_sq=?");
+			pstmt.setInt(1, vo.getBoard_sq());
+			
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+			//	vo.setItem_sq(rs.getInt("item_sq"));
+				vo.setBoard_sq(rs.getInt("board_sq"));
+				vo.setMber_id(rs.getString("id"));
+				vo.setDel_fl(rs.getBoolean("del_fl"));
+				vo.setBoard_number(rs.getString("board_number"));
+				vo.setGoods_info(rs.getString("goods_info"));
+				vo.setTitle(rs.getString("title"));
+				vo.setContent(rs.getString(Parser.chgToHtml("content")));
+				vo.setDttm(rs.getString("dttm"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vo;
+	}
+	
+	
 	public int itemModify(ItemVo vo, int admin_sq) {
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
 			if (vo.getExplanation() == null) {
-				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, admin_sq=?, dttm=now() where item_sq=?");
+				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, admin_sq=?, dttm=now(), filepath=? where item_sq=?");
 				pstmt.setString(1, vo.getItem_name());
 				pstmt.setString(2, vo.getCategory());
 				pstmt.setString(3, vo.getCode());
@@ -471,11 +531,12 @@ public class AdminDao {
 				pstmt.setString(9, vo.getItem_rating());
 				pstmt.setString(10, vo.getSize());
 				pstmt.setInt(11, admin_sq);
-				pstmt.setInt(12, vo.getItem_sq());
+				pstmt.setString(12, vo.getFilepath());
+				pstmt.setInt(13, vo.getItem_sq());
 				
 				count = pstmt.executeUpdate();
 			} else {
-				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, explanation=?, admin_sq=?, dttm=now() where item_sq=?");
+				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, explanation=?, admin_sq=?, dttm=now(), filepath=? where item_sq=?");
 				pstmt.setString(1, vo.getItem_name());
 				pstmt.setString(2, vo.getCategory());
 				pstmt.setString(3, vo.getCode());
@@ -488,7 +549,8 @@ public class AdminDao {
 				pstmt.setString(10, vo.getSize());
 				pstmt.setString(11, vo.getExplanation());
 				pstmt.setInt(12, admin_sq);
-				pstmt.setInt(13, vo.getItem_sq());
+				pstmt.setString(13, vo.getFilepath());
+				pstmt.setInt(14, vo.getItem_sq());
 				
 				count = pstmt.executeUpdate();
 			}
@@ -532,6 +594,85 @@ public class AdminDao {
 			pstmt.setBoolean(1, vo.isDel_fl());
 			pstmt.setInt(2, admin_sq);
 			pstmt.setInt(3, vo.getItem_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+//------------------------------------------------------------------------------
+//	 file upload관련 Dao 시작
+	public int fileUpload(FileVo vo, String path) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("insert into inf_file_tb (fileName, fileRealName, item_sq) values (?, ?, ?)");
+			pstmt.setString(1, vo.getFileName());
+			pstmt.setString(2, vo.getFileRealName());
+			pstmt.setInt(3, vo.getItem_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	
+	//다운로드 수 증가
+	public int fileHit(String fileRealName) {
+		try {
+			PreparedStatement pstmt = con.prepareStatement("update inf_file_tb set downloadCount = (select max(downloadCount) + 1 from file where fileRealName=?) where fileRealName=?");
+			pstmt.setString(1, fileRealName);
+			pstmt.setString(2, fileRealName);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	//file table의 내용 가져오기
+	public ArrayList<FileVo> getList() {
+		ArrayList<FileVo> list = new ArrayList<FileVo>();
+		
+		try {
+			PreparedStatement pstmt = con.prepareStatement("select * from inf_file_tb");
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				FileVo file = new FileVo();
+				file.setFileName(rs.getString("fileName"));
+				file.setFileRealName(rs.getString("FileRealName"));
+				list.add(file);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
+	}
+//	 file upload관련 Dao 종료
+//------------------------------------------------------------------------------
+	
+	public int fileItemSq(int item_sq, String newFileRealName) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_file_tb set item_sq=? where fileRealName=?");
+			pstmt.setInt(1, item_sq);
+			pstmt.setString(2, newFileRealName);
 			
 			count = pstmt.executeUpdate();
 			

@@ -1,22 +1,24 @@
 @charset "UTF-8";
-.row {
-	width: 960px;
-	margin : 0 auto;
-}
 .pagenations {
 	width: 960px;
 	margin : 0 auto;
 }
 
-.col {
-	width: 220px;
+.item {
+	width: 500px;
+	text-align : center;
+}
+.card-img-top {
+	height: 200px;
 }
 
-div {
+.item_full {
+	width: 960px;
+	margin : 0 auto;
 	text-align : center;
 }
 
-ul {
+.ul_ct {
 	display : flex;
 	justify-content: space-evenly;
 	margin: 0 auto;
@@ -25,6 +27,9 @@ ul {
 	padding-left: 0px;
 	padding : 20px;
 	
+}
+.ct {
+	font-size: 20px;
 }
 .ct_one {
 	padding : 40px;
@@ -50,18 +55,18 @@ ul {
 
 .page_prev {
 	font-size: 20px;
-	padding : 20px;
+	padding : 10px;
 }
 .page_frt {
 	display: inline;
 	font-size: 20px;
-	padding : 20px;
+	padding : 10px;
 }
 .page_num {
 	font-size: 20px;
-	padding : 20px;
+	padding : 10px;
 }
 .page_next {
 	font-size: 20px;
-	padding : 20px;
+	padding : 10px;
 }

@@ -29,59 +29,11 @@
     <button onclick="location.href='/'">홈</button>
     <button onclick="dummy()">dummy넣기</button>
 <body>
-	<ul>
-		<li><a class="ct ct_one" href="/item/mainItem?category=1">NEW IN</a></li>
-		<li><a class="ct ct_two" href="/item/mainItem?category=2">EARRINGS</a></li>
-		<li><a class="ct ct_three" href="/item/mainItem?category=3">NECKLACES</a></li>
-		<li><a class="ct ct_four" href="/item/mainItem?category=4">BRACELETS</a></li>
-		<li><a class="ct ct_five" href="/item/mainItem?category=5">RINGS</a></li>
-		<li><a class="ct ct_six" href="/item/mainItem?category=6">ANKLETS</a></li>
-		<li><a class="ct ct_seven" href="/item/mainItem?category=7">BEST</a></li>
-	</ul>
 <!-- 홈화면 기준은 날짜 별로 기준인것 같음 모든항목 출력인듯하고 -->
-<!-- <table>
-<tr>
-	<th>상품이미지주소</th>
-	<th>상품프리뷰</th>
-	<th>상품이름</th>
-	<th>상품가격</th>
-	<th>상품카테고리번호</th>
-	<th>상품할인율</th>
-	<th>상품시퀀스번호</th>
-	<th>상품할인가격</th>
-</tr> -->
-<%-- <% for (int i = 0; i <list.size(); i++) {%>
-  <tr onclick="location.href='/item/detail?item_sq=<%=list.get(i).getItem_sq()%>'">
-    <th><%=list.get(i).getFilepath() %></th>
-    <th><%=list.get(i).getPreview() %></th>
-    <th><%=list.get(i).getItem_name() %></th>
-    <th><%=list.get(i).getPrice() %></th>
-    <th><%=list.get(i).getCategory() %></th>
-    <td><%=list.get(i).getDiscount() %></td>
-    <td><%=list.get(i).getItem_sq() %></td>
-    <td><%=list.get(i).getPrice() - (list.get(i).getPrice() * list.get(i).getDiscount() /100)%></td>
-  </tr>
-<!--   <tr> -->
-    <td><%=list.get(i).getDisprice() %></td>
-    
-<!--   </tr> -->
-<% } %> --%>
 
-<!-- </table> -->
-
-
-<%--     <th><%=list.get(i).getPreview() %></th> --%>
-<%--     <th><%=list.get(i).getCategory() %></th> --%>
-<%--     <td><%=list.get(i).getDiscount() %></td> --%>
-<%--     <td><%=list.get(i).getItem_sq() %></td> --%>
-
-<!--   <tr> -->
-<%--     <td><%=list.get(i).getDisprice() %></td> --%>
-    
-<!--   </tr> -->
-<div class="row row-cols-1 row-cols-md-4">
+<div class="row row-cols-1 row-cols-md-4 item_full">
 <% for (int i = 0; i <list.size(); i++) {%>
-	<div class="col mb-3">
+	<div class="col mb-3 item">
 		<div class="card" onclick="location.href='/item/detail?item_sq=<%=list.get(i).getItem_sq()%>'">
   			<img src="..." class="card-img-top" alt="...">
   			<div class="card-body">
@@ -95,7 +47,7 @@
 <% } %>
 </div>
 
-<div class="pagenations">
+<div class="pagenations item">
 <%if (pagenation.getStartPageNumber() != 1) {%>
 <a class="page_prev" href="/?pn=<%=pagenation.getStartPageNumber() - 1 %>&category=<%=category%>"> < </a>
 <% } %>

@@ -54,6 +54,11 @@ public class ItemAddProcAction implements Action{
 		String size = request.getParameter("size");
 		String explanation = request.getParameter("content");
 		
+		HttpSession session = request.getSession();
+		String directory = (String) session.getAttribute("fileImgNamePathDirectory");
+		String newFileRealName = (String) session.getAttribute("fileImgNamePathRealName");
+		String domain = (String) session.getAttribute("fileImgNameDomain");
+		String pathFolder = (String) session.getAttribute("fileImgNamePathFoldery");
 		
 		ItemVo vo = new ItemVo();
 		vo.setItem_name(item_name);
@@ -67,8 +72,8 @@ public class ItemAddProcAction implements Action{
 		vo.setItem_rating(item_rating);
 		vo.setSize(size);
 		vo.setExplanation(Parser.chgToStr(explanation));
+		vo.setFilepath(Parser.chgToStr(domain + pathFolder + newFileRealName));
 		
-		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
 		
 		AdminService svc = new AdminService();
@@ -80,8 +85,18 @@ public class ItemAddProcAction implements Action{
 			return null;
 		}
 		
+		int item_sq = svc.searchItemSq(vo);
+		
+		if (!svc.fileItemSq(item_sq, newFileRealName)) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('상품이미지 등록에 실패하였습니다.');location.href='/';</script>");
+			out.close();
+			return null;
+		}
+		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/admin/");
+		forward.setPath("/admin/itemList");
 		forward.setRedirect(true);
 		return forward;
 	}

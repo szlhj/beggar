@@ -73,10 +73,52 @@
 		
 		saveContent();
 	}
+	
 	function cancle() {
-		location.href = "/";
+		location.href = "/admin";
 	}
 </script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+ 	$('#input_img').on('change', function (){
+		var data = new FormData();
+		data.append("file", $('#input_img').prop('files')[0]);
+		console.log(data);
+		$.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/admin/fileUpload",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (result) {
+                console.log("SUCCESS : ", result.data.url);
+                $('#objectUrl').attr("disabled", true) 
+                $('#objectUrl').val(result.data.url)
+                
+                
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+            }
+        });
+ 	});
+ });
+</script>
+
+<style type="text/css">
+	.img_wrap {
+		width:200px;
+		margin-top: 5px;
+	}
+	.img_wrap img {
+		max-width: 100%;
+	}
+</style>
+
 
 </head>
 <body>
@@ -106,9 +148,14 @@
 					상품 등급<input type="text" id="item_rating" name="item_rating" /><br>
 					사이즈<input type="text" id="size" name="size" /><br>
 					<div>
+						<input type="file" id="input_img" />
+						<div class="img_wrap">
+							<img id="img" />
+						</div>
+					</div>
+					<div>
 						<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
 					</div>
-
 				</form>
 				<button onclick="join()">등록</button>
 				<button onclick="cancle()">취소</button>

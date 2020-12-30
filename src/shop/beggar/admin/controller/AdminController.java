@@ -27,7 +27,11 @@ import shop.beggar.admin.action.MemberManagementAction;
 import shop.beggar.admin.action.AdminRegisterProcAction;
 import shop.beggar.admin.action.BoardAddAction;
 import shop.beggar.admin.action.BoardAddProcAction;
+import shop.beggar.admin.action.BoardDelAction;
+import shop.beggar.admin.action.BoardDetailAction;
 import shop.beggar.admin.action.BoardListAction;
+import shop.beggar.admin.action.BoardModifyProcAction;
+import shop.beggar.admin.action.BoardModifyViewAction;
 import shop.beggar.admin.action.EditCheckAction;
 import shop.beggar.admin.action.FileExAction;
 import shop.beggar.beggar.board.action.FrequentlyAction;
@@ -189,6 +193,14 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/fileUpload")) {  //파일 업로드 및 다운로드 예제
+			Action action = new FileUploadAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		} else if (command.equals("/boardAdd")) { 
 			Action action = new BoardAddAction();
 			
@@ -207,6 +219,38 @@ private static final long serialVersionUID = 1L;
 			}
 		} else if (command.equals("/boardList")) { 
 			Action action = new BoardListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}	else if (command.equals("/boardDetail")) {
+			Action action = new BoardDetailAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardModifyView")) {
+			Action action = new BoardModifyViewAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardModifyProc")) {
+			Action action = new BoardModifyProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/boardDel")) {
+			Action action = new BoardDelAction();
 			
 			try {
 				forward = action.execute(request, response);

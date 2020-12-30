@@ -33,8 +33,12 @@
 	function searchArticle() {
 		var filter = $('#filter option:selected');
 		var keyword = $('#keyword');
+		var firstTime = $('#firstTime');
+		var lastTime = $('#lastTime');
 		location.href = "/admin/memberManagement?pn=1&filter=" + filter.val()
-				+ "&keyword=" + encodeURI(keyword.val());
+				+ "&keyword=" + encodeURI(keyword.val())
+				+ "&firstTime=" + firstTime.val()
+				+ "&lastTime=" + lastTime.val();
 	}
 </script>
 </head>
@@ -45,8 +49,12 @@
 		<option value="name">이름</option>
 	</select>
 	<input name="keyword" id="keyword">
+	<br>
+	날짜
+	<input type="date" name="firstTime" id="firstTime"> ~
+	<input type="date" name="lastTime" id="lastTime">
 	<button onclick="searchArticle()">검색</button>
-	
+	<br>
 	<button onclick="location.href='/admin/'">관리자 홈으로</button>
 
 	<table border=1>
