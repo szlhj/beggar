@@ -67,7 +67,7 @@
 					<div class="img_wrap">
 						<img id="img" style="width: 200px; height: 200px;" src="<%=itemVo.getFilepath() %>" />
 					</div>
-				</div>
+				</div><br>
 				<div>
 					<%=content %>
 				</div>

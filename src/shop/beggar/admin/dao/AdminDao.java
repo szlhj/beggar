@@ -487,7 +487,7 @@ public class AdminDao {
 		int count = 0;
 		try {
 			if (vo.getExplanation() == null) {
-				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, admin_sq=?, dttm=now() where item_sq=?");
+				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, admin_sq=?, dttm=now(), filepath=? where item_sq=?");
 				pstmt.setString(1, vo.getItem_name());
 				pstmt.setString(2, vo.getCategory());
 				pstmt.setString(3, vo.getCode());
@@ -499,11 +499,12 @@ public class AdminDao {
 				pstmt.setString(9, vo.getItem_rating());
 				pstmt.setString(10, vo.getSize());
 				pstmt.setInt(11, admin_sq);
-				pstmt.setInt(12, vo.getItem_sq());
+				pstmt.setString(12, vo.getFilepath());
+				pstmt.setInt(13, vo.getItem_sq());
 				
 				count = pstmt.executeUpdate();
 			} else {
-				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, explanation=?, admin_sq=?, dttm=now() where item_sq=?");
+				pstmt = con.prepareStatement("update inf_goods_tb set item_name=?, category=?, code=?, price=?, discount=?, stok=?, color=?, item_number=?, item_rating=?, size=?, explanation=?, admin_sq=?, dttm=now(), filepath=? where item_sq=?");
 				pstmt.setString(1, vo.getItem_name());
 				pstmt.setString(2, vo.getCategory());
 				pstmt.setString(3, vo.getCode());
@@ -516,7 +517,8 @@ public class AdminDao {
 				pstmt.setString(10, vo.getSize());
 				pstmt.setString(11, vo.getExplanation());
 				pstmt.setInt(12, admin_sq);
-				pstmt.setInt(13, vo.getItem_sq());
+				pstmt.setString(13, vo.getFilepath());
+				pstmt.setInt(14, vo.getItem_sq());
 				
 				count = pstmt.executeUpdate();
 			}

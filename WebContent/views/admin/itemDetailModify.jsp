@@ -95,6 +95,39 @@
 		location.href = "/admin/itemDel?isDel=" + isDel + "&pn=" + <%=pn%> + "&sq=" + <%=itemVo.getItem_sq()%>;
 	}
 </script>
+
+<script type="text/javascript">
+ $(document).ready(function() {
+ 	$('#input_img').on('change', function (){
+		var data = new FormData();
+		data.append("file", $('#input_img').prop('files')[0]);
+		console.log(data);
+		$.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "/admin/fileUpload",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (result) {
+                console.log("SUCCESS : ", "");//result.data.url);
+//                 $('#objectUrl').attr("disabled", true) 
+//                 $('#objectUrl').val(result.data.url)
+                
+                $("#img").attr("src", "");
+//                 handleImgFileSelect;
+            },
+            error: function (e) {
+                console.log("ERROR : ", e);
+            }
+        });
+ 	
+ 	});
+ });
+</script>
+
 </head>
 <body>
 	<div>
@@ -121,6 +154,12 @@
 				상품넘버링<input type="text" id="item_number" name="item_number" value="<%=itemVo.getItem_number() %>" /><br>
 				상품 등급<input type="text" id="item_rating" name="item_rating" value="<%=itemVo.getItem_rating() %>" /><br>
 				사이즈<input type="text" id="size" name="size" value="<%=itemVo.getSize() %>" /><br>
+				<div>
+					<input type="file" id="input_img" />
+					<div class="img_wrap">
+						<img id="img" style="width: 200px; height: 200px;" src="<%=itemVo.getFilepath() %>" />
+					</div>
+				</div><br>
 				<div>
 					<jsp:include page="/editor/editorSkinForModify.jsp" flush="false" />
 				</div>
