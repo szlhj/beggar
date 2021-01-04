@@ -60,7 +60,7 @@ public class LoginProcAction implements Action {
 			return null;
 		}
 
-		// int_mber_lgn_hist_tb에 저장 작업
+		// int_mber_lgn_hist_tb에 저장 작업 ip주소 가져오기
 		String ipAddr = IpTraceUtils.getRemoteAddr(request);
 
 //		System.out.println(ipAddr);
@@ -79,8 +79,10 @@ public class LoginProcAction implements Action {
 //		request.setAttribute("mber_sq", voInfo.getMber_sq());// 세션에 mber_sq 넣기
 		HttpSession session = request.getSession();
 		String idc = lm.getMemberId(session);
-		session.setAttribute("vo", voInfo);
+		
+		session.setAttribute("ssvo", voInfo);
 		session.setMaxInactiveInterval(60 * 60);
+				
 		ItemVo ivo = new ItemVo();
 		ivo.setMber_sq(voInfo.getMber_sq()); // 쿠키에 있는 상품을 카트 테이블에 넣는 ivo
 		if (idc != null) { // 로그인 상태엔 장바구니 테이블에 저장

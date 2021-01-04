@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletResponse;
 import shop.beggar.beggar.item.action.DetailAction;
 import shop.beggar.beggar.item.action.DummyAction;
 import shop.beggar.beggar.item.action.MainItemAction;
+import shop.beggar.beggar.item.action.OrderAction;
+import shop.beggar.beggar.item.action.OrderProcAction;
 import shop.beggar.beggar.item.action.PurchaseAction;
 import shop.beggar.beggar.item.action.ShopBasketAction;
 import shop.beggar.common.Action;
@@ -72,8 +74,25 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+//-----------------------------------------------------------------------------------------
+		} else if (command.equals("/order")) { //결제화면
+			Action action = new OrderAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderProc")) { //결제로직
+			Action action = new OrderProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-		
+//-----------------------------------------------------------------------------------------		
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				//Redirect

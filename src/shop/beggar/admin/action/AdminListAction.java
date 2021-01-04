@@ -1,49 +1,61 @@
 package shop.beggar.admin.action;
 
+import java.io.PrintWriter;
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import shop.beggar.admin.service.AdminService;
-import shop.beggar.beggar.vo.BoardVo;
-import shop.beggar.beggar.vo.ItemVo;
+import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
-import shop.beggar.common.LoginManager;
+import shop.beggar.common.Pagenation;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: ItemDetailAction.java
- * @Since			: 2020. 12. 19.
+ * @FileName		: AdminListAction.java
+ * @Since			: 2020. 12. 30.
  * @Author			: HJLee
- * @Description		: 관리자 상품 상세 화면 경로설정
+ * @Description		: 관리자 계정 리스트 화면으로 이동 로직
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 19.		HJLee				최초 작성
+ * 2020. 12. 30.		HJLee				최초 작성
  *
  */
-public class BoardDetailAction implements Action {
+public class AdminListAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		String board_sq = request.getParameter("board_sq");
 		String pn = request.getParameter("pn");
+
+		if (pn == null) {
+			pn = "1";
+		}
+		int page = Integer.parseInt(pn);
 		
 		AdminService svc = new AdminService();
-		BoardVo vo = new BoardVo();
-		vo.setBoard_sq(Integer.parseInt(board_sq));
 		
-//		svc.increaseCount(Integer.parseInt(board_sq));
-				
-		BoardVo boardVo = svc.getBoardDetail(vo);
-		request.setAttribute("boardVo", boardVo);
+		Pagenation pagenation = new Pagenation(page, svc.getAdminListCount());
+		if (page > pagenation.getTotalPageCount()) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>location.href='/admin/adminList?pn=" + pagenation.getTotalPageCount() + "';</script>");
+			out.close();
+			return null;
+		}
+		
+		ArrayList<AdminVo> list = svc.getListAdminVo();
+		
+		request.setAttribute("pagenation", pagenation);
+		request.setAttribute("adminList", list);
 		request.setAttribute("pn", pn);
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/boardDetail.jsp");
+		forward.setPath("/views/admin/adminList.jsp");
 		return forward;
 	}
 }

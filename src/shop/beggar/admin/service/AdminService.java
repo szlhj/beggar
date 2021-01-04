@@ -117,7 +117,7 @@ public class AdminService {
 		Connection con = getConnection();
 		dao.setConnection(con);
 		
-		int count = dao.boardAdd(vo);
+		int count = dao.boardAdd(vo, 1);
 		
 		if (count > 0) {
 			commit(con);
@@ -287,7 +287,7 @@ public class AdminService {
 		Connection con = getConnection();
 		dao.setConnection(con);
 		
-		int count = dao.boardModify(vo);
+		int count = 0;//dao.boardModify(vo);
 		
 		if (count > 0) {
 			commit(con);
@@ -369,5 +369,34 @@ public class AdminService {
 		close(con);
 		
 		return isSuccess;
+	}
+	
+	public ArrayList<AdminVo> getListAdminVo(){
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ArrayList<AdminVo> list = dao.getListAdminVo();
+		
+		close(con);
+		return list;
+	}
+	
+	public int getAdminListCount() {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.getAdminListCount();
+		close(con);
+		return count;
+	}
+	
+	public AdminVo getAdminDetail(AdminVo vo) {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		AdminVo infoVo = dao.getAdminDetail(vo);
+		close(con);
+		return infoVo;
 	}
 }

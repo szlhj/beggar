@@ -65,7 +65,7 @@ public class BoardAddProcAction implements Action{
 		
 		
 		AdminService svc = new AdminService();
-		if (!svc.boardAdd(vo)) {
+		if (!svc.boardAdd(vo, 1)) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('게시판등록에 실패하였습니다.');location.href='/';</script>");

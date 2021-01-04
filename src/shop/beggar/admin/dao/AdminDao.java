@@ -119,6 +119,7 @@ public class AdminDao {
 		
 		return list;
 	}
+	
 	public ArrayList<BoardVo> getBoardArticleList(Pagenation pagenation, String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -681,5 +682,88 @@ public class AdminDao {
 			close(pstmt);
 		}
 		return count;
+	}
+
+	public ArrayList<AdminVo> getListAdminVo() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<AdminVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement(" select admin_sq, admin_supper, admin_del_fl, date_format(admin_dttm,'%Y-%c-%d') as admin_dttm, admin_id, admin_pwd, admin_name, admin_email, admin_phone, admin_memo from inf_admin_tb");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AdminVo vo = new AdminVo();
+				vo.setAdmin_del_fl(rs.getBoolean("admin_del_fl"));
+				vo.setAdmin_sq(rs.getInt("admin_sq"));
+				vo.setDttm(rs.getString("admin_dttm"));
+				vo.setAdminEmail(rs.getString("admin_email"));
+				vo.setAdminId(rs.getString("admin_id"));
+				vo.setAdminMemo(rs.getString("admin_memo"));
+				vo.setAdminName(rs.getString("admin_name"));
+				vo.setAdminPhone(rs.getString("admin_phone"));
+				vo.setAdminPwd(rs.getString("admin_pwd"));
+				vo.setAdmin_supper(rs.getBoolean("admin_supper"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int getAdminListCount() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("select count(*) from inf_admin_tb");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public AdminVo getAdminDetail(AdminVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = con.prepareStatement("select admin_sq, admin_supper, admin_del_fl, date_format(admin_dttm,'%Y-%c-%d') as admin_dttm, admin_id, admin_pwd, admin_name, admin_email, admin_phone, admin_memo from inf_admin_tb where admin_sq=?");
+			pstmt.setInt(1, vo.getAdmin_sq());
+//			admin_del_fl, date_format(admin_dttm,'%Y-%c-%d') as admin_dttm, admin_name, admin_email, admin_phone, admin_memo
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo.setAdminId(rs.getString("admin_id"));
+				vo.setAdmin_sq(rs.getInt("admin_sq"));
+				vo.setAdminPwd(rs.getString("admin_pwd"));
+				vo.setAdmin_supper(rs.getBoolean("admin_supper"));
+				vo.setAdmin_del_fl(rs.getBoolean("admin_del_fl"));
+				vo.setDttm(rs.getString("admin_dttm"));
+				vo.setAdminName(rs.getString("admin_name"));
+				vo.setAdminEmail(rs.getString("admin_email"));
+				vo.setAdminPhone(rs.getString("admin_phone"));
+				vo.setAdminMemo(rs.getString("admin_memo"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vo;
 	}
 }

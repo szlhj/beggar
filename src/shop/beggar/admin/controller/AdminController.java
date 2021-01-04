@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import shop.beggar.admin.action.AdminAction;
+import shop.beggar.admin.action.AdminDetailAction;
+import shop.beggar.admin.action.AdminListAction;
 import shop.beggar.admin.action.AdminModifyAction;
 import shop.beggar.admin.action.AdminModifyProcAction;
 import shop.beggar.admin.action.ItemAddAction;
@@ -252,6 +254,22 @@ private static final long serialVersionUID = 1L;
 			}
 		} else if (command.equals("/boardDel")) {
 			Action action = new BoardDelAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/listAdmin")) { 
+			Action action = new AdminListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/detailAdmin")) { 
+			Action action = new AdminDetailAction();
 			
 			try {
 				forward = action.execute(request, response);
