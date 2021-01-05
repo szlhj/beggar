@@ -80,7 +80,7 @@ public class LoginProcAction implements Action {
 		HttpSession session = request.getSession();
 		String idc = lm.getMemberId(session);
 		
-		session.setAttribute("ssvo", voInfo);
+		session.setAttribute("vo", voInfo);
 		session.setMaxInactiveInterval(60 * 60);
 				
 		ItemVo ivo = new ItemVo();

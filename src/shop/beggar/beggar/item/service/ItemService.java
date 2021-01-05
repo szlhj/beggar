@@ -1,7 +1,9 @@
 package shop.beggar.beggar.item.service;
 
-import static shop.beggar.common.JdbcUtil.*;
-
+import static shop.beggar.common.JdbcUtil.close;
+import static shop.beggar.common.JdbcUtil.commit;
+import static shop.beggar.common.JdbcUtil.getConnection;
+import static shop.beggar.common.JdbcUtil.rollback;
 
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -146,6 +148,43 @@ public class ItemService {
 		Connection con = getConnection();
 		dao.setConnection(con);
 		int count = dao.orderPaymentNonmber(vo);
+		boolean isSuccess = true;
+		if(count > 0) {
+			commit(con);//0보다 크면 커밋
+		} else {
+			rollback(con);  //작으면 롤백함
+			isSuccess = false;
+		}
+		close(con);
+		return isSuccess;
+	}
+	
+	public ArrayList<OrderVo> orderPaymentList(OrderVo vo) {
+		ItemDao dao= ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		ArrayList<OrderVo> list = dao.orderPaymentList(vo);
+		close(con);
+		return list;
+	}
+	
+	public OrderVo orderPaymentListAddr(OrderVo vo) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		OrderVo voInfo = dao.orderPaymentListAddr(vo);
+		
+		close(con);
+		
+		return voInfo;
+	}
+	
+	public boolean orderDelete(OrderVo vo) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.orderDelete(vo);
 		boolean isSuccess = true;
 		if(count > 0) {
 			commit(con);//0보다 크면 커밋

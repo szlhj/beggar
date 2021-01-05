@@ -213,7 +213,7 @@ public class ItemDao {
 		OrderVo vo = new OrderVo();
 		
 		try {
-			pstmt = con.prepareStatement("select a.name as mber_name, b.addr_form, b.addr_to, a.phone as mber_phone, b.record_item as record, b.name_to, b.name_to_phone from inf_mber_privcy_tb a, inf_order_tb b where a.mber_sq = b.mber_sq and a.mber_sq=? order by b.order_dttm desc limit 1");
+			pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone, b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where a.mber_sq=? order by b.order_dttm desc limit 1");
 			pstmt.setInt(1, mber_sq);
 			rs = pstmt.executeQuery();
 			
@@ -242,7 +242,7 @@ public class ItemDao {
 		ResultSet rs = null;
 		ArrayList<OrderVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok from inf_order_tb a, inf_mber_tb b, inf_goods_tb c where a.mber_sq = b.mber_sq and a.item_sq = c.item_sq and a.mber_sq=? and a.shipping=0");
+			pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, format(c.price,0), format(a.item_stok,0) as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.mber_sq=?");
 			pstmt.setInt(1, mber_sq);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -267,7 +267,7 @@ public class ItemDao {
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("update inf_order_tb set shipping=1, order_payment_plan=?, record_item=?, addr_form=?, name_form=?, name_form_phone=?, addr_to=?, name_to=?, name_to_phone=? where mber_sq=? and shipping=0");
+			pstmt = con.prepareStatement("update inf_order_tb set shipping=1, order_payment_plan=?, record_item=?, addr_form=?, name_form=?, name_form_phone=?, addr_to=?, name_to=?, name_to_phone=? where mber_sq=? and shipping=1");
 			pstmt.setInt(1, vo.getOrder_payment_plan());
 			pstmt.setString(2, vo.getRecord_item());
 			pstmt.setString(3, vo.getAddr_form());
@@ -291,7 +291,7 @@ public class ItemDao {
 		ResultSet rs = null;
 		ArrayList<OrderVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok from inf_order_tb a, inf_goods_tb c where a.item_sq = c.item_sq and a.nonmber=? and a.shipping=0");
+			pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and nonmber=?");
 			pstmt.setString(1, nonmber);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -316,7 +316,7 @@ public class ItemDao {
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("update inf_order_tb set shipping=1, order_payment_plan=?, record_item=?, addr_form=?, name_form=?, name_form_phone=?, addr_to=?, name_to=?, name_to_phone=? where nonmber=? and shipping=0");
+			pstmt = con.prepareStatement("update inf_order_tb set shipping=1, order_payment_plan=?, record_item=?, addr_form=?, name_form=?, name_form_phone=?, addr_to=?, name_to=?, name_to_phone=? where nonmber=? and shipping=1");
 			pstmt.setInt(1, vo.getOrder_payment_plan());
 			pstmt.setString(2, vo.getRecord_item());
 			pstmt.setString(3, vo.getAddr_form());
@@ -326,6 +326,93 @@ public class ItemDao {
 			pstmt.setString(7, vo.getName_to());
 			pstmt.setString(8, vo.getName_to_phone());
 			pstmt.setString(9, vo.getNonmber());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public ArrayList<OrderVo> orderPaymentList(OrderVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrderVo> list = new ArrayList<>();
+		try {
+			if (vo.getMber_sq() == 0) {
+				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.nonmber=?");
+				pstmt.setString(1, vo.getNonmber());
+			} else {
+				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.mber_sq=?");
+				pstmt.setInt(1, vo.getMber_sq());
+			}
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo = new OrderVo();
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setItem_img(rs.getString("item_img"));
+				vo.setItem_stok(rs.getInt("stok"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setOrder_dttm(rs.getString("order_dttm"));
+				list.add(vo);
+				}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+	
+	public OrderVo orderPaymentListAddr(OrderVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			if (vo.getMber_sq() == 0) {
+				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where shipping=1 and b.nonmber=? order by b.nonmber asc limit 1");
+				pstmt.setString(1, vo.getNonmber());
+			} else {
+				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where shipping=1 and b.mber_sq=? order by b.nonmber asc limit 1");
+				pstmt.setInt(1, vo.getMber_sq());
+			}
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo.setName_form(rs.getString("mber_name"));
+				vo.setAddr_form(rs.getString("addr_form"));
+				vo.setName_form_phone(rs.getString("mber_phone"));
+				vo.setRecord_item(rs.getString("record"));
+				vo.setName_to(rs.getString("name_to"));
+				vo.setAddr_to(rs.getString("addr_to"));
+				vo.setName_to_phone(rs.getString("name_to_phone"));
+				vo.setOrder_dttm(rs.getString("order_dttm"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
+	}
+	
+	public int orderDelete(OrderVo vo) {  //회원 결재
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			if (vo.getMber_sq() == 0) {
+				pstmt = con.prepareStatement("update inf_order_tb set shipping=6 where nonmber=? and shipping=1");
+				pstmt.setString(1, vo.getNonmber());
+			} else {
+				pstmt = con.prepareStatement("update inf_order_tb set shipping=6 where mber_sq=? and shipping=1");
+				pstmt.setInt(1, vo.getMber_sq());
+			}
 			count = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

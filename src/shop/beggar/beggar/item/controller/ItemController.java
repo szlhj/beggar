@@ -13,7 +13,10 @@ import shop.beggar.beggar.item.action.DetailAction;
 import shop.beggar.beggar.item.action.DummyAction;
 import shop.beggar.beggar.item.action.MainItemAction;
 import shop.beggar.beggar.item.action.OrderAction;
+import shop.beggar.beggar.item.action.OrderDeleteAction;
+import shop.beggar.beggar.item.action.OrderInquiryAction;
 import shop.beggar.beggar.item.action.OrderProcAction;
+import shop.beggar.beggar.item.action.OrderViewAction;
 import shop.beggar.beggar.item.action.PurchaseAction;
 import shop.beggar.beggar.item.action.ShopBasketAction;
 import shop.beggar.common.Action;
@@ -91,8 +94,33 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
+		} else if (command.equals("/orderView")) { //결제후로직
+			Action action = new OrderViewAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderInquiry")) { //비회원 주문 조회 페이지
+			Action action = new OrderInquiryAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderDelete")) { //주문조회 페이지 삭제로직
+			Action action = new OrderDeleteAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
-//-----------------------------------------------------------------------------------------		
+		
+		
 		if (forward != null) {
 			if (forward.isRedirect()) {
 				//Redirect

@@ -24,9 +24,6 @@
 <body>
 	<jsp:include page="/views/navbar.jsp" />
 	<jsp:include page="/views/item/navigation.jsp"></jsp:include>
-		
-	<button onclick="location.href='/admin/'">관리자 홈</button><br>
-	<button onclick="location.href='/item/order'">결제하기</button>
 	
 	<jsp:include page="/views/item/itemPage.jsp"></jsp:include>
 </body>

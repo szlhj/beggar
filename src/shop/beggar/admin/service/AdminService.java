@@ -1,5 +1,10 @@
 package shop.beggar.admin.service;
 
+import static shop.beggar.common.JdbcUtil.close;
+import static shop.beggar.common.JdbcUtil.commit;
+import static shop.beggar.common.JdbcUtil.getConnection;
+import static shop.beggar.common.JdbcUtil.rollback;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
