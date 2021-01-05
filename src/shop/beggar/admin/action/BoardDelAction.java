@@ -1,7 +1,5 @@
 package shop.beggar.admin.action;
 
-import java.io.PrintWriter;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -9,7 +7,6 @@ import javax.servlet.http.HttpSession;
 import shop.beggar.admin.service.AdminService;
 import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.beggar.vo.BoardVo;
-import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
