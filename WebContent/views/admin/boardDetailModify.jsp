@@ -7,7 +7,7 @@
 	BoardVo boardVo = (BoardVo) request.getAttribute("boardVo");
 	String pn = (String) request.getAttribute("pn");
 
-	String board_number = boardVo.getBoard_number();
+	int board_number = boardVo.getBoard_number();
 
 	String content = Parser.chgToHtml(boardVo.getContent());
 %>
@@ -65,10 +65,10 @@
 				게시판번호<input type="text" id="board_sq" name="board_sq" value="<%=boardVo.getBoard_sq() %>" readonly="readonly" /><br>
 				카테고리
 					<select id="board_number" name="board_number">
-						<option value="0" <%="0".equals(board_number)?"selected":"" %>></option> 
-						<option value="1"  <%="1".equals(board_number)?"selected":"" %>>공지사항</option>
-						<option value="2" <%="2".equals(board_number)?"selected":"" %>>1:1문의</option>
-						<option value="3" <%="3".equals(board_number)?"selected":"" %>>제품관련문의</option>
+						<option value=0 <%=0==board_number?"selected":"" %>></option> 
+						<option value=1 <%=1==board_number?"selected":"" %>>공지사항</option>
+						<option value=2 <%=2==board_number?"selected":"" %>>1:1문의</option>
+						<option value=3 <%=3==board_number?"selected":"" %>>제품관련문의</option>
 					</select>
 					<br>
 					상품번호<input type="text" id="goods_info" name="goods_info" value="<%=boardVo.getGoods_info() %>" /><br>

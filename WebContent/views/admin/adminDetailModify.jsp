@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>내가 쓴 글 보기</title>
+<title>관리자 수정</title>
 </head>
 <body>
-
+	
 </body>
 </html>

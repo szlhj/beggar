@@ -43,7 +43,7 @@ public class BoardListAction implements Action {
 		
 		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
-		MemberVo mberVo = (MemberVo) session.getAttribute("memberVo");
+		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 		
 		String id="0";
 		
@@ -114,7 +114,9 @@ public class BoardListAction implements Action {
 		request.setAttribute("list", list);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);
-
+		request.setAttribute("adminVo", adminVo);
+		request.setAttribute("vo", mberVo);
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/boardList.jsp");// 경로
 		return forward;

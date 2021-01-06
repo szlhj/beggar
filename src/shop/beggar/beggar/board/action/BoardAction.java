@@ -2,7 +2,10 @@ package shop.beggar.beggar.board.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import shop.beggar.admin.vo.AdminVo;
+import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
@@ -23,6 +26,13 @@ import shop.beggar.common.ActionForward;
 public class BoardAction implements Action{
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		HttpSession session = request.getSession();
+		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
+		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
+		
+		request.setAttribute("adminVo", adminVo);
+		request.setAttribute("vo", mberVo);
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/board/board.jsp");
 		return forward;

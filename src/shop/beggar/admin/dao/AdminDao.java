@@ -119,12 +119,13 @@ public class AdminDao {
 		
 		return list;
 	}
+	
 	public ArrayList<BoardVo> getBoardArticleList(Pagenation pagenation, String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		ArrayList<BoardVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" order by mber_sq LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" group by board_sq LIMIT ?,?");
 			//select * from (inf_board_tb a, inf_mber_tb b a.mber_sq=b.mber_sq) 
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
@@ -132,8 +133,9 @@ public class AdminDao {
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
 				vo.setBoard_sq(rs.getInt("board_sq"));
+				vo.setMber_sq(rs.getInt("mber_sq"));
 				vo.setMber_id(rs.getString("id"));
-				vo.setBoard_number(rs.getString("board_number"));
+				vo.setBoard_number(rs.getInt("board_number"));
 				vo.setCount(rs.getInt("count"));
 				vo.setDel_fl(rs.getInt("del_fl"));
 				vo.setDttm(rs.getString("dttm"));
@@ -270,16 +272,16 @@ public class AdminDao {
 		return count;
 	}
 	
-	public int boardAdd(BoardVo vo, int admin_sq) {	
+	public int boardAdd(BoardVo vo) {	
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, mber_sq, count) values (?,?,?,?,?,0)");
-			pstmt.setString(1, vo.getBoard_number());
-			pstmt.setString(2, vo.getGoods_info());
-			pstmt.setString(3, vo.getTitle());
-			pstmt.setString(4, vo.getContent());
-			pstmt.setInt(5, vo.getMber_sq());
+				pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, count, mber_sq) values (?,?,?,?,0,?)");
+				pstmt.setInt(1, vo.getBoard_number());
+				pstmt.setString(2, vo.getGoods_info());
+				pstmt.setString(3, vo.getTitle());
+				pstmt.setString(4, vo.getContent());
+				pstmt.setInt(5, vo.getMber_sq());
 			
 			count = pstmt.executeUpdate();
 			
@@ -497,7 +499,7 @@ public class AdminDao {
 				vo.setBoard_sq(rs.getInt("board_sq"));
 				vo.setMber_id(rs.getString("id"));
 				vo.setDel_fl(rs.getBoolean("del_fl"));
-				vo.setBoard_number(rs.getString("board_number"));
+				vo.setBoard_number(rs.getInt("board_number"));
 				vo.setGoods_info(rs.getString("goods_info"));
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString(Parser.chgToHtml("content")));
@@ -573,6 +575,24 @@ public class AdminDao {
 			pstmt.setBoolean(1, vo.isShow_fl());
 			pstmt.setInt(2, admin_sq);
 			pstmt.setInt(3, vo.getItem_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	public int increaseCount(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set count=count+1 where board_sq=?");
+			pstmt.setInt(1, vo.getBoard_sq());
 			
 			count = pstmt.executeUpdate();
 			
@@ -673,6 +693,131 @@ public class AdminDao {
 			pstmt = con.prepareStatement("update inf_file_tb set item_sq=? where fileRealName=?");
 			pstmt.setInt(1, item_sq);
 			pstmt.setString(2, newFileRealName);
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public ArrayList<AdminVo> getListAdminVo() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<AdminVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement(" select admin_sq, admin_supper, admin_del_fl, date_format(admin_dttm,'%Y-%c-%d') as admin_dttm, admin_id, admin_pwd, admin_name, admin_email, admin_phone, admin_memo from inf_admin_tb");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				AdminVo vo = new AdminVo();
+				vo.setAdmin_del_fl(rs.getBoolean("admin_del_fl"));
+				vo.setAdmin_sq(rs.getInt("admin_sq"));
+				vo.setDttm(rs.getString("admin_dttm"));
+				vo.setAdminEmail(rs.getString("admin_email"));
+				vo.setAdminId(rs.getString("admin_id"));
+				vo.setAdminMemo(rs.getString("admin_memo"));
+				vo.setAdminName(rs.getString("admin_name"));
+				vo.setAdminPhone(rs.getString("admin_phone"));
+				vo.setAdminPwd(rs.getString("admin_pwd"));
+				vo.setAdmin_supper(rs.getBoolean("admin_supper"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public int getAdminListCount() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("select count(*) from inf_admin_tb");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public AdminVo getAdminDetail(AdminVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			pstmt = con.prepareStatement("select admin_sq, admin_supper, admin_del_fl, date_format(admin_dttm,'%Y-%c-%d') as admin_dttm, admin_id, admin_pwd, admin_name, admin_email, admin_phone, admin_memo from inf_admin_tb where admin_sq=?");
+			pstmt.setInt(1, vo.getAdmin_sq());
+//			admin_del_fl, date_format(admin_dttm,'%Y-%c-%d') as admin_dttm, admin_name, admin_email, admin_phone, admin_memo
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo.setAdminId(rs.getString("admin_id"));
+				vo.setAdmin_sq(rs.getInt("admin_sq"));
+				vo.setAdminPwd(rs.getString("admin_pwd"));
+				vo.setAdmin_supper(rs.getBoolean("admin_supper"));
+				vo.setAdmin_del_fl(rs.getBoolean("admin_del_fl"));
+				vo.setDttm(rs.getString("admin_dttm"));
+				vo.setAdminName(rs.getString("admin_name"));
+				vo.setAdminEmail(rs.getString("admin_email"));
+				vo.setAdminPhone(rs.getString("admin_phone"));
+				vo.setAdminMemo(rs.getString("admin_memo"));
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(rs);
+			close(pstmt);
+		}
+		return vo;
+	}
+	public int boardDel(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set del_fl=?, dttm=now() where board_sq=?");
+			pstmt.setBoolean(1, vo.isDel_fl());
+			pstmt.setInt(2, vo.getBoard_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	public int boardModify(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set board_number=?, goods_info=?, title=?, content=?, count=? where board_sq=?");
+			pstmt.setInt(1, vo.getBoard_number());
+			pstmt.setString(2, vo.getGoods_info());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setInt(5, vo.getCount());
+			pstmt.setInt(6, vo.getBoard_sq());
 			
 			count = pstmt.executeUpdate();
 			

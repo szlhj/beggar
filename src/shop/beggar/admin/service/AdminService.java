@@ -1,5 +1,10 @@
 package shop.beggar.admin.service;
 
+import static shop.beggar.common.JdbcUtil.close;
+import static shop.beggar.common.JdbcUtil.commit;
+import static shop.beggar.common.JdbcUtil.getConnection;
+import static shop.beggar.common.JdbcUtil.rollback;
+
 import java.sql.Connection;
 import java.util.ArrayList;
 
@@ -110,7 +115,7 @@ public class AdminService {
 		return count;
 	}
 	
-	public boolean boardAdd(BoardVo vo, int admin_sq) {
+	public boolean boardAdd(BoardVo vo) {
 		boolean isSuccess = true;
 		
 		AdminDao dao = AdminDao.getInstance();
@@ -131,6 +136,27 @@ public class AdminService {
 		return isSuccess;
 	}
 
+	public boolean increaseCount(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.increaseCount(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
 	public boolean registerAdmin(AdminVo vo) {
 		boolean isSuccess = true;
 		
@@ -300,6 +326,26 @@ public class AdminService {
 		
 		return isSuccess;
 	}
+	public boolean boardDel(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.boardDel(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
 
 	public boolean itemDel(ItemVo vo, int admin_sq) {
 		boolean isSuccess = true;
@@ -369,5 +415,34 @@ public class AdminService {
 		close(con);
 		
 		return isSuccess;
+	}
+	
+	public ArrayList<AdminVo> getListAdminVo(){
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ArrayList<AdminVo> list = dao.getListAdminVo();
+		
+		close(con);
+		return list;
+	}
+	
+	public int getAdminListCount() {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.getAdminListCount();
+		close(con);
+		return count;
+	}
+	
+	public AdminVo getAdminDetail(AdminVo vo) {
+		AdminDao dao= AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		AdminVo infoVo = dao.getAdminDetail(vo);
+		close(con);
+		return infoVo;
 	}
 }

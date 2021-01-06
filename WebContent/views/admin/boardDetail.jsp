@@ -1,3 +1,5 @@
+<%@page import="shop.beggar.admin.vo.AdminVo"%>
+<%@page import="shop.beggar.beggar.vo.MemberVo"%>
 <%@page import="shop.beggar.beggar.vo.BoardVo"%>
 <%@page import="shop.beggar.common.Parser"%>
 <%@page import="shop.beggar.beggar.vo.ItemVo"%>
@@ -5,11 +7,31 @@
     pageEncoding="UTF-8"%>
 <%
 	BoardVo boardVo = (BoardVo) request.getAttribute("boardVo");
+	AdminVo adminVo = (AdminVo) request.getAttribute("adminVo");
+	MemberVo memberVo = (MemberVo) request.getAttribute("vo");
+	String mber_id = request.getParameter("mber_id");
+	boardVo.setMber_id(mber_id);
+	
+	if(memberVo == null && adminVo == null){
+		memberVo = new MemberVo();
+		memberVo.setId("");
+	}
+	
+	if(adminVo != null){
+		memberVo = new MemberVo();
+		memberVo.setId("관리자");
+	}
+	
+	if(boardVo.getMber_id()==null||boardVo.getMber_id().equals("")){
+		boardVo.setMber_id("관리자");
+	}
+	
 	String pn = (String) request.getAttribute("pn");
 	
-	String board_number = boardVo.getBoard_number();
+	int board_number = boardVo.getBoard_number();
 	
 	String content = Parser.chgToHtml(boardVo.getContent());
+	
 	
 %>
 <!DOCTYPE html>
@@ -28,7 +50,6 @@
 	function modify() {
 		location.href = "/admin/boardModifyView?pn="+<%=pn %>+"&board_sq="+<%=boardVo.getBoard_sq() %>;
 	}
-	
 	function cancle() {
 		location.href = "/admin/boardList?pn=" + <%=pn%>;
 	}
@@ -47,12 +68,12 @@
 			게시판번호<input type="text" id="board_sq" name="board_sq" value="<%=boardVo.getBoard_sq() %>" readonly="readonly" /><br>
 			
 			<%String Board_numberName ="";
-			if(boardVo.getBoard_number().equals("1")){ 
-			Board_numberName = "공지사항";
-			}else if(boardVo.getBoard_number().equals("2")){ 
-			Board_numberName = "1:1문의";
-			}else if(boardVo.getBoard_number().equals("3")){ 
-			Board_numberName = "제품관련문의";
+			if(boardVo.getBoard_number()==1){ 
+				Board_numberName = "공지사항";
+			}else if(boardVo.getBoard_number()==2){ 
+				Board_numberName = "1:1문의";
+			}else if(boardVo.getBoard_number()==3){ 
+				Board_numberName = "제품관련문의";
 			} %>
 			
 			카테고리<input type="text" id="board_number" name="board_number" value="<%=Board_numberName %>" readonly="readonly"/><br>
@@ -60,15 +81,17 @@
 			제목<input type="text" id="title" name="title" value="<%=boardVo.getTitle() %>" readonly="readonly"/><br>
 			내용
 			<div readonly="readonly">
-			<%=content %>
+				<%=content %>
 			</div>
-			<button onclick="modify()">수정하기</button>
-			<%if (boardVo.isDel_fl() == true) { %>
-				<button onclick="del(false)">취소하기</button>
-			<%} else { %>
-				<button onclick="del(true)">삭제하기</button>
+				<%if (memberVo!=null&&boardVo.getMber_id().equals(memberVo.getId())) {%>
+					<button onclick="modify()">수정하기</button>
+				<%if (boardVo.isDel_fl() == true) { %>
+					<button onclick="del(false)">취소하기</button>
+				<%} else { %>
+					<button onclick="del(true)">삭제하기</button>
+				<%} %>
 			<%} %>
-			<button onclick="cancle()">취소</button>
+			<button onclick="cancle()">뒤로가기</button>
 		</section>
 	</div>
 </body>

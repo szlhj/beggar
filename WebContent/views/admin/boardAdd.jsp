@@ -1,7 +1,38 @@
+<%@page import="shop.beggar.beggar.vo.MemberVo"%>
 <%@page import="shop.beggar.admin.vo.AdminVo"%>
+<%@page import="shop.beggar.beggar.vo.BoardVo"%>
+<%@page import="shop.beggar.common.Pagenation"%>
+<%@page import="shop.beggar.beggar.vo.ItemVo"%>
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+	<%
+	    ArrayList<BoardVo> list = (ArrayList<BoardVo>) request.getAttribute("list");
+		Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
+		AdminVo adminVo = (AdminVo) request.getAttribute("adminVo");
+		MemberVo memberVo = (MemberVo) request.getAttribute("vo");
+		
+		if(memberVo == null && adminVo == null){
+			memberVo = new MemberVo();
+			memberVo.setId("");
+		}
+		
+		if(adminVo != null){
+			memberVo = new MemberVo();
+			memberVo.setId("관리자");
+		}
+		
+		String pn = request.getParameter("pn");
+		String filter = request.getParameter("filter");
+		
+		if (filter == null) {
+			filter = "";
+		}
+		if (pn == null) {
+			pn = "1";
+		}
+		
+    %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,7 +90,9 @@
 					게시판목차
 					<select id="board_number" name="board_number">
 						<option value="0" selected></option>
+						<%if(adminVo!=null){%>
 						<option value="1">공지사항</option>
+						<%}%>
 						<option value="2">1:1문의</option>
 						<option value="3">제품관련문의</option>
 					</select>

@@ -1,6 +1,7 @@
 package shop.beggar.beggar.item.dao;
 
 import static shop.beggar.common.JdbcUtil.close;
+import static shop.beggar.common.JdbcUtil.getConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
+import shop.beggar.beggar.vo.OrderVo;
 import shop.beggar.common.Pagenation;
 
 /**
@@ -47,7 +49,7 @@ public class ItemDao {
 		ArrayList<ItemVo> list = new ArrayList<>();
 		try {
 			if(category.equals("0")) {
-				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,item_sq,category from inf_item_tb where del_fl=0 and show_fl=1 LIMIT ?,?");
+				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,item_sq,category from inf_goods_tb where del_fl=0 and show_fl=1 LIMIT ?,?");
 		//			pstmt.setInt(1, pagenation.getStartArticleNumber());
 				pstmt.setInt(1, pagenation.getStartArticleNumber());
 				pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
@@ -65,7 +67,7 @@ public class ItemDao {
 					list.add(vo);
 					}
 			} else {
-				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,category,item_sq from inf_item_tb a where del_fl=0 and show_fl=1 and category='" + category + "' LIMIT ?,?");
+				pstmt = con.prepareStatement("select filepath,preview,item_name,price,discount,category,item_sq from inf_goods_tb a where del_fl=0 and show_fl=1 and category='" + category + "' LIMIT ?,?");
 				pstmt.setInt(1, pagenation.getStartArticleNumber());
 				pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
 				rs = pstmt.executeQuery();
@@ -98,13 +100,13 @@ public class ItemDao {
 		int count = 0;
 		try {
 			if(category.equals("0")) {
-			pstmt = con.prepareStatement("select count(*) from inf_item_tb where del_fl=0 and show_fl=1");
+			pstmt = con.prepareStatement("select count(*) from inf_goods_tb where del_fl=0 and show_fl=1");
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
 			}
 			} else {
-				pstmt = con.prepareStatement("select count(*) from inf_item_tb where del_fl=0 and show_fl=1 and category="+ category);
+				pstmt = con.prepareStatement("select count(*) from inf_goods_tb where del_fl=0 and show_fl=1 and category="+ category);
 				rs = pstmt.executeQuery();
 				while (rs.next()) {
 					count = rs.getInt(1);
@@ -124,7 +126,7 @@ public class ItemDao {
 		int count = 0;
 		try {
 			pstmt = con.prepareStatement    //bbs.nextval 은 bbs라는 시퀀스를 따로 만들어 둔 상태에서 ex)게시판 번호 같이 순서대로 올라가는 번호를 입력할때 따로 만들어두고 사용 (순서대로 1씩오름)
-					("insert into inf_item_tb(price,discount,stok,del_fl,show_fl,category,code,color,item_name,item_number,item_rating,size,explanation,preview,filepath) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+					("insert into inf_goods_tb(price,discount,stok,del_fl,show_fl,category,code,color,item_name,item_number,item_rating,size,explanation,preview,filepath) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
 			pstmt.setInt(1, vo.getPrice());		//mber_sq에 id가 들어감
 			pstmt.setInt(2, vo.getDiscount());
 			pstmt.setInt(3, vo.getStok());
@@ -154,7 +156,7 @@ public class ItemDao {
 		ResultSet rs = null;
 		
 		try {
-			pstmt = con.prepareStatement("select item_sq , price, discount , stok , dttm , category , code , color, item_name, item_number, item_rating, size , explanation , preview, filepath from inf_item_tb where del_fl=0 and show_fl and item_sq=?");
+			pstmt = con.prepareStatement("select item_sq , price, discount , stok , dttm , category , code , color, item_name, item_number, item_rating, size , explanation , preview, filepath from inf_goods_tb where del_fl=0 and show_fl=1 and item_sq=?");
 			pstmt.setInt(1, vo.getItem_sq());
 			rs = pstmt.executeQuery();
 			
@@ -185,4 +187,243 @@ public class ItemDao {
 		return vo;
 	}
 	
+	public int registerCart(ItemVo vo) {  //장바구니 정보를 db 테이블에 저장
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement    
+					("insert into inf_cart_tb(item_sq,mber_sq) values(?,?)");
+			pstmt.setInt(1, vo.getItem_sq());		//mber_sq에 id가 들어감
+			pstmt.setInt(2, vo.getMber_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+//---------------------------------------------------------------------------
+//		inf_orser_tb 관련 시작	
+	
+	public OrderVo orderMberInfo(int mber_sq) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		OrderVo vo = new OrderVo();
+		
+		try {
+			pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone, b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where a.mber_sq=? order by b.order_dttm desc limit 1");
+			pstmt.setInt(1, mber_sq);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo.setName_form(rs.getString("mber_name"));
+				vo.setAddr_form(rs.getString("addr_form"));
+				vo.setName_form_phone(rs.getString("mber_phone"));
+				vo.setRecord_item(rs.getString("record"));
+				vo.setName_to(rs.getString("name_to"));
+				vo.setAddr_to(rs.getString("addr_to"));
+				vo.setName_to_phone(rs.getString("name_to_phone"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
+	}
+	
+	public ArrayList<OrderVo> orderItemList(int mber_sq) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrderVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, format(c.price,0), format(a.item_stok,0) as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.mber_sq=?");
+			pstmt.setInt(1, mber_sq);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				OrderVo vo = new OrderVo();
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setItem_img(rs.getString("item_img"));
+				vo.setItem_stok(rs.getInt("stok"));
+				vo.setPrice(rs.getInt("price"));
+				list.add(vo);
+				}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+	
+	public int orderPayment(OrderVo vo) {  //회원 결재
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("update inf_order_tb set shipping=1, order_payment_plan=?, record_item=?, addr_form=?, name_form=?, name_form_phone=?, addr_to=?, name_to=?, name_to_phone=? where mber_sq=? and shipping=1");
+			pstmt.setInt(1, vo.getOrder_payment_plan());
+			pstmt.setString(2, vo.getRecord_item());
+			pstmt.setString(3, vo.getAddr_form());
+			pstmt.setString(4, vo.getName_form());
+			pstmt.setString(5, vo.getName_form_phone());
+			pstmt.setString(6, vo.getAddr_to());
+			pstmt.setString(7, vo.getName_to());
+			pstmt.setString(8, vo.getName_to_phone());
+			pstmt.setInt(9, vo.getMber_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public ArrayList<OrderVo> orderItemListnonmber(String nonmber) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrderVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and nonmber=?");
+			pstmt.setString(1, nonmber);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				OrderVo vo = new OrderVo();
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setItem_img(rs.getString("item_img"));
+				vo.setItem_stok(rs.getInt("stok"));
+				vo.setPrice(rs.getInt("price"));
+				list.add(vo);
+				}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+	
+	public int orderPaymentNonmber(OrderVo vo) {  //비회원 결재
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("update inf_order_tb set shipping=1, order_payment_plan=?, record_item=?, addr_form=?, name_form=?, name_form_phone=?, addr_to=?, name_to=?, name_to_phone=? where nonmber=? and shipping=1");
+			pstmt.setInt(1, vo.getOrder_payment_plan());
+			pstmt.setString(2, vo.getRecord_item());
+			pstmt.setString(3, vo.getAddr_form());
+			pstmt.setString(4, vo.getName_form());
+			pstmt.setString(5, vo.getName_form_phone());
+			pstmt.setString(6, vo.getAddr_to());
+			pstmt.setString(7, vo.getName_to());
+			pstmt.setString(8, vo.getName_to_phone());
+			pstmt.setString(9, vo.getNonmber());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public ArrayList<OrderVo> orderPaymentList(OrderVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrderVo> list = new ArrayList<>();
+		try {
+			if (vo.getMber_sq() == 0) {
+				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.nonmber=?");
+				pstmt.setString(1, vo.getNonmber());
+			} else {
+				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.mber_sq=?");
+				pstmt.setInt(1, vo.getMber_sq());
+			}
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				vo = new OrderVo();
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setItem_img(rs.getString("item_img"));
+				vo.setItem_stok(rs.getInt("stok"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setOrder_dttm(rs.getString("order_dttm"));
+				list.add(vo);
+				}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+			close(rs);
+		}
+		return list;
+	}
+	
+	public OrderVo orderPaymentListAddr(OrderVo vo) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			if (vo.getMber_sq() == 0) {
+				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where shipping=1 and b.nonmber=? order by b.nonmber asc limit 1");
+				pstmt.setString(1, vo.getNonmber());
+			} else {
+				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where shipping=1 and b.mber_sq=? order by b.nonmber asc limit 1");
+				pstmt.setInt(1, vo.getMber_sq());
+			}
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				vo.setName_form(rs.getString("mber_name"));
+				vo.setAddr_form(rs.getString("addr_form"));
+				vo.setName_form_phone(rs.getString("mber_phone"));
+				vo.setRecord_item(rs.getString("record"));
+				vo.setName_to(rs.getString("name_to"));
+				vo.setAddr_to(rs.getString("addr_to"));
+				vo.setName_to_phone(rs.getString("name_to_phone"));
+				vo.setOrder_dttm(rs.getString("order_dttm"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
+	}
+	
+	public int orderDelete(OrderVo vo) {  //회원 결재
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			if (vo.getMber_sq() == 0) {
+				pstmt = con.prepareStatement("update inf_order_tb set shipping=6 where nonmber=? and shipping=1");
+				pstmt.setString(1, vo.getNonmber());
+			} else {
+				pstmt = con.prepareStatement("update inf_order_tb set shipping=6 where mber_sq=? and shipping=1");
+				pstmt.setInt(1, vo.getMber_sq());
+			}
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+
+//		inf_orser_tb 관련 종료
+//---------------------------------------------------------------------------
+	
+		
 }

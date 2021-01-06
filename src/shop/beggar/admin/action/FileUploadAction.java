@@ -109,8 +109,9 @@ public class FileUploadAction implements Action {
 		
 		HttpSession session = request.getSession();
 		session.setAttribute("fileImgNamePathDirectory", directory);
-		session.setAttribute("fileImgNameDomain", domain);
 		session.setAttribute("fileImgNamePathFoldery", pathFolder);
+		
+		session.setAttribute("fileImgNameDomain", domain);
 		session.setAttribute("fileImgNamePathRealName", newFileRealName);
 		
 //		ActionForward forward = new ActionForward();

@@ -36,7 +36,7 @@ public class BoardAddProcAction implements Action{
 		
 		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
-		MemberVo mberVo = (MemberVo) session.getAttribute("memberVo");
+		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 	    
 		int sq = 0;
 		//일반 회원인 경우
@@ -50,7 +50,7 @@ public class BoardAddProcAction implements Action{
 			sq = mberVo.getMber_sq();
 		}
 	    
-		String board_number = request.getParameter("board_number");
+		int board_number = Integer.parseInt(request.getParameter("board_number"));
 		String goods_info = request.getParameter("goods_info");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");  
@@ -74,7 +74,7 @@ public class BoardAddProcAction implements Action{
 		}
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/admin/");
+		forward.setPath("/admin/boardList");
 		forward.setRedirect(true);
 		return forward;
 	}

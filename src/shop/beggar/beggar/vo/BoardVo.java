@@ -5,7 +5,7 @@ public class BoardVo {
 	
 	private int board_sq;// 게시판 넘버
 	private int person_sq;// 사람 번호
-	private String board_number;// 게시판 구분
+	private int board_number;// 게시판 구분
 	private int count; // 게시판 조회수
 	private int del_fl; // 삭제 유무
 	private String dttm; // 게시판 작성 시간
@@ -61,10 +61,10 @@ public class BoardVo {
 	public void setPerson_sq(int person_sq) {
 		this.person_sq = person_sq;
 	}
-	public String getBoard_number() {
+	public int getBoard_number() {
 		return board_number;
 	}
-	public void setBoard_number(String board_number) {
+	public void setBoard_number(int board_number) {
 		this.board_number = board_number;
 	}
 	public int getCount() {

@@ -50,10 +50,10 @@ public class BoardDelAction implements Action {
 		
 		vo.setDel_fl(del_fl);
 		
-		if (!svc.boardDel(vo, adminVo.getAdmin_sq())) {
+		if (!svc.boardDel(vo)) {
 			response.setContentType("text/html;charset=UTF-8;");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('상품 삭제에 실패하였습니다.');history.back();</script>");
+			out.println("<script>alert('게시판 삭제에 실패하였습니다.');history.back();</script>");
 			out.close();
 			return null;
 		}

@@ -40,6 +40,20 @@
 <body>
 	<div>
 		<section>
+		
+			<button onclick="modifyView()">수정</button>
+			<%if (itemVo.isShow_fl() == true) { %>
+				<button onclick="show(false)">등록중지</button>
+			<%} else { %>
+				<button onclick="show(true)">등록하기</button>
+			<%} %>
+			<%if (itemVo.isDel_fl() == true) { %>
+				<button onclick="del(false)">다시한번?</button>
+			<%} else { %>
+				<button onclick="del(true)">삭제하기</button>
+			<%} %>
+			<button onclick="cancle()">취소</button>
+			
 			<form action="/admin/itemModifyView?pn=<%=pn %>" method="post" id="viewForm">
 				상품일련번호<input type="text" id="item_sq" name="item_sq" value="<%=itemVo.getItem_sq() %>" readonly="readonly" /><br>
 				상품이름<input type="text" id="item_name" name="item_name" value="<%=itemVo.getItem_name() %>" /><br>
@@ -72,6 +86,7 @@
 					<%=content %>
 				</div>
 			</form>
+			
 			<button onclick="modifyView()">수정</button>
 			<%if (itemVo.isShow_fl() == true) { %>
 				<button onclick="show(false)">등록중지</button>
@@ -84,6 +99,7 @@
 				<button onclick="del(true)">삭제하기</button>
 			<%} %>
 			<button onclick="cancle()">취소</button>
+			
 		</section>
 	</div>
 </body>
