@@ -10,8 +10,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import shop.beggar.admin.action.AdminAction;
+import shop.beggar.admin.action.AdminDetailAction;
+import shop.beggar.admin.action.AdminListAction;
 import shop.beggar.admin.action.AdminModifyAction;
 import shop.beggar.admin.action.AdminModifyProcAction;
+import shop.beggar.admin.action.AdminRegisterAction;
+import shop.beggar.admin.action.AdminRegisterProcAction;
+import shop.beggar.admin.action.BoardAddAction;
+import shop.beggar.admin.action.BoardAddProcAction;
+import shop.beggar.admin.action.BoardDelAction;
+import shop.beggar.admin.action.BoardDetailAction;
+import shop.beggar.admin.action.BoardListAction;
+import shop.beggar.admin.action.BoardModifyProcAction;
+import shop.beggar.admin.action.BoardModifyViewAction;
+import shop.beggar.admin.action.FileExAction;
+import shop.beggar.admin.action.FileUploadAction;
 import shop.beggar.admin.action.ItemAddAction;
 import shop.beggar.admin.action.ItemAddProcAction;
 import shop.beggar.admin.action.ItemDelAction;
@@ -252,6 +265,22 @@ private static final long serialVersionUID = 1L;
 			}
 		} else if (command.equals("/boardDel")) {
 			Action action = new BoardDelAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/listAdmin")) { 
+			Action action = new AdminListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/detailAdmin")) { 
+			Action action = new AdminDetailAction();
 			
 			try {
 				forward = action.execute(request, response);

@@ -1,39 +1,30 @@
-package shop.beggar.admin.action;
+package shop.beggar.beggar.item.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
-import shop.beggar.admin.service.AdminService;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
 /**
- * @PackageName		: shop.beggar.admin.action
- * @FileName		: AdminAction.java
- * @Since			: 2020. 12. 7.
+ * @PackageName		: shop.beggar.beggar.item.action
+ * @FileName		: OrderInquiryAction.java
+ * @Since			: 2021. 1. 5.
  * @Author			: HJLee
- * @Description		: 
+ * @Description		: 비회원 주문조회
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 7.		HJLee				최초 작성
+ * 2021. 1. 5.		HJLee				최초 작성
  *
  */
-public class AdminAction implements Action{
+public class OrderInquiryAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
-		AdminService svc = new AdminService();
-		int count = svc.supperAdminInfo();
-		
-		HttpSession session = request.getSession();
-		session.setAttribute("adminSupperCount", count);
-		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/adminMain.jsp");
+		forward.setPath("/views/item/orderInquiry.jsp");
 		return forward;
 	}
 }

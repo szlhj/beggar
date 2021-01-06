@@ -5,7 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import shop.beggar.admin.service.AdminService;
 import shop.beggar.beggar.vo.BoardVo;
-import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 

@@ -30,8 +30,14 @@ public class AdminModifyAction implements Action {
 		HttpSession session = request.getSession();
 		AdminVo vo = (AdminVo) session.getAttribute("adminVo");
 		
+		String admin_sq = request.getParameter("admin_sq");
+		
 		AdminService svc = new AdminService();
 		AdminVo infoVo = svc.adminInfoAll(vo);
+		
+		if (admin_sq != null) {
+			infoVo.setAdmin_sq(Integer.parseInt("admin_sq"));
+		}
 		
 		request.setAttribute("vo", infoVo);
 		

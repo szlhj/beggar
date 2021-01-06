@@ -1,6 +1,6 @@
 package shop.beggar.admin.action;
 
-import static shop.beggar.common.RegExp.*;
+import static shop.beggar.common.RegExp.REGEXP_NUMBER;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,17 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import shop.beggar.common.RegExp;
 import shop.beggar.admin.service.AdminService;
 import shop.beggar.admin.vo.AdminVo;
-import shop.beggar.beggar.item.service.ItemService;
 import shop.beggar.beggar.vo.BoardVo;
-import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 import shop.beggar.common.Pagenation;
 import shop.beggar.common.ActionForward;
+import shop.beggar.common.RegExp;
 
 /**
  * @PackageName : shop.beggar.beggar.member.action
@@ -43,7 +41,7 @@ public class BoardListAction implements Action {
 		
 		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
-		MemberVo mberVo = (MemberVo) session.getAttribute("memberVo");
+		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 		
 		String id="0";
 		

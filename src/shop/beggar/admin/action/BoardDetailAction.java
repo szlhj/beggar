@@ -2,14 +2,11 @@ package shop.beggar.admin.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import shop.beggar.admin.service.AdminService;
 import shop.beggar.beggar.vo.BoardVo;
-import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
-import shop.beggar.common.LoginManager;
 
 /**
  * @PackageName		: shop.beggar.admin.action
@@ -36,11 +33,8 @@ public class BoardDetailAction implements Action {
 		BoardVo vo = new BoardVo();
 		vo.setBoard_sq(Integer.parseInt(board_sq));
 		
-		
-		
-		svc.increaseCount(Integer.parseInt(board_sq));
-		
-		
+//		svc.increaseCount(Integer.parseInt(board_sq));
+				
 		BoardVo boardVo = svc.getBoardDetail(vo);
 		request.setAttribute("boardVo", boardVo);
 		request.setAttribute("pn", pn);

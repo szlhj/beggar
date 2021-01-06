@@ -2,38 +2,44 @@ package shop.beggar.admin.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import shop.beggar.admin.service.AdminService;
+import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
 /**
  * @PackageName		: shop.beggar.admin.action
- * @FileName		: AdminAction.java
- * @Since			: 2020. 12. 7.
+ * @FileName		: AdminDetailAction.java
+ * @Since			: 2020. 12. 30.
  * @Author			: HJLee
- * @Description		: 
+ * @Description		: 관리자 상세 보기 화면 로직
  * =====================================================================================
  * 								   Modification History
  * =====================================================================================
  * Date				Author				Note
  * -------------------------------------------------------------------------------------
- * 2020. 12. 7.		HJLee				최초 작성
+ * 2020. 12. 30.		HJLee				최초 작성
  *
  */
-public class AdminAction implements Action{
+public class AdminDetailAction implements Action {
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		AdminService svc = new AdminService();
-		int count = svc.supperAdminInfo();
+		String admin_sq = request.getParameter("admin_sq");
+		String pn = request.getParameter("pn");
 		
-		HttpSession session = request.getSession();
-		session.setAttribute("adminSupperCount", count);
+		AdminVo sqVo = new AdminVo();
+		sqVo.setAdmin_sq(Integer.parseInt(admin_sq));
+		
+		AdminService svc = new AdminService();
+		AdminVo vo = svc.getAdminDetail(sqVo);
+		
+		request.setAttribute("adminVo", vo);
+		request.setAttribute("pn", pn);
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/views/admin/adminMain.jsp");
+		forward.setPath("/views/admin/adminDetail.jsp");
 		return forward;
 	}
 }

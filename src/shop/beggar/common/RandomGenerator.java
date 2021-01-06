@@ -22,11 +22,11 @@ public class RandomGenerator {
 
 	/** 랜덤 문자열을 생성한다 **/
     public static String generate(String DATA, int length) {
-        if (length < 1) throw new IllegalArgumentException("length must be a positive number.");
+        if (length < 1) throw new IllegalArgumentException("length must be a positive number."); // 1보다 작으면 메세지 뿌리고 튕겨낸다.
         StringBuilder sb = new StringBuilder(length);
         for (int i = 0; i < length; i++) {
-            sb.append( DATA.charAt(
-            		random.nextInt(DATA.length())
+            sb.append( DATA.charAt( //charAt 문자열을 1개씩 잘라낸다
+            		random.nextInt(DATA.length()) //배열화 시킨다 nextInt 한개씩 순서대로 length 길이만큼 중에서 랜덤한 숫자에 순서에 1개를 뽑아낸다.
             		));
         }
         return sb.toString();
