@@ -47,7 +47,7 @@
 				<%
 					}
 				%>
-				<li><a class="sideMenu" href="" onMouseOver='this.innerHTML="장바구니"' onMouseOut='this.innerHTML="CART"'>CART</a></li>
+				<li><a class="sideMenu" href="/item/cartForm" onMouseOver='this.innerHTML="장바구니"' onMouseOut='this.innerHTML="CART"'>CART</a></li>
 				<li><a class="sideMenu" href="/board/" onMouseOver='this.innerHTML="게시판"' onMouseOut='this.innerHTML="BOARD"'>게시판</a></li>
 				<li><a class="sideMenu" href="/item/mainItem" onMouseOver='this.innerHTML="아이템페이지"' onMouseOut='this.innerHTML="ITEM"'>아이템</a></li>
 			</ul>

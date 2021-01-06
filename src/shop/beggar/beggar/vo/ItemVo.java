@@ -6,7 +6,7 @@ public class ItemVo {
 	private int item_sq;
 	private int price;
 	private int discount;
-	private int stok;
+	private int stok; //goods 테이블에 상품 총 재고
 	private boolean del_fl;
 	private boolean show_fl;
 	private String dttm;
@@ -23,8 +23,16 @@ public class ItemVo {
 	private int admin_sq;
 	private String admin_name;
 	private int mber_sq;
+	private int item_stok; //cart테이블에 장바구니에 상품 수량
+
 	
 	
+	public int getItem_stok() {
+		return item_stok;
+	}
+	public void setItem_stok(int item_stok) {
+		this.item_stok = item_stok;
+	}
 	public int getMber_sq() {
 		return mber_sq;
 	}

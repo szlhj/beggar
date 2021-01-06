@@ -32,7 +32,7 @@ public class OrderAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		HttpSession session = request.getSession();
-		MemberVo memberVo = (MemberVo) session.getAttribute("ssvo");
+		MemberVo memberVo = (MemberVo) session.getAttribute("vo");
 		
 		String nonmber = "1234";
 		
