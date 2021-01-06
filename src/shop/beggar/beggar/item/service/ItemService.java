@@ -79,11 +79,73 @@ public class ItemService {
 		return voInfo;
 	}
 	
+	public boolean checkCartItem(ItemVo vo) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.checkCartItem(vo);
+		boolean isSuccess = true;
+		if(count > 0) {
+			commit(con);//0보다 크면 커밋
+		} else {
+			rollback(con);  //작으면 롤백함
+			isSuccess = false;
+		}
+		close(con);
+		return isSuccess;
+	}
+	
 	public boolean registerCart(ItemVo vo) {
 		ItemDao dao = ItemDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
 		int count = dao.registerCart(vo);
+		boolean isSuccess = true;
+		if(count > 0) {
+			commit(con);//0보다 크면 커밋
+		} else {
+			rollback(con);  //작으면 롤백함
+			isSuccess = false;
+		}
+		close(con);
+		return isSuccess;
+	}
+	
+	public ItemVo cartItemInfo(int item_sq) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ItemVo voInfo = dao.cartItemInfo(item_sq);
+		
+		close(con);
+		
+		return voInfo;
+	}
+	
+	public int getArticleItem(int mber_sq) {
+		ItemDao dao= ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.getArticleItem(mber_sq);
+		close(con);
+		return count;
+	}
+	
+	public ArrayList<ItemVo> getCartPageInfo(int mber_sq) {
+		ItemDao dao= ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		ArrayList<ItemVo> list = dao.getCartPageInfo(mber_sq);
+		close(con);
+		return list;
+	}
+	
+	public boolean changeCartStok(ItemVo ivo) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.changeCartStok(ivo);
 		boolean isSuccess = true;
 		if(count > 0) {
 			commit(con);//0보다 크면 커밋
