@@ -10,6 +10,9 @@ import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 import shop.beggar.common.BCrypt;
+import shop.beggar.common.RegExp;
+
+import static shop.beggar.common.RegExp.*;
 
 /**
  * @PackageName		: shop.beggar.admin.action
@@ -43,6 +46,19 @@ public class AdminRegisterProcAction implements Action {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('잘못된 접근입니다.');location.href='/admin';/script>");
+			out.close();
+			return null;
+		}
+		
+		if (!RegExp.isValidExp(adminId, REGEXP_ID)
+				|| !RegExp.isValidExp(adminPwd, REGEXP_PWD)
+				|| !RegExp.isValidExp(adminName, REGEXP_NAME)
+				|| !RegExp.isValidExp(adminPhone, REGEXP_NUMBER)
+				|| !RegExp.isValidExp(adminEmail, REGEXP_EMAIL)
+				|| !adminPwd.equals(adminPwdc)) {
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('회원가입 정보를 확인하여 주세요...');location.href='/';</script>");
 			out.close();
 			return null;
 		}

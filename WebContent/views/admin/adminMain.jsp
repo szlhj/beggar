@@ -79,6 +79,38 @@
 			alert("비밀번호가 동일하지 않습니다.");
 			return;
 		}
+
+		var regExp = new RegExp("^[a-z0-9]{4,20}$","g");
+		if (regExp.exec($adminId.val()) == null){
+			alert("아이디 입력형식이 아닙니다.");
+			$adminId.focus;
+			$adminId.val('');
+			return;
+		}
+		
+		regExp = new RegExp("^[a-zA-Z0-9!@#]{4,20}$","g");
+		if (regExp.exec($adminPwd.val()) == null){
+			alert("비밀번호 입력형식이 아닙니다.");
+			$adminPwd.focus;
+			$adminPwd.val('');
+			return;
+		}
+		// ^[가-힣]{2,20}|[a-zA-Z]{2,10}\s[a-zA-Z]{2,20} : 한글2~20자 or 영문2~20자 공백 영문2~20자
+		regExp = new RegExp("^[가-힣]{2,20}|[a-zA-Z]{2,20}\s[a-zA-Z]{2,20}$","g");
+		if (regExp.exec($adminName.val()) == null){
+			alert("이름 입력형식이 아닙니다.");
+			$adminName.focus;
+			$adminName.val('');
+			return;
+		}
+		
+		regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+		if (regExp.exec($adminEmail.val()) == null){
+			alert("이메일 입력형식이 아닙니다.");
+			$adminEmail.focus;
+			$adminEmail.val('');
+			return;
+		}
 		
 		$('#marform').submit();
 	}

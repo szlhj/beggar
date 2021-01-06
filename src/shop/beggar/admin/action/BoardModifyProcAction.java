@@ -34,7 +34,7 @@ public class BoardModifyProcAction implements Action {
 		
 		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
-		MemberVo mberVo = (MemberVo) session.getAttribute("memberVo");
+		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 	    
 		int sq = 0;
 		//일반 회원인 경우

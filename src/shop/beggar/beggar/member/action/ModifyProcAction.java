@@ -65,8 +65,6 @@ public class ModifyProcAction implements Action{
 		
 		if(pwd != null || !(pwd.equals(""))) {
 			mfVo.setPwd(pwd);
-		} else {
-			mfVo.setPwd(null);
 		}
 		
 		mfVo.setPwd(BCrypt.hashpw(pwd, BCrypt.gensalt(12)));

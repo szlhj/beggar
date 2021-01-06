@@ -109,10 +109,12 @@
 				<td class="img" rowspan="2">이미지</td>
 				<td class="orderTd" colspan="2">상품명</td>
 				<td class="priceTd" rowspan="2">결재금액</td>
+				<td>결재일자</td>
 			</tr>
 			<tr>
 				<td class="priceTd">가격</td>
 				<td class="stokTd">수량</td>
+				<td>배송상태</td>
 			</tr>
 		</table>
 		<%for (int i = 0; i < orderList.size(); i++) { %>
@@ -121,6 +123,7 @@
 					<td class="imgTd" rowspan="2"><img class="img" src="<%=orderList.get(i).getItem_img() %>"></td>
 					<td class="orderTd" colspan="2"><%=orderList.get(i).getItem_name() %></td>
 					<td class="priceTd" rowspan="2"><%=orderList.get(i).getPrice() * orderList.get(i).getItem_stok() %></td>
+					<td>1</td>
 				</tr>
 				<tr>
 					<td class="priceTd">
@@ -129,6 +132,7 @@
 					<td class="stokTd">
 						<%=orderList.get(i).getItem_stok() %> EA
 					</td>
+					<td>1</td>
 				</tr>
 			</table>
 		<% total += orderList.get(i).getPrice() * orderList.get(i).getItem_stok();
