@@ -41,11 +41,11 @@
 	}
 
 	function searchId() {
-		location.href="/member/searchId.do";
+		location.href="/member/searchId";
 	}
 
 	function searchPwd() {
-		location.href="/member/searchPwd.do";
+		location.href="/member/searchPwd";
 	}
 </script>
 </head>
@@ -54,6 +54,7 @@
 	
 	<section>
 		<div class="login_box">
+			<h1>LOG IN</h1>
 			<form action="/member/loginProcAction" method="post" onsubmit="return validateCheck()">
 				<input type="text" id="id" name="id" placeholder="아이디" value="<%=shId %>" /><br>
 				<input type="password" id="pwd" name="pwd" placeholder="비밀번호" /><br>

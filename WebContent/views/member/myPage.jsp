@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	<jsp:include page="/views/navbar.jsp" />
+	<jsp:include page="/views/member/myPageNavigation.jsp" />
+	
 </body>
 </html>

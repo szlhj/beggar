@@ -1,0 +1,146 @@
+*
+{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+#main_header {
+    /*중앙 정렬*/
+    width: 100%;
+    margin: 0 auto;
+
+    height: 100px;
+	/*자식이 absolute이므로 부모는 relative*/
+    position: relative;
+    
+    background-color: pink;
+}
+
+#main_header>#main_gnb {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+#main_header>#title {
+    position: absolute;
+    width: 100%;
+    top: 40px;
+    text-align: center;
+}
+
+#main_header>#form
+{
+    display: block;
+    position: absolute;
+    width: 100%;
+    top: 190px;
+	
+    font-size: 20px;
+    /*height: 100%;*/
+    text-align: center;
+
+}
+
+/*띄어쓰기를 안한 경우*/
+/*현재 화면*/
+/*Inherited form, form에 적용됨*/
+/*띄어쓰기를 한 경우*/
+/*form이 아닌 html 전체의 영향을 받는 것으로 보임*/
+/*form:first-child*/ 
+#form{
+}
+
+/* 부모 요소 안에 모든 자손 요소를 대상으로 스타일을 적용 */
+/* https://aboooks.tistory.com/249 */
+/*이건 띄어쓰기를 해야 적용됨*/
+/*띄어쓰기를 하면 form이 아닌 html 전체의 영향을 받는 것 같아 보이며, form에만 적용할 경우 의도된데로 코드가 동작하지 않음*/
+/*form :nth-child(2)*/
+#inputSearch {  
+    width: 300px;
+    height: 35px;
+    vertical-align: middle;
+    border-style: inset;
+    border-radius: 30px;
+}
+
+/*form :nth-child(3)*/
+#inputSubmit
+{
+    background-color: #F0F0F0;
+    border-style: outset;
+    vertical-align: middle;
+    font-size: 15px;
+    padding:2px
+}
+
+#main_header>#main_lnb {
+    position: absolute;
+    bottom: 10px;
+    left: 37px;
+}
+#title>a
+{
+    font-size: 100px;
+    text-decoration: none;
+    color: black;
+    font-style: italic;
+    text-shadow: -10px -3px 4px rgba(96, 117, 150, 0.95);
+}
+
+#main_gnb>ul {
+    overflow: hidden;
+}
+
+#main_gnb>ul>li {
+    float: left;
+}
+
+
+#main_gnb>ul>li>a {
+    display: block;  
+    padding: 10px 20px;
+    border: 1px solid rgb(255, 255, 255);
+    background-color: gray;
+    font-weight: bold;
+    text-align: center;
+    width: 177px;
+    color: white;
+}
+
+#main_gnb>ul>li>a:hover {
+    color: white;
+}
+
+#main_gnb>ul>li:first-child>a {
+    border-radius: 10px 0 0 10px;
+}
+
+#main_gnb>ul>li:last-child>a {
+    border-radius: 0 10px 10px 0;
+}
+
+#main_footer
+{
+    width:960px;
+    margin:0 auto;
+    margin-bottom:10px;
+
+    box-sizing:border-box;
+    padding:10px;
+    border:1px solid black;
+    text-align: center;
+}

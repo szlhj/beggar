@@ -7,6 +7,7 @@
 <title>관리자 회원 가입</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+<link rel="stylesheet" href="/views/css/adminRegister.css" type="text/css">
 
 <script type="text/javascript">
 	function adminJoin() {
@@ -55,17 +56,24 @@
 
 </head>
 <body>
-	<form action="/admin/registerAdminProc" method="post" id="marform">
-		<input type="text" id="adminId" name="adminId" placeholder="아이디" /><br>
-		<input type="password" id="adminPwd" name="adminPwd" placeholder="비밀번호" /><br>
-		<input type="password" id="adminPwdc" name="adminPwdc" placeholder="비밀번호 확인" /><br>
-		<input type="text" id="adminName" name="adminName" placeholder="이름" /><br>
-		<input type="email" id="adminEmail" name="adminEmail" placeholder="이메일" /><br>
-		<input type="tel" id="adminPhone" name="adminPhone" placeholder="전화번호" /><br>
-<!-- 		<input type="checkbox" id="adminSupper" name="adminSupper" /><label for="adminSupper">슈퍼관리자</label><br> -->
-		<textarea rows="10" cols="30" id="adminMemo" name="adminMemo" placeholder="메모 입력"></textarea><br>
-	</form>
-	<button onclick="adminJoin()">가입</button>
-	<button onclick="location.href='/admin'">취소</button>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
+	
+	<div class="adminRegister">
+		<div class="register">
+			<form action="/admin/registerAdminProc" method="post" id="marform">
+				<input type="text" id="adminId" name="adminId" placeholder="아이디" /><br>
+				<input type="password" id="adminPwd" name="adminPwd" placeholder="비밀번호" /><br>
+				<input type="password" id="adminPwdc" name="adminPwdc" placeholder="비밀번호 확인" /><br>
+				<input type="text" id="adminName" name="adminName" placeholder="이름" /><br>
+				<input type="email" id="adminEmail" name="adminEmail" placeholder="이메일" /><br>
+				<input type="tel" id="adminPhone" name="adminPhone" placeholder="전화번호" /><br>
+			<!-- 		<input type="checkbox" id="adminSupper" name="adminSupper" /><label for="adminSupper">슈퍼관리자</label><br> -->
+				<textarea rows="10" cols="30" id="adminMemo" name="adminMemo" placeholder="메모 입력"></textarea><br>
+			</form>
+			<button class="register_button" onclick="adminJoin()">가입</button>
+			<button class="register_button" onclick="location.href='/admin'">취소</button>
+		</div>
+	</div>
+	<jsp:include page="/views/admin/adminNavigation.jsp" />
 </body>
 </html>

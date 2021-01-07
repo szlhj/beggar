@@ -61,23 +61,6 @@ public class MemberManagementAction implements Action{
 		String idQuery="";
 		String nameQuery="";
 		
-//		if(firstTime != null && !firstTime.equals("")) {
-//			int firstTimeInt=Integer.parseInt(firstTime);
-//			int firstTimeYear = firstTimeInt/10000;
-//			int firstTimeMonth = (firstTimeInt%10000)/100;
-//			int firstTimeDay = firstTimeInt%100;
-//			
-//			firstTime = (firstTimeYear + "-" + firstTimeMonth + "-" + firstTimeDay);
-//		}
-//		
-//		if(lastTime != null && !lastTime.equals("")) {
-//			int lastTimeInt=Integer.parseInt(lastTime);
-//			int lastTimeYear = lastTimeInt/10000;
-//			int lastTimeMonth = (lastTimeInt%10000)/100;
-//			int lastTimeDay = lastTimeInt%100;
-//			lastTime = (lastTimeYear + "-" + lastTimeMonth + "-" + lastTimeDay);
-//		}
-		
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
 		}

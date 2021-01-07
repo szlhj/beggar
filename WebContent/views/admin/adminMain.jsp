@@ -17,9 +17,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>관리자</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+<link rel="stylesheet" href="/views/css/adminMain.css" type="text/css">
 
 <script type="text/javascript">
 	function adminLogin(){
@@ -118,15 +119,20 @@
 
 </head>
 <body>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
+	<div class="adminMain">
+	<div class="main">
 	<%if (admin_sq == 0) {%>
 		<%if (adminSupperCount == 1) { %>
+			<h1>관리자 LOG IN</h1>
 			<form action="/admin/LoginAdminProc" method="post" id="loginform" >
 				<input type="text" id="adminId" name="adminId" /><br>
-				<input type="password" id="adminPwd" name="adminPwd" /><br>
-				<button onclick="adminLogin()">로그인</button>
-				<button onclick="/admin">취소</button>
+				<input type="password" id="adminPwd" name="adminPwd" /><br><br><br>
+				<button class="main_button" onclick="adminLogin()">로그인</button>
+				<button class="main_button" onclick="/admin">취소</button>
 			</form>
 		<%} else { %>
+			<h1>슈퍼 관리자 등록</h1>
 			<form action="/admin/registerAdminProc" method="post" id="marform">
 				<input type="text" id="adminId" name="adminId" placeholder="아이디" /><br>
 				<input type="password" id="adminPwd" name="adminPwd" placeholder="비밀번호" /><br>
@@ -137,23 +143,13 @@
 		 		<input type="checkbox" id="adminSupper" name="adminSupper" checked="checked" /><label for="adminSupper">슈퍼관리자</label><br>
 				<textarea rows="10" cols="30" id="adminMemo" name="adminMemo" placeholder="메모 입력"></textarea><br>
 			</form>
-			<button onclick="supperAdminRegister()">슈퍼 관리자 저장</button>
-			<button onclick="location.href='/admin'">취소</button>
+			<button class="main_button" onclick="supperAdminRegister()">슈퍼 관리자 저장</button>
+			<button class="main_button" onclick="location.href='/admin'">취소</button>
 		<%} %>
 	<%} else { %>
-		<%if (admin_supper == true) { %>
-			<a href="/admin/registerAdmin">관리자등록</a>
-			<a href="/admin/listAdmin">관리자 리스트</a>
-		<%} %>
-		<a href="/admin/modifyAdmin">관리자수정</a>
-		<a href="/admin/memberManagement">회원관리</a>
-		<a href="/admin/itemList">상품목록</a>
-		<a href="/admin/itemAdd">상품등록</a>
-		<a href="/admin/logoutAdmin">관리자 로그아웃</a>
-		<a href="/admin/fileUpAndDown">파일 up/down</a>
-		<a href="/admin/boardList">게시판리스트</a>
-		<a href="/admin/boardAdd">게시판작성</a>
-		<button onclick="/admin/">취소</button>
+		<jsp:include page="/views/admin/adminNavigation.jsp" />
 	<%} %>
+	</div>
+	</div>
 </body>
 </html>

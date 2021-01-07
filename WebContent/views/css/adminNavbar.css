@@ -1,12 +1,16 @@
 @charset "UTF-8";
+body{
+	padding: 0px;
+	margin: 0px;
+}
 .navbar {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	background-color: #0f0f0f;
+	background-color: black;
 }
 
-img.logo{
+img .logo{
 	padding: .8em;
 	padding-left: .4em;
 }
@@ -25,7 +29,7 @@ img.logo{
 	font-size: 1.5rem;
 	list-style: none;
 	display: flex;
-	color: #0f0f0f;
+	color: black;
 	padding-right: .8em;
 }
 

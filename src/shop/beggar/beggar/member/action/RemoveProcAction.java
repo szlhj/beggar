@@ -53,7 +53,7 @@ public ActionForward execute(HttpServletRequest request, HttpServletResponse res
 			return null;
 		}
 		
-		MemberService svc = new MemberService();
+//		MemberService svc = new MemberService();
 //		MemberVo vo = svc.getMemberLoginInfo(id);
 //		if (vo == null || !pwd.equals(vo.getMember_pwd())) {
 //			response.setContentType("text/html;charset=UTF-8");
@@ -62,9 +62,9 @@ public ActionForward execute(HttpServletRequest request, HttpServletResponse res
 //			out.close();
 //			return null;
 //		}
-		
+//		
 //		vo.setMember_del_fl(true);
-		
+//		
 //		if (!svc.leaveMember(vo)) {
 //			response.setContentType("text/html;charset=UTF-8");
 //			PrintWriter out = response.getWriter();

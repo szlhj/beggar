@@ -28,6 +28,7 @@
 
 </head>
 <body>
+	<h1>임시 비밀번호 발급</h1>
 	<form action="/member/searchPwdProc" method="post" id="shPwdForm">
 		<input type="text" id="shId" name="shId" placeholder="아이디" /><br>
 		<input type="text" id="shName" name="shName" placeholder="이름" /><br>

@@ -40,7 +40,7 @@ img.login_title {
 }
 
 .login_button {
-	display: block;
+	display: inline-block;
 	padding: .3em;
 	border-radius: .4em;
 	font-size: 1.8rem;

@@ -7,7 +7,7 @@
 <title>상품추가</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-
+<link rel="stylesheet" href="/views/css/itemAdd.css" type="text/css">
 
 <script type="text/javascript">
 	function join() {
@@ -122,8 +122,9 @@
 
 </head>
 <body>
-	<div>
-		<div>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
+	<div class="itemAdd">
+		<div class="add">
 			<section>
 				<form action="/admin/itemAddProc" method="post" id="editorForm">
 					상품이름<input type="text" id="item_name" name="item_name" /><br>
@@ -153,14 +154,16 @@
 							<img id="img" />
 						</div>
 					</div>
-					<div>
+					<div style="width: 1500px;">
 						<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
 					</div>
 				</form>
-				<button onclick="join()">등록</button>
-				<button onclick="cancle()">취소</button>
+				<br>
+				<button class="add_button" onclick="join()">등록</button>
+				<button class="add_button" onclick="cancle()">취소</button>
 			</section>
 		</div>
 	</div>
+	<jsp:include page="/views/admin/adminNavigation.jsp" />
 </body>
 </html>

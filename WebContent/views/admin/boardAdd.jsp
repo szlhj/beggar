@@ -9,20 +9,12 @@
 <title>게시판작성</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+<link rel="stylesheet" href="/views/css/boardAdd.css" type="text/css">
 
 
 <script type="text/javascript">
 	function join() {
 
-		/* private int board_sq;// 게시판 넘버
-		private int person_sq;// 사람 번호
-		private int board_number;// 게시판 구분
-		private int count; // 게시판 조회수
-		private int del_fl; // 삭제 유무
-		private String dttm; // 게시판 작성 시간
-		private String goods_info; // 상품번호
-		private String title; //제목
-		private String content; // 내용 */
 		var $board_number = $('#board_number');
 		var $goods_info = $('#goods_info');
 		var $title = $('#title');
@@ -52,8 +44,9 @@
 
 </head>
 <body>
-	<div>
-		<div>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
+	<div class="boardAdd">
+		<div class="add">
 			<section>
 				<form action="/admin/boardAddProc" method="post" id="editorForm">
 					게시판목차
@@ -66,15 +59,17 @@
 					<br>
 					상품번호<input type="text" id="goods_info" name="goods_info" /><br>
 					제목<input type="text" id="title" name="title" /><br>
-					내용<div>
+					내용<div style="width: 1000px;">
 						<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
 					</div>
 
 				</form>
-				<button onclick="join()">등록</button>
-				<button onclick="cancle()">취소</button>
+				<br>
+				<button class="add_button" onclick="join()">등록</button>
+				<button class="add_button" onclick="cancle()">취소</button>
 			</section>
 		</div>
 	</div>
+	<jsp:include page="/views/admin/adminNavigation.jsp" />
 </body>
 </html>

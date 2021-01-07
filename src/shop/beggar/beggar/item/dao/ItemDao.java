@@ -467,10 +467,10 @@ public class ItemDao {
 		ArrayList<OrderVo> list = new ArrayList<>();
 		try {
 			if (vo.getMber_sq() == 0) {
-				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.nonmber=?");
+				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm, a.shipping from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.nonmber=?");
 				pstmt.setString(1, vo.getNonmber());
 			} else {
-				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.shipping=1 and a.mber_sq=?");
+				pstmt = con.prepareStatement("select c.item_name as item_name, c.filepath as item_img, c.price, a.item_stok as stok, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm, a.shipping from inf_order_tb a left join inf_mber_tb b on a.mber_sq=b.mber_sq inner join inf_goods_tb c on a.item_sq = c.item_sq where a.mber_sq=?");
 				pstmt.setInt(1, vo.getMber_sq());
 			}
 			rs = pstmt.executeQuery();
@@ -481,6 +481,7 @@ public class ItemDao {
 				vo.setItem_stok(rs.getInt("stok"));
 				vo.setPrice(rs.getInt("price"));
 				vo.setOrder_dttm(rs.getString("order_dttm"));
+				vo.setShipping(rs.getInt("shipping"));
 				list.add(vo);
 				}
 		} catch (Exception e) {
@@ -499,10 +500,10 @@ public class ItemDao {
 		
 		try {
 			if (vo.getMber_sq() == 0) {
-				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where shipping=1 and b.nonmber=? order by b.nonmber asc limit 1");
+				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where b.nonmber=? order by b.order_dttm desc limit 1");
 				pstmt.setString(1, vo.getNonmber());
 			} else {
-				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where shipping=1 and b.mber_sq=? order by b.nonmber asc limit 1");
+				pstmt = con.prepareStatement("select ifnull(a.name,b.name_form) as mber_name, b.addr_form, b.addr_to, ifnull(a.phone,b.name_form_phone) as mber_phone, b.record_item as record, b.name_to, b.name_to_phone, date_format(b.order_dttm,'%Y-%c-%d') as order_dttm from inf_order_tb b left join inf_mber_privcy_tb a on a.mber_sq = b.mber_sq where b.mber_sq=? order by b.order_dttm desc limit 1");
 				pstmt.setInt(1, vo.getMber_sq());
 			}
 			rs = pstmt.executeQuery();

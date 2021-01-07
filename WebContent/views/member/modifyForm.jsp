@@ -53,7 +53,6 @@
 
 		if (pwd.val() != pwdc.val()){
 			alert('비밀번호가 일치하지 않습니다.');
-// 			$pwd.focus;
 			return;
 		}
 		
@@ -93,19 +92,18 @@
 </script>
 </head>
 <body>
-회원정보 수정 Form
-<form action="/member/modifyProc" method="post" id="mfForm">
-아이디 <%=mvo.getId() %> <br />
-새로운비밀번호<input type="password" id="pwd" name="pwd"/><br />
-새로운비밀번호 확인 <input type="password" id="pwdc" name="pwdc" /> <br />
-이름 <%=mvo.getName() %> <br />
-휴대전화<input type="tel" id="tel" name="tel" value="<%=mvo.getPhone() %>"/> <br />
-SMS 수신여부 <input type="checkbox" id="sms_fl" name="sms_fl"  <%=sms_fl.equals("true")?"checked":"" %> /> <br />
-이메일<input type="email" id="email" name="email" value="<%=mvo.getEmail()%>"/> <br />
-이메일 수신여부 <input type="checkbox" id="email_fl" name="email_fl" <%=email_fl.equals("true")?"checked":"" %> /> <br />
-<%-- <input type="hidden" id="mber_sq" name="mber_sq" value="<%= %>" /><br> --%>
-</form>
-<button type="button" onclick="modifyInfo()">정보수정</button>
-<button type="button" onclick="cancle()">취소</button>
+	<h1>회원정보 수정</h1>
+	<form action="/member/modifyProc" method="post" id="mfForm">
+		아이디 <%=mvo.getId() %> <br/>
+		새로운비밀번호<input type="password" id="pwd" name="pwd"/><br/>
+		새로운비밀번호 확인 <input type="password" id="pwdc" name="pwdc" /> <br/>
+		이름 <%=mvo.getName() %> <br/>
+		휴대전화<input type="tel" id="tel" name="tel" value="<%=mvo.getPhone() %>"/> <br/>
+		SMS 수신여부 <input type="checkbox" id="sms_fl" name="sms_fl"  <%=sms_fl.equals("true")?"checked":"" %> /> <br/>
+		이메일<input type="email" id="email" name="email" value="<%=mvo.getEmail()%>"/> <br/>
+		이메일 수신여부 <input type="checkbox" id="email_fl" name="email_fl" <%=email_fl.equals("true")?"checked":"" %> /> <br/>
+	</form>
+	<button type="button" onclick="modifyInfo()">정보수정</button>
+	<button type="button" onclick="cancle()">취소</button>
 </body>
 </html>
