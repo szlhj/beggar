@@ -18,6 +18,7 @@ import shop.beggar.beggar.member.action.LogoutAction;
 import shop.beggar.beggar.member.action.MemberShipAction;
 import shop.beggar.beggar.member.action.ModifyAction;
 import shop.beggar.beggar.member.action.ModifyProcAction;
+import shop.beggar.beggar.member.action.MyPageAction;
 import shop.beggar.beggar.member.action.RegisterAction;
 import shop.beggar.beggar.member.action.RegisterProcAction;
 import shop.beggar.beggar.member.action.RemoveAction;
@@ -177,6 +178,14 @@ public class MemberController extends HttpServlet {
 			}
 		} else if (command.equals("/changePwdProc")) {  //비밀번호 찾기
 			Action action = new ChangePwdProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/myPage")) {  //비밀번호 찾기
+			Action action = new MyPageAction();
 			
 			try {
 				forward = action.execute(request, response);

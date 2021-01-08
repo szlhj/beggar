@@ -73,6 +73,9 @@ public class NoticeAction implements Action {
 		String lastTimeQuery="";
 		String board_numberQuery="";
 		
+		if (filter == null || filter.equals("")) {
+			filter = "0";
+		}
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
 		}
@@ -98,7 +101,7 @@ public class NoticeAction implements Action {
 		query = firstTimeQuery+lastTimeQuery+board_numberQuery+" and (del_fl= 0)";
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount());
+		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount(query));
 		if (page > pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

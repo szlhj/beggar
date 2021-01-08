@@ -7,8 +7,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	<%
-	    ArrayList<BoardVo> list = (ArrayList<BoardVo>) request.getAttribute("list");
-		Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
 		AdminVo adminVo = (AdminVo) request.getAttribute("adminVo");
 		MemberVo memberVo = (MemberVo) request.getAttribute("vo");
 		
@@ -77,7 +75,7 @@
 		saveContent();
 	}
 	function cancle() {
-		location.href = "/";
+		location.href = "/board/";
 	}
 </script>
 

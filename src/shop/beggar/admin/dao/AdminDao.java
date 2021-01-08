@@ -141,6 +141,7 @@ public class AdminDao {
 				vo.setDttm(rs.getString("dttm"));
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString("content"));
+				vo.setComment(rs.getString("comment"));
 				
 				list.add(vo);
 			}
@@ -157,12 +158,12 @@ public class AdminDao {
 	
 	
 
-	public int getArticleCount() {
+	public int getArticleCount(String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("select count(*) from inf_mber_tb");
+			pstmt = con.prepareStatement("select count(*) from inf_mber_tb where 1=1 "+ query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
@@ -196,12 +197,12 @@ public class AdminDao {
 		return count;
 	}
 	
-	public int getBoardArticleCount() {
+	public int getBoardArticleCount(String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("select count(*) from inf_board_tb");
+			pstmt = con.prepareStatement("select count(*) from inf_board_tb where 1=1 "+ query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
@@ -504,6 +505,7 @@ public class AdminDao {
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString(Parser.chgToHtml("content")));
 				vo.setDttm(rs.getString("dttm"));
+				vo.setComment(rs.getString("comment"));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -806,6 +808,7 @@ public class AdminDao {
 		}
 		return count;
 	}
+	
 	public int boardModify(BoardVo vo) {
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -818,6 +821,26 @@ public class AdminDao {
 			pstmt.setString(4, vo.getContent());
 			pstmt.setInt(5, vo.getCount());
 			pstmt.setInt(6, vo.getBoard_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int boardAnswer(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set comment=? where board_sq=?");
+			pstmt.setString(1, vo.getComment());
+			pstmt.setInt(2, vo.getBoard_sq());
 			
 			count = pstmt.executeUpdate();
 			

@@ -46,11 +46,14 @@ public class OneAndOneQuestionAction implements Action {
 		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 		
 		String id="0";
+		int mber_sq;
 		
 		if(mberVo == null) {
 			id="관리자";
+			mber_sq=0;
 		}else {
 			id=mberVo.getId();
+			mber_sq=mberVo.getMber_sq();
 		}
 		
 		if (pn == null) {
@@ -75,6 +78,11 @@ public class OneAndOneQuestionAction implements Action {
 		String firstTimeQuery="";
 		String lastTimeQuery="";
 		String board_numberQuery="";
+		String board_mber_sqQuery="";
+		
+		if (filter == null || filter.equals("")) {
+			filter = "0";
+		}
 		
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
@@ -93,15 +101,17 @@ public class OneAndOneQuestionAction implements Action {
 		if (filter == null || filter.equals("")) {
 			board_numberQuery = "";
 		}else if(filter.equals("4")) {
-			board_numberQuery = " and (id= '" + id + "')";
+//			board_numberQuery = " and (id= '" + id + "')";
+			board_mber_sqQuery = " and (mber_sq= '" + mber_sq + "')";
 		}else{
+			board_mber_sqQuery = " and (mber_sq= '" + mber_sq + "')";
 			board_numberQuery = " and (board_number= '" + filter + "')";
 		}
 		
-		query = firstTimeQuery+lastTimeQuery+board_numberQuery+" and (del_fl= 0)";
+		query = firstTimeQuery+lastTimeQuery+board_numberQuery+board_mber_sqQuery+" and (del_fl= 0)";
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount());
+		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount(query));
 		if (page > pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

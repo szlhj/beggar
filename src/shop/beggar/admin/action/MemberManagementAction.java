@@ -61,23 +61,6 @@ public class MemberManagementAction implements Action{
 		String idQuery="";
 		String nameQuery="";
 		
-//		if(firstTime != null && !firstTime.equals("")) {
-//			int firstTimeInt=Integer.parseInt(firstTime);
-//			int firstTimeYear = firstTimeInt/10000;
-//			int firstTimeMonth = (firstTimeInt%10000)/100;
-//			int firstTimeDay = firstTimeInt%100;
-//			
-//			firstTime = (firstTimeYear + "-" + firstTimeMonth + "-" + firstTimeDay);
-//		}
-//		
-//		if(lastTime != null && !lastTime.equals("")) {
-//			int lastTimeInt=Integer.parseInt(lastTime);
-//			int lastTimeYear = lastTimeInt/10000;
-//			int lastTimeMonth = (lastTimeInt%10000)/100;
-//			int lastTimeDay = lastTimeInt%100;
-//			lastTime = (lastTimeYear + "-" + lastTimeMonth + "-" + lastTimeDay);
-//		}
-		
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
 		}
@@ -113,7 +96,7 @@ public class MemberManagementAction implements Action{
 		query = firstTimeQuery+lastTimeQuery+idQuery+nameQuery;
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page,svc.getArticleCount());
+		Pagenation pagenation = new Pagenation(page,svc.getArticleCount(query));
 		if(page>pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -126,6 +109,8 @@ public class MemberManagementAction implements Action{
 		ArrayList<MemberVo> list = svc.getArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
 		request.setAttribute("list", list);
+		request.setAttribute("filter", filter);
+		request.setAttribute("pn", pn);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/memberViews.jsp");//경로

@@ -18,6 +18,8 @@ import shop.beggar.admin.action.AdminRegisterAction;
 import shop.beggar.admin.action.AdminRegisterProcAction;
 import shop.beggar.admin.action.BoardAddAction;
 import shop.beggar.admin.action.BoardAddProcAction;
+import shop.beggar.admin.action.BoardAnswerAction;
+import shop.beggar.admin.action.BoardAnswerProcAction;
 import shop.beggar.admin.action.BoardDelAction;
 import shop.beggar.admin.action.BoardDetailAction;
 import shop.beggar.admin.action.BoardListAction;
@@ -280,6 +282,30 @@ private static final long serialVersionUID = 1L;
 			}
 		} else if (command.equals("/detailAdmin")) { 
 			Action action = new AdminDetailAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/boardAnswer")) { 
+			Action action = new BoardAnswerAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/boardAnswerProc")) { 
+			Action action = new BoardAnswerProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/boardProcAnswer")) { 
+			Action action = new BoardAnswerProcAction();
 			
 			try {
 				forward = action.execute(request, response);

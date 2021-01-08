@@ -1,0 +1,44 @@
+@charset "UTF-8";
+body{
+	font-size: 18px
+}
+.itemImg{
+	width: 80px;
+	height: 80px;
+	text-align: center;
+}
+.table{
+	width: 990px;
+	height: 80px;
+}
+.tableTitle{
+	height: 50px;
+	text-align: center;
+}
+.itemName{
+	width: 300px;
+	text-align: center;
+}
+.itemPrice{
+	width: 150px;
+	text-align: center;
+}
+.itemStoc{
+	width: 100px;
+	text-align: center;
+}
+.itemDttmShipping{
+	width: 150px;
+	text-align: center;
+}
+.tableTd{
+	text-align: center;
+}
+.tableNumber{
+	text-align: right;
+}
+.orderName{
+	width: 150px;
+	height: 80px;
+	text-align: right;
+}

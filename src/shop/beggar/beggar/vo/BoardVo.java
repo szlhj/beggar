@@ -17,8 +17,14 @@ public class BoardVo {
 	private String admin_id;//관리자 아이디
 	private String mber_id;//맴버 아이디
 	private boolean isDel_fl;
+	private String comment;
 	
-	
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 	public int getMber_sq() {
 		return mber_sq;
 	}

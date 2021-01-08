@@ -55,11 +55,11 @@ public class BoardService {
 		close(con);
 		return list;
 	}
-	public int getBoardArticleCount() {
+	public int getBoardArticleCount(String query) {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.getBoardArticleCount();
+		int count = dao.getBoardArticleCount(query);
 		close(con);
 		return count;
 	}

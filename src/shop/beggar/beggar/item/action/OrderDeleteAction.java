@@ -31,7 +31,7 @@ public class OrderDeleteAction implements Action {
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		HttpSession session = request.getSession();
-		MemberVo mberVo = (MemberVo)session.getAttribute("ssvo");
+		MemberVo mberVo = (MemberVo)session.getAttribute("vo");
 		
 		String nonmber = request.getParameter("nonmber");
 		

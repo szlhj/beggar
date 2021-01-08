@@ -76,6 +76,10 @@ public class ProductRelatedAction implements Action {
 		String lastTimeQuery="";
 		String board_numberQuery="";
 		
+		if (filter == null || filter.equals("")) {
+			filter = "0";
+		}
+		
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
 		}
@@ -89,7 +93,9 @@ public class ProductRelatedAction implements Action {
 		else {
 			lastTimeQuery = " and dttm<='"+lastTime+"'";
 		}
+		
 		filter = "3";//필터값지정
+		
 		if (filter == null || filter.equals("")) {
 			board_numberQuery = "";
 		}else if(filter.equals("4")) {
@@ -101,7 +107,7 @@ public class ProductRelatedAction implements Action {
 		query = firstTimeQuery+lastTimeQuery+board_numberQuery+" and (del_fl= 0)";
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount());
+		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount(query));
 		if (page > pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

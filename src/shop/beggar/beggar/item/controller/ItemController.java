@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import shop.beggar.beggar.item.action.CartFormAction;
 import shop.beggar.beggar.item.action.DetailAction;
 import shop.beggar.beggar.item.action.DummyAction;
 import shop.beggar.beggar.item.action.MainItemAction;
@@ -61,7 +62,7 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/shopBasket")) { //상세화면
+		} else if (command.equals("/shopBasket")) { //장바구니 저장명령
 			Action action = new ShopBasketAction();
 			
 			try {
@@ -69,7 +70,23 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/purchase")) { //상세화면
+		} else if (command.equals("/purchase")) { //주문상세화면
+			Action action = new PurchaseAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/cartForm")) { //장바구니상세화면
+			Action action = new CartFormAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/purchase")) { //장바구니상세화면
 			Action action = new PurchaseAction();
 			
 			try {

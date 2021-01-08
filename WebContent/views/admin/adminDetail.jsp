@@ -35,8 +35,7 @@
 
 </head>
 <body>
-	<button onclick="location.href='/admin'">관리자 홈으로</button>
-	<button onclick="location.href='/'">홈으로</button><br>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
 	
 	관리자 일련번호 : <%=vo.getAdmin_sq() %><br>
 	관리자 아이디 : <%=vo.getAdminId() %><br>
@@ -51,5 +50,6 @@
 	<button onclick="modify()">수정</button>
 	<button onclick="cancle()">취소</button>
 	
+	<jsp:include page="/views/admin/adminNavigation.jsp" />
 </body>
 </html>

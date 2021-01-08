@@ -46,12 +46,15 @@ function boardAdd() {
 	<div>
 		<ul class="board_sideMenu">
 			<li><a href="/board/notice">공지사항</a></li>
+			<li><a href="/board/oneAndOneQuestion">1:1문의</a>
 			<li><a href="/board/productRelated">제품관련문의</a></li>
+			<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
 			<li><a href="/board/myQuestion">내가쓴글보기</a></li>
+			<%} %>
 		</ul>
 	</div>
 	<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
-	<button onclick="boardAdd()">게시판작성</button>
+	<button onclick="boardAdd()">글작성</button>
 	<br>
 	<%}%>
 	<button onclick="location.href='/'">취소</button>

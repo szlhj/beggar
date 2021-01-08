@@ -48,12 +48,29 @@
 		searchArticle();
 	}
 	function searchArticle(){
-		var filter = $('#filter option:selected');
+		var filter = $('#filter');
 		var firstTime = $('#firstTime');
 		var lastTime = $('#lastTime');
-		location.href = "/board/notice?pn=1&filter=" + filter.val()
-		+ "&firstTime=" + firstTime.val()
-		+ "&lastTime=" + lastTime.val();
+		if(filter.text() == "공지사항"){
+			location.href = "/board/notice?pn=1&filter=" + filter.val()
+			+ "&firstTime=" + firstTime.val()
+			+ "&lastTime=" + lastTime.val();	
+		}
+		else if(filter.text() == "1:1문의"){
+			location.href = "/board/oneAndoneQuestion?pn=1&filter=" + filter.val()
+			+ "&firstTime=" + firstTime.val()
+			+ "&lastTime=" + lastTime.val();
+		}
+		else if(filter.text() == "제품관련문의"){
+			location.href = "/board/productRelated?pn=1&filter=" + filter.val()
+			+ "&firstTime=" + firstTime.val()
+			+ "&lastTime=" + lastTime.val();
+		}
+		else if(filter.text() == "내가쓴글보기"){
+			location.href = "/board/myQuestion?pn=1&filter=" + filter.val()
+			+ "&firstTime=" + firstTime.val()
+			+ "&lastTime=" + lastTime.val();
+		}
 	}
 	function boardAdd() {
 		location.href = "/board/addBoard";
@@ -66,13 +83,13 @@
 </head>
 <body>
 	<%if(filter.equals("1")){ %>
-		공지사항
+		<span id="filter">공지사항</span>
 	<%}else if(filter.equals("2")){%>
-		1:1문의
+		<span id="filter">1:1문의</span>
 	<%}else if(filter.equals("3")){%>
-		제품관련문의
+		<span id="filter">제품관련문의</span>
 	<%}else if(filter.equals("4")){%>
-		내가쓴글보기
+		<span id="filter">내가쓴글보기</span>
 	<%}%>
 	<br>
 	날짜
@@ -93,9 +110,12 @@
 			<th>작성자</th>
 			<th>생성일자</th>
 			<th>조회수</th>
+			<%if(filter.equals("2")){ %>
+			<th>답변상황</th>
+			<%} %>
 		</tr>
 		<%for (int i = 0; i < list.size(); i++) { %>
-			<tr onclick="location.href='/board/detailBoard?board_sq=<%=list.get(i).getBoard_sq() %>&pn=<%=pn %>&mber_id=<%=list.get(i).getMber_id()%>&yesOrNo=<%=yesOrNo%>'">
+			<tr onclick="location.href='/board/detailBoard?board_sq=<%=list.get(i).getBoard_sq() %>&pn=<%=pn %>&mber_id=<%=list.get(i).getMber_id()%>&yesOrNo=<%=yesOrNo%>&filter=<%=filter%>'">
 				
 				<%String Board_numberName =""; %>
 				<%if(list.get(i).getBoard_number()==1){ %>
@@ -118,7 +138,15 @@
 				</td>
 				<td><%=list.get(i).getDttm() %></td>
 				<td><%=list.get(i).getCount() %></td>
-				
+				<%if(filter.equals("2")){ %>
+					<% String CommentTF = "";%>
+					<%if(list.get(i).getComment()==null||list.get(i).getComment().equals("")) {%>
+					<% 		CommentTF= " X ";	%>
+					<%}else{ %>
+					<% 		CommentTF= " O ";%>
+					<%} %>
+					<td><%=CommentTF %></td>
+				<%} %>
 			</tr>
 		<%} %>
 	</table>
@@ -126,18 +154,18 @@
 		<button onclick="location.href='/board/'">뒤로가기</button>
 		<br>
 		<%if (pagenation.getStartPageNumber() != 1) {%>
-		<a href="/board/notice?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
+		<a href="/board/notice?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
 		<% } %>
 	
 		<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
 		<%if (i != Integer.parseInt(pn)) {%>
-			<a href="/board/notice?pn=<%=i %>"> <%=i%> </a>
+			<a href="/board/notice?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
 		<%} else  {%>
 			<%=i %>
 		<%} %>
 		<%} %>
 		<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-			<a href="/board/notice?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
+			<a href="/board/notice?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
 		<%} %>	
 	<%}else if(filter.equals("2")||filter.equals("")){ %>
 		<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
@@ -146,18 +174,18 @@
 		<button onclick="location.href='/board/'">뒤로가기</button>
 		<br>
 		<%if (pagenation.getStartPageNumber() != 1) {%>
-		<a href="/board/oneAndOneQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
+		<a href="/board/oneAndOneQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
 		<% } %>
 	
 		<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
 		<%if (i != Integer.parseInt(pn)) {%>
-			<a href="/board/oneAndOneQuestion?pn=<%=i %>"> <%=i%> </a>
+			<a href="/board/oneAndOneQuestion?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
 		<%} else  {%>
 			<%=i %>
 		<%} %>
 		<%} %>
 		<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-			<a href="/board/oneAndOneQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
+			<a href="/board/oneAndOneQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
 		<%} %>
 		
 	<%}else if(filter.equals("3")){ %>
@@ -167,18 +195,18 @@
 		<button onclick="location.href='/board/'">뒤로가기</button>
 		<br>
 		<%if (pagenation.getStartPageNumber() != 1) {%>
-		<a href="/board/productRelated?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
+		<a href="/board/productRelated?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
 		<% } %>
 	
 		<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
 		<%if (i != Integer.parseInt(pn)) {%>
-			<a href="/board/productRelated?pn=<%=i %>"> <%=i%> </a>
+			<a href="/board/productRelated?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
 		<%} else  {%>
 			<%=i %>
 		<%} %>
 		<%} %>
 		<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-			<a href="/board/productRelated?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
+			<a href="/board/productRelated?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
 		<%} %>
 		
 	<%}else if(filter.equals("4")){ %>
@@ -188,18 +216,18 @@
 		<button onclick="location.href='/board/'">뒤로가기</button>
 		<br>
 		<%if (pagenation.getStartPageNumber() != 1) {%>
-		<a href="/board/myQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
+		<a href="/board/myQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
 		<% } %>
 	
 		<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
 		<%if (i != Integer.parseInt(pn)) {%>
-			<a href="/board/myQuestion?pn=<%=i %>"> <%=i%> </a>
+			<a href="/board/myQuestion?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
 		<%} else  {%>
 			<%=i %>
 		<%} %>
 		<%} %>
 		<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-			<a href="/board/myQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
+			<a href="/board/myQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
 		<%} %>
 	<%}%>
 </body>

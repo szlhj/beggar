@@ -55,6 +55,7 @@
 </script>
 </head>
 <body>
+	<h1>아이디 찾기</h1>
 	<%if (numPageCount == null) { %>
 		<form action="/member/searchIdProcAction" method="post" id="searchForm" />
 			<input type="text" id="searchName" name="searchName" placeholder="이름" /><br>

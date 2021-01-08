@@ -50,6 +50,7 @@
 
 </head>
 <body>
+<h1>비밀번호 변경</h1>
 <hr>
 랜덤 비밀번호 <%=randomPwd %>
 아이디 <%=mber_sq %>

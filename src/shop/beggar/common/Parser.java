@@ -1,5 +1,7 @@
 package shop.beggar.common;
 
+import java.text.DecimalFormat;
+
 /**
  * @PackageName		: common
  * @FileName		: Parser.java
@@ -31,8 +33,7 @@ public class Parser {
 		str = str.replaceAll("&quot;", "\"");
 		
 		return str;
-	}
-	
+	}	
 	
 	public static String categoryParser(String category) {
 		String str = "";
@@ -71,6 +72,43 @@ public class Parser {
 		disp = price - (price * discount /100);
 		
 		return disp;
+	}	
+	
+	public static String shipping(int shipping) {
+		String str = "";
+		switch(shipping) {
+		case 0:
+			str = "결제대기 중";
+		case 1:
+			str = "물건준비 중";
+			break;
+		case 2:
+			str = "배송준비 중";
+			break;
+		case 3:
+			str = "집하장 도착";
+			break;
+		case 4:
+			str = "집하장에서 출발";
+			break;
+		case 5:
+			str = "배송완료";
+			break;
+		case 6:
+			str = "주문 삭제";
+			break;
+		default:
+			str = "etc";
+			break;
+		}
+		
+		return str;
+	}
+	
+	public static String comma(int price) {
+		DecimalFormat format = new DecimalFormat("###,###");
+		
+		return format.format(price) + " 원";
 	}
 	
 }

@@ -59,11 +59,11 @@ public class AdminService {
 		return list;
 	}
 	
-	public int getArticleCount() {
+	public int getArticleCount(String query) {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.getArticleCount();
+		int count = dao.getArticleCount(query);
 		close(con);
 		return count;
 	}
@@ -76,11 +76,11 @@ public class AdminService {
 		close(con);
 		return count;
 	}
-	public int getBoardArticleCount() {
+	public int getBoardArticleCount(String query) {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.getBoardArticleCount();
+		int count = dao.getBoardArticleCount(query);
 		close(con);
 		return count;
 	}
@@ -326,6 +326,28 @@ public class AdminService {
 		
 		return isSuccess;
 	}
+	
+	public boolean boardAnswer(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.boardAnswer(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
 	public boolean boardDel(BoardVo vo) {
 		boolean isSuccess = true;
 		

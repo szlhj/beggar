@@ -36,6 +36,7 @@ public class BoardDetailAction implements Action {
 		String board_sq = request.getParameter("board_sq");
 		String pn = request.getParameter("pn");
 		String mber_id = request.getParameter("mber_id");
+		String filter = request.getParameter("filter");
 		
 		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
@@ -72,6 +73,7 @@ public class BoardDetailAction implements Action {
 		request.setAttribute("adminVo", adminVo);
 		request.setAttribute("vo", mberVo);
 		request.setAttribute("mber_id", mber_id);
+		request.setAttribute("filter", filter);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/boardDetail.jsp");

@@ -1,3 +1,4 @@
+<%@page import="shop.beggar.common.Parser"%>
 <%@page import="shop.beggar.beggar.vo.OrderVo"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="shop.beggar.beggar.vo.MemberVo"%>
@@ -52,15 +53,9 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+<link rel="stylesheet" href="/views/css/orderView.css" type="text/css">
 
 <script type="text/javascript">
-	function numberWithCommas(x) {
-	    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-	}
-	
-	function changeComma(e,num) {
-		return e.innerHTML = numberWithCommas(num);
-	}
 	function cancle() {
 		location.href="/";
 	}
@@ -69,80 +64,50 @@
 	}
 </script>
 
-<style type="text/css">
-	.priceTd{
-		width: 150px;
-		height: 50px;
-		text-align: center;
-	}
-	.stokTd{
-		width: 100px;
-		height: 50px;
-		text-align: center;
-	}
-	.img{
-		width: 100px;
-		height: 100px;
-	}
-	.totalTitle{
-		width: 360px;
-		height: 50px;
-		text-align: center;
-	}
-	.totalPrice{
-		width: 150px;
-		height: 50px;
-		text-align: center;
-	}
-</style>
-
 </head>
 <body>
 	<jsp:include page="/views/navbar.jsp" />
-	<jsp:include page="/views/item/navigation.jsp"></jsp:include>
+	<jsp:include page="/views/member/myPageNavigation.jsp" />
 	
 	<%if (orderList == null) { %>
 		결제할 내용이 없습니다.
 	<%} else { %>
-		<table border="1">
+		<table class="table" border="1">
 			<tr>
-				<td class="img" rowspan="2">이미지</td>
-				<td class="orderTd" colspan="2">상품명</td>
-				<td class="priceTd" rowspan="2">결재금액</td>
+				<td class="tableTitle itemImg">이미지</td>
+				<td class="tableTitle itemName">상품명</td>
+				<td class="tableTitle itemPrice">가격</td>
+				<td class="tableTitle itemStoc">수량</td>
+				<td class="tableTitle itemPrice">결재금액</td>
+				<td class="tableTitle itemDttmShipping">결재일자</td>
+				<td class="tableTitle itemDttmShipping">배송상태</td>
 			</tr>
-			<tr>
-				<td class="priceTd">가격</td>
-				<td class="stokTd">수량</td>
-			</tr>
-		</table>
 		<%for (int i = 0; i < orderList.size(); i++) { %>
-			<table border="1">
-				<tr>
-					<td class="imgTd" rowspan="2"><img class="img" src="<%=orderList.get(i).getItem_img() %>"></td>
-					<td class="orderTd" colspan="2"><%=orderList.get(i).getItem_name() %></td>
-					<td class="priceTd" rowspan="2"><%=orderList.get(i).getPrice() * orderList.get(i).getItem_stok() %></td>
-				</tr>
-				<tr>
-					<td class="priceTd">
-						<%=orderList.get(i).getPrice() %>
-					</td>
-					<td class="stokTd">
-						<%=orderList.get(i).getItem_stok() %> EA
-					</td>
-				</tr>
-			</table>
+			<tr>
+				<td class="itemImg"><img class="itemImg" src="<%=orderList.get(i).getItem_img() %>"></td>
+				<td class=""><%=orderList.get(i).getItem_name() %></td>
+				<td class="tableNumber"><%=Parser.comma(orderList.get(i).getPrice()) %></td>
+				<td class="tableNumber"><%=orderList.get(i).getItem_stok() %> EA</td>
+				<td class="tableNumber"><%=Parser.comma(orderList.get(i).getPrice() * orderList.get(i).getItem_stok()) %></td>
+				<td class="tableTd"><%=orderList.get(i).getOrder_dttm() %></td>
+				<td class="tableTd"><%=Parser.shipping(orderList.get(i).getShipping()) %></td>
+			</tr>
 		<% total += orderList.get(i).getPrice() * orderList.get(i).getItem_stok();
 		} %>
+		</table>
 		<br>
 		<table>
 			<tr>
-				<td class="totalTitle">총합계 금액</td>
-				<td class="totalPrice"><%=total %></td>
+				<td class="tableTitle itemImg"></td>
+				<td class="tableTitle itemName"></td>
+				<td class="tableTitle itemPrice">총합계 금액</td>
+				<td class="tableTitle itemStoc"></td>
+				<td class="tableTitle tableNumber"><%=Parser.comma(total) %></td>
 			</tr>
 		</table>
 	<%} %>
 	<form action="/item/orderDelete" method="post" id="orderDeleteForm">
-			<table border="1">
+			<table class="table" border="1">
 			<tr>
 				<td colspan="2">보내는 사람
 					<input type="hidden" id="mber_sq" name="mber_sq" value="<%=mber_sq %>">
@@ -151,8 +116,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td>이름</td>
-				<td><input type="text" id="formName" name="formName" value="<%=formName %>"></td>
+				<td calss="orderName">이름</td>
+				<td><input calss="orderName" type="text" id="formName" name="formName" value="<%=formName %>"></td>
 			</tr>
 			<tr>
 				<td>전화번호</td>
@@ -183,7 +148,7 @@
 			</tr>
 		</table>
 	</form>
-	<button onclick="orderDelete()">주문 삭제</button>
+	<button onclick="orderDelete()">주문 삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 	<button onclick="cancle()">취소</button>
 </body>
 </html>

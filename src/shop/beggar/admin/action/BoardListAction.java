@@ -1,6 +1,6 @@
 package shop.beggar.admin.action;
 
-import static shop.beggar.common.RegExp.*;
+import static shop.beggar.common.RegExp.REGEXP_NUMBER;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -9,17 +9,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import shop.beggar.common.RegExp;
 import shop.beggar.admin.service.AdminService;
 import shop.beggar.admin.vo.AdminVo;
-import shop.beggar.beggar.item.service.ItemService;
 import shop.beggar.beggar.vo.BoardVo;
-import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 import shop.beggar.common.Pagenation;
-import shop.beggar.common.ActionForward;
+import shop.beggar.common.RegExp;
 
 /**
  * @PackageName : shop.beggar.beggar.member.action
@@ -47,10 +44,14 @@ public class BoardListAction implements Action {
 		
 		String id="0";
 		
+		int mber_sq;
+		
 		if(mberVo == null) {
 			id="관리자";
+			mber_sq=0;
 		}else {
 			id=mberVo.getId();
+			mber_sq=mberVo.getMber_sq();
 		}
 		
 		if (pn == null) {
@@ -76,6 +77,7 @@ public class BoardListAction implements Action {
 		String lastTimeQuery="";
 		String board_numberQuery="";
 		
+		
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
 		}
@@ -89,10 +91,12 @@ public class BoardListAction implements Action {
 		else {
 			lastTimeQuery = " and dttm<='"+lastTime+"'";
 		}
-		if (filter == null || filter.equals("")) {
+		
+		if (filter == null || filter.equals("") ||filter.equals("0")) {
 			board_numberQuery = "";
 		}else if(filter.equals("4")) {
-			board_numberQuery = " and (id= '" + id + "')";
+//			board_numberQuery = " and (id= '" + id + "')";
+			board_numberQuery = " and (mber_sq= '"+ mber_sq + "')";
 		}else{
 			board_numberQuery = " and (board_number= '" + filter + "')";
 		}
@@ -100,7 +104,7 @@ public class BoardListAction implements Action {
 		query = firstTimeQuery+lastTimeQuery+board_numberQuery;
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount());
+		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount(query));
 		if (page > pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();

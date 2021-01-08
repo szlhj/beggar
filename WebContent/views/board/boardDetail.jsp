@@ -10,6 +10,7 @@
 	AdminVo adminVo = (AdminVo) request.getAttribute("adminVo");
 	MemberVo memberVo = (MemberVo) request.getAttribute("vo");
 	String mber_id = request.getParameter("mber_id");
+	String filter = (String)request.getAttribute("filter");
 	
 	String yesOrNo = (String)request.getAttribute("yesOrNo");
 	
@@ -39,6 +40,9 @@
 	
 	String content = Parser.chgToHtml(boardVo.getContent());
 	
+	if(boardVo.getComment()==null||boardVo.getComment().equals("")){
+		boardVo.setComment("");
+	}
 %>
 <!DOCTYPE html>
 <html>
@@ -60,7 +64,6 @@
 	function del(isDel) {
 		location.href = "/board/delBoard?isDel=" + isDel + "&pn=" + <%=pn%> + "&sq=" + <%=boardVo.getBoard_sq()%>;
 	}
-	
 </script>
 </head>
 <body>
@@ -68,7 +71,7 @@
 		<section>
 		<%String buttonhref=""; %>
 		<%if(yesOrNo.equals("true")){%>
-		<%	buttonhref = "/board/myQuestion";%>
+		<%	buttonhref = "/board/myQuestion"; %>
 		<%}else{%>
 		<%  if(boardVo.getBoard_number()==1){%>
 		<%	  buttonhref = "/board/notice";	%>
@@ -96,6 +99,9 @@
 			<div readonly="readonly">
 				<%=content %>
 			</div>
+			<%if (!boardVo.getComment().equals("")){ %>
+			답변<input type="text" id="comment" name="comment" value="<%=boardVo.getComment() %>" readonly="readonly"/><br>
+			<%} %>
 			<%if (memberVo!=null&&boardVo.getMber_id().equals(memberVo.getId())) {%>
 					<button onclick="modify()">수정하기</button>
 				<%if (boardVo.isDel_fl() == true) { %>
@@ -104,7 +110,7 @@
 					<button onclick="del(true)">삭제하기</button>
 				<%} %>
 			<%} %>
-			<button onclick= "location.href = '<%=buttonhref%>'">뒤로가기 </button>
+			<button onclick= "location.href = '<%=buttonhref%>?pn=<%=pn%>&filter=<%=filter%>'">뒤로가기 </button>
 		</section>
 	</div>
 </body>

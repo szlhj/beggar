@@ -37,6 +37,7 @@ public class BoardDetailAction implements Action {
 		String pn = request.getParameter("pn");
 		String mber_id = request.getParameter("mber_id");
 		String yesOrNo = request.getParameter("yesOrNo");
+		String filter = request.getParameter("filter");
 		
 		HttpSession session = request.getSession();
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
@@ -74,6 +75,7 @@ public class BoardDetailAction implements Action {
 		request.setAttribute("vo", mberVo);
 		request.setAttribute("mber_id", mber_id);
 		request.setAttribute("yesOrNo", yesOrNo);
+		request.setAttribute("filter", filter);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/board/boardDetail.jsp");

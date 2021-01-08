@@ -18,6 +18,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+<link rel="stylesheet" href="/views/css/boardDetail.css" type="text/css">
 
 <script type="text/javascript">
 	var content = '<%=content%>';
@@ -59,7 +60,9 @@
 </script>
 </head>
 <body>
-	<div>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
+	<div class="boardDetail">
+		<div class="detail">
 		<section>
 			<form action="/admin/boardModifyProc?pn=<%=pn %>" method="post" id="editorForm">
 				게시판번호<input type="text" id="board_sq" name="board_sq" value="<%=boardVo.getBoard_sq() %>" readonly="readonly" /><br>
@@ -74,18 +77,21 @@
 					상품번호<input type="text" id="goods_info" name="goods_info" value="<%=boardVo.getGoods_info() %>" /><br>
 					제목<input type="text" id="title" name="title" value="<%=boardVo.getTitle() %>" /><br>
 					내용
-					<div>
+						<div style="width: 1000px;">
 						<jsp:include page="/editor/editorSkinForModify.jsp" flush="false" />
 					</div>
 			</form>
+				<br>
 			<button onclick="modify()">수정</button>
 			<%if (boardVo.isDel_fl() == true) { %>
-				<button onclick="del(false)">취소하기</button>
+				<button onclick="del(false)">삭제취소</button>
 			<%} else { %>
 				<button onclick="del(true)">삭제하기</button>
 			<%} %>
 			<button onclick="cancle()">취소</button>
 		</section>
+		</div>
 	</div>
+	<jsp:include page="/views/admin/adminNavigation.jsp" />
 </body>
 </html>

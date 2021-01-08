@@ -51,7 +51,7 @@
 	}
 	
 	function cancle() {
-		location.href = "/board/boardList?pn=" + <%=pn%>;
+		location.href = "/board/?pn=" + <%=pn%>;
 	}
 	function del(isDel) {
 		location.href = "/board/boardDel?isDel=" + isDel + "&pn=" + <%=pn%> + "&sq=" + <%=boardVo.getBoard_sq()%>;

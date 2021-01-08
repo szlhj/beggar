@@ -14,60 +14,66 @@
 <head>
 <meta charset="UTF-8">
 <title>관리자 리스트</title>
+
+<link rel="stylesheet" href="/views/css/adminList.css" type="text/css">
+
 </head>
 <body>
-	<button onclick="location.href='/admin/'">관리자 홈으로</button>
-	<button onclick="location.href='/'">홈으로</button>
-	<button onclick="location.href='/admin/listDummy'">admin dummy</button>
+	<jsp:include page="/views/admin/adminNavbar.jsp" />
 
-	<table border="1">
-		<tr>
-			<th>관리자 일련번호</th>
-			<th>관리자 아이디</th>
-			<th>관리자 이름</th>
-			<th>관리자 이메일</th>
-			<th>관리자 전화번호</th>
-			<th>관리자 슈퍼관리자</th>
-			<th>관리자 삭제 여부</th>
-			<th>관리자 생성일자</th>
-		</tr>
-		<%for (int i = 0; i < list.size(); i++) { %>
-			<tr onclick="location.href='/admin/detailAdmin?admin_sq=<%=list.get(i).getAdmin_sq() %>&pn=<%=pn %>'">
-				
-				<td><%=list.get(i).getAdmin_sq() %></td>
-				<td><%=list.get(i).getAdminId() %></td>
-				<td><%=list.get(i).getAdminName() %></td>
-				<td><%=list.get(i).getAdminEmail() %></td>
-				<td><%=list.get(i).getAdminPhone() %></td>
-				<%if (list.get(i).isAdmin_supper() == true) { %>
-					<td>슈퍼 관리자</td>
-				<%} else { %>
-					<td>관리자</td>
+	<div class="adminList">
+		<div class="list">
+			<table border="1">
+				<tr>
+					<th>관리자 일련번호</th>
+					<th>관리자 아이디</th>
+					<th>관리자 이름</th>
+					<th>관리자 이메일</th>
+					<th>관리자 전화번호</th>
+					<th>관리자 슈퍼관리자</th>
+					<th>관리자 삭제 여부</th>
+					<th>관리자 생성일자</th>
+				</tr>
+				<%for (int i = 0; i < list.size(); i++) { %>
+					<tr onclick="location.href='/admin/detailAdmin?admin_sq=<%=list.get(i).getAdmin_sq() %>&pn=<%=pn %>'">
+						
+						<td><%=list.get(i).getAdmin_sq() %></td>
+						<td><%=list.get(i).getAdminId() %></td>
+						<td><%=list.get(i).getAdminName() %></td>
+						<td><%=list.get(i).getAdminEmail() %></td>
+						<td><%=list.get(i).getAdminPhone() %></td>
+						<%if (list.get(i).isAdmin_supper() == true) { %>
+							<td>슈퍼 관리자</td>
+						<%} else { %>
+							<td>관리자</td>
+						<%} %>
+						<%if (list.get(i).isAdmin_del_fl() == true) { %>
+							<td>삭제</td>
+						<%} else { %>
+							<td>사용중</td>
+						<%} %>
+						<td><%=list.get(i).getDttm() %></td>
+						
+					</tr>
 				<%} %>
-				<%if (list.get(i).isAdmin_del_fl() == true) { %>
-					<td>삭제</td>
-				<%} else { %>
-					<td>사용중</td>
+			</table>
+			<%if (pagenation.getStartPageNumber() != 1) {%>
+				<a href="/admin/boardlist?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
+			<% } %>
+			
+			<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
+				<%if (i != Integer.parseInt(pn)) {%>
+					<a href="/admin/boardlist?pn=<%=i %>"> <%=i%> </a>
+				<%} else  {%>
+					<%=i %>
 				<%} %>
-				<td><%=list.get(i).getDttm() %></td>
-				
-			</tr>
-		<%} %>
-	</table>
+			<%} %>
+			<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
+				<a href="/admin/boardlist?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
+			<%} %>
+		</div>
+	</div>
+	<jsp:include page="/views/admin/adminNavigation.jsp" />
 	
-	<%if (pagenation.getStartPageNumber() != 1) {%>
-		<a href="/admin/boardlist?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
-	<% } %>
-	
-	<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
-		<%if (i != Integer.parseInt(pn)) {%>
-			<a href="/admin/boardlist?pn=<%=i %>"> <%=i%> </a>
-		<%} else  {%>
-			<%=i %>
-		<%} %>
-	<%} %>
-	<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-		<a href="/admin/boardlist?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
-	<%} %>
 </body>
 </html>

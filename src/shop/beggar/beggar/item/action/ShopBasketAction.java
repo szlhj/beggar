@@ -44,6 +44,13 @@ public class ShopBasketAction implements Action {
 			ivo.setMber_sq(vo.getMber_sq());
 
 			ItemService svc = new ItemService();
+			if(svc.checkCartItem(ivo)) {
+				response.setContentType("text/html;charset=UTF-8");
+				PrintWriter out = response.getWriter();
+				out.println("<script>alert('id장바구니에 중복된 상품이 있습니다.');history.back();</script>");
+				out.close();
+				return null;
+			}
 			if (!(svc.registerCart(ivo))) {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
@@ -53,7 +60,7 @@ public class ShopBasketAction implements Action {
 			} else {
 				response.setContentType("text/html;charset=UTF-8");
 				PrintWriter out = response.getWriter();
-				out.println("<script>alert('장바구니에 상품을 저장하였습니다.');history.back();</script>");
+				out.println("<script>alert('id장바구니에 상품을 저장하였습니다.');history.back();</script>");
 				out.close();
 				return null;
 			}
@@ -62,14 +69,23 @@ public class ShopBasketAction implements Action {
 		if (id == null) { // 비회원일때
 			String item_sq = request.getParameter("item_sq");
 			Cookie[] cookies = request.getCookies();
-			if (cookies == null) {
-				Cookie c = new Cookie("item_sq", item_sq);
-				response.addCookie(c);
-			} else {
-				for (int i = 0; i < cookies.length; i++) {
-					Cookie ci = cookies[i];
-					String cName = ci.getName();
-					if (cName.equals("item_sq")) {
+
+			for (int i = 0; i < cookies.length; i++) {
+				Cookie cj = cookies[i];
+				String cjValue = cj.getValue();
+				if (cjValue.equals(item_sq)) {
+					response.setContentType("text/html;charset=UTF-8");
+					PrintWriter out = response.getWriter();
+					out.println(
+							"<script>alert('쿠키장바구니 상품이 중복된 상품입니다.');history.back();</script>");
+					out.close();
+					return null;
+				}
+			}
+			for (int k = 0; k < cookies.length; k++) {
+					Cookie cj = cookies[k];
+					String cjName = cj.getName();
+					if (cjName.equals("item_sq")) {
 						session.setAttribute("cart_sq", item_sq);
 						response.setContentType("text/html;charset=UTF-8");
 						PrintWriter out = response.getWriter();
@@ -79,34 +95,21 @@ public class ShopBasketAction implements Action {
 						return null;
 					}
 				}
-			}
-			// Cookie cartCookie = new Cookie("item_sq",item_sq);
-//				response.addCookie(cartCookie);
-//			} else {
-//					response.addCookie();
-//			}
-
-//			for(int i=0; i < cookies.length; i++) {
-//				Cookie ci = cookies[i];
-//				String cName=ci.getName();
-//				String cValue = ci.getValue();
-//				response.setContentType("text/html;charset=UTF-8");
-//				PrintWriter out = response.getWriter();
-//				out.println("<script>alert('"+cValue+"');</script>");
-//				for(Cookie c : cookies) {
-//					if(c.getName().equals("item_sq")) {
-//						String valu = c.getValue();
-//						out.println("<script>alert('"+valu+"');</script>");
-//						
-//					}
-//				}
-//				out.close();
-//			}
-
 			
+			Cookie c = new Cookie("item_sq", item_sq);
+			c.setPath("/");  //쿠키 모든경로에서 사용가능하게 설정
+			c.setMaxAge(60*60*2); //쿠키 2시간 사용가능하게 설정
+			response.addCookie(c);
+			
+			response.setContentType("text/html;charset=UTF-8");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('쿠키장바구니에 상품을 저장하였습니다.');history.back();</script>");
+			out.close();
+			return null;
+	
 		}
 		ActionForward forward = new ActionForward();
-		forward.setPath("/detail?item_sq=" + item_sq_string);
+		forward.setPath("/item/detail?item_sq=" + item_sq_string);
 		return forward;
 	}
 }
