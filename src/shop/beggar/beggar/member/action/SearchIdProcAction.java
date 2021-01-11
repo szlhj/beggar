@@ -33,34 +33,25 @@ public class SearchIdProcAction implements Action{
 		
 		String query = " and name='" + searchName + "'";
 		
-		if (searchEmail == null
-				&& searchTel == null
-				|| searchEmail.equals("")
-				&& searchTel.equals("")) {
+		if ((searchEmail == null
+				&& searchTel == null)
+				|| (searchEmail.equals("")
+				&& searchTel.equals(""))) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('이메일 과 정화번호중 한곳은 입력을 하여야 합니다.');</script>");
+			out.println("<script>alert('이메일, 전화번호중 한곳은 입력을 하여야 합니다.');</script>");
 			out.close();
 			return null;
-		} else if (searchEmail == null
-				&& searchTel != null
-				|| searchEmail.equals("")
-				&& !searchTel.equals("")) {
-			query = query + " and phone='" + searchTel + "'";
-		} else if (searchEmail != null
-				&& searchTel == null
-				|| !searchEmail.equals("")
-				&& searchTel.equals("")) {
-			query = query +  " and email='" + searchEmail + "'";
-		} else if (searchEmail != null
-				&& searchTel != null
-				|| !searchEmail.equals("")
-				&& !searchTel.equals("")) {
-			response.setContentType("text/html;charset=UTF-8");
-			PrintWriter out = response.getWriter();
-			out.println("<script>alert('이메일 과 정화번호중 한곳만 입력을 하여야 합니다.');</script>");
-			out.close();
-			return null;
+		}
+		
+		if (searchEmail != null 
+				|| !searchEmail.equals("")) {
+			query +=  " and email='" + searchEmail + "'";
+		}
+		
+		if (searchTel != null 
+				|| !searchTel.equals("")) {
+			query += " and phone='" + searchTel + "'";
 		}
 		
 		MemberService svc = new MemberService();

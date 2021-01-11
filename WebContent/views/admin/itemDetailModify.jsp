@@ -17,7 +17,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="/views/css/itemDetailView.css" type="text/css">
+<link rel="stylesheet" href="/views/css/item/itemDetailView.css" type="text/css">
 
 <script type="text/javascript">
 	var content = '<%=content%>';

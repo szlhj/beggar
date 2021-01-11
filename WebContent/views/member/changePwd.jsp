@@ -14,6 +14,8 @@
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
 
+<link rel="stylesheet" href="/views/css/member/changePwd.css" type="text/css">
+
 <script type="text/javascript">
 	function cancle() {
 		location.href = "/";
@@ -50,18 +52,29 @@
 
 </head>
 <body>
-<h1>비밀번호 변경</h1>
-<hr>
-랜덤 비밀번호 <%=randomPwd %>
-아이디 <%=mber_sq %>
-<hr>
-	<form action="/member/changePwdProc" method="post" id="chPwdForm">
-		<input type="password" id="extantPwd" name="extantPwd" placeholder="현재 비밀번호" /><br>
-		<input type="password" id="newPwd" name="newPwd" placeholder="새로운 비밀번호" /><br>
-		<input type="password" id="newPwdc" name="newPwdc" placeholder="새로운 비밀번호 확인" /><br>
-		<input type="hidden" id="mber_sq" name="mber_sq" value="<%=mber_sq %>" /><br>
-	</form>
-	<button type="button" onclick="pwdModify()">변경</button>
-	<button type="button" onclick="cancle()">취소</button>
+	<jsp:include page="/views/navbar.jsp" />
+	
+	<div class="changePwdForm">
+		<div class="changePwd">
+			<h3>비밀번호 변경</h3>
+			<form action="/member/changePwdProc" method="post" id="chPwdForm">						
+				<input type="hidden" id="mber_sq" name="mber_sq" value="<%=mber_sq %>" />
+				<input type="hidden" id="extantPwd" name="extantPwd" value="<%=randomPwd %>" />
+				<table>
+					<tr>
+						<td class="td1">새로운 비밀번호</td>
+						<td class="td2"><input type="password" id="newPwd" name="newPwd" />
+						</td>
+					</tr>
+					<tr>
+						<td class="td1">새로운 비밀번호 확인</td>
+						<td class="td2"><input type="password" id="newPwdc" name="newPwdc" /></td>
+					</tr>
+				</table>
+			</form>
+			<button class="changePwd_button" type="button" onclick="pwdModify()">변경</button>
+			<button class="changePwd_button" type="button" onclick="cancle()">취소</button>
+		</div>
+	</div>
 </body>
 </html>

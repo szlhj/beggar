@@ -24,6 +24,9 @@
 <body>
 	<jsp:include page="/views/navbar.jsp" />
 	<jsp:include page="/views/item/navigation.jsp"></jsp:include>
+		
+<!-- 	<button onclick="location.href='/admin/'">包府磊 权</button><br> -->
+<!-- 	<button onclick="location.href='/item/orderView?nonmber=1234'">林巩炼雀</button> -->
 	
 	<jsp:include page="/views/item/itemPage.jsp"></jsp:include>
 </body>

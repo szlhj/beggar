@@ -48,7 +48,7 @@ public class BoardModifyProcAction implements Action {
 			sq = mberVo.getMber_sq();
 		}
 		
-		String board_number = request.getParameter("board_number");
+		int board_number = Integer.parseInt(request.getParameter("board_number"));
 		String goods_info = request.getParameter("goods_info");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");

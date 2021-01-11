@@ -75,7 +75,7 @@ public class LoginAdminProcAction implements Action {
 		HttpSession session = request.getSession();
 		session.setAttribute("adminVo", adminVo);
 		session.setAttribute("adminSupperCount", count);
-		session.setMaxInactiveInterval(60*60);
+//		session.setMaxInactiveInterval(60*60);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/admin/");

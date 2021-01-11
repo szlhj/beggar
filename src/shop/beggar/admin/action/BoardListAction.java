@@ -45,10 +45,14 @@ public class BoardListAction implements Action {
 		
 		String id="0";
 		
+		int mber_sq;
+		
 		if(mberVo == null) {
 			id="관리자";
+			mber_sq=0;
 		}else {
 			id=mberVo.getId();
+			mber_sq=mberVo.getMber_sq();
 		}
 		
 		if (pn == null) {
@@ -74,6 +78,7 @@ public class BoardListAction implements Action {
 		String lastTimeQuery="";
 		String board_numberQuery="";
 		
+		
 		if(firstTime == null || firstTime.equals("")) {
 			firstTimeQuery = "";
 		}
@@ -87,10 +92,12 @@ public class BoardListAction implements Action {
 		else {
 			lastTimeQuery = " and dttm<='"+lastTime+"'";
 		}
-		if (filter == null || filter.equals("")) {
+		
+		if (filter == null || filter.equals("") ||filter.equals("0")) {
 			board_numberQuery = "";
 		}else if(filter.equals("4")) {
-			board_numberQuery = " and (id= '" + id + "')";
+//			board_numberQuery = " and (id= '" + id + "')";
+			board_numberQuery = " and (mber_sq= '"+ mber_sq + "')";
 		}else{
 			board_numberQuery = " and (board_number= '" + filter + "')";
 		}
@@ -98,7 +105,7 @@ public class BoardListAction implements Action {
 		query = firstTimeQuery+lastTimeQuery+board_numberQuery;
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount());
+		Pagenation pagenation = new Pagenation(page, svc.getBoardArticleCount(query));
 		if (page > pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -112,7 +119,9 @@ public class BoardListAction implements Action {
 		request.setAttribute("list", list);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);
-
+		request.setAttribute("adminVo", adminVo);
+		request.setAttribute("vo", mberVo);
+		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/boardList.jsp");// 경로
 		return forward;

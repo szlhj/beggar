@@ -96,7 +96,7 @@ public class MemberManagementAction implements Action{
 		query = firstTimeQuery+lastTimeQuery+idQuery+nameQuery;
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page,svc.getArticleCount());
+		Pagenation pagenation = new Pagenation(page,svc.getArticleCount(query));
 		if(page>pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -109,6 +109,8 @@ public class MemberManagementAction implements Action{
 		ArrayList<MemberVo> list = svc.getArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
 		request.setAttribute("list", list);
+		request.setAttribute("filter", filter);
+		request.setAttribute("pn", pn);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/memberViews.jsp");//경로

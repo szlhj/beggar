@@ -36,20 +36,19 @@
 				<%
 					if (mber_sq == 0) {
 				%>
-				<li><a class="sideMenu" href="/member/loginAction" onMouseOver='this.innerHTML="로그인"' onMouseOut='this.innerHTML="LOGIN"'>LOGIN</a></li>
-				<li><a class="sideMenu" href="/member/registerAction" onMouseOver='this.innerHTML="회원가입"' onMouseOut='this.innerHTML="JOIN"'>JOIN</a></li>
-				<li><a class="sideMenu" href="/item/orderInquiry" onMouseOver='this.innerHTML="주문조회"' onMouseOut='this.innerHTML="ORDER INQUIRY"'>ORDER INQUIRY</a></li>
+				<li><a class="sideMenu" href="/member/loginAction">로그인</a></li>
+				<li><a class="sideMenu" href="/member/registerAction">회원가입</a></li>
+				<li><a class="sideMenu" href="/item/orderInquiry">주문조회</a></li>
 				<%
 					} else {
 				%>
-				<li><a class="sideMenu" href="/member/myPage" onMouseOver='this.innerHTML="나의메뉴"' onMouseOut='this.innerHTML="MY MENU"'>MY MENU</a></li>
-				<li><a class="sideMenu" href="/member/logoutAction" onMouseOver='this.innerHTML="로그아웃"' onMouseOut='this.innerHTML="LOGOUT"'>LOGOUT</a></li>
+				<li><a class="sideMenu" href="/member/myPage">나의메뉴</a></li>
+				<li><a class="sideMenu" href="/member/logoutAction">로그아웃</a></li>
 				<%
 					}
 				%>
-				<li><a class="sideMenu" href="/item/cartForm" onMouseOver='this.innerHTML="장바구니"' onMouseOut='this.innerHTML="CART"'>CART</a></li>
-				<li><a class="sideMenu" href="/board/" onMouseOver='this.innerHTML="게시판"' onMouseOut='this.innerHTML="BOARD"'>게시판</a></li>
-				<li><a class="sideMenu" href="/item/mainItem" onMouseOver='this.innerHTML="아이템페이지"' onMouseOut='this.innerHTML="ITEM"'>아이템</a></li>
+				<li><a class="sideMenu" href="/item/cartForm">장바구니</a></li>
+				<li><a class="sideMenu" href="/board/">게시판</a></li>
 			</ul>
 		</div>
 	</nav>

@@ -10,6 +10,7 @@ import shop.beggar.admin.vo.FileVo;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
+import shop.beggar.beggar.vo.OrderVo;
 import shop.beggar.common.Pagenation;
 import shop.beggar.common.Parser;
 
@@ -125,7 +126,7 @@ public class AdminDao {
 		ResultSet rs = null;
 		ArrayList<BoardVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" order by mber_sq LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" group by board_sq LIMIT ?,?");
 			//select * from (inf_board_tb a, inf_mber_tb b a.mber_sq=b.mber_sq) 
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());
@@ -133,13 +134,15 @@ public class AdminDao {
 			while (rs.next()) {
 				BoardVo vo = new BoardVo();
 				vo.setBoard_sq(rs.getInt("board_sq"));
+				vo.setMber_sq(rs.getInt("mber_sq"));
 				vo.setMber_id(rs.getString("id"));
-				vo.setBoard_number(rs.getString("board_number"));
+				vo.setBoard_number(rs.getInt("board_number"));
 				vo.setCount(rs.getInt("count"));
 				vo.setDel_fl(rs.getInt("del_fl"));
 				vo.setDttm(rs.getString("dttm"));
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString("content"));
+				vo.setComment(rs.getString("comment"));
 				
 				list.add(vo);
 			}
@@ -154,12 +157,12 @@ public class AdminDao {
 		return list;
 	}
 
-	public int getArticleCount() {
+	public int getArticleCount(String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("select count(*) from inf_mber_tb");
+			pstmt = con.prepareStatement("select count(*) from inf_mber_tb where 1=1 "+ query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
@@ -193,12 +196,12 @@ public class AdminDao {
 		return count;
 	}
 	
-	public int getBoardArticleCount() {
+	public int getBoardArticleCount(String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("select count(*) from inf_board_tb");
+			pstmt = con.prepareStatement("select count(*) from inf_board_tb where 1=1 "+ query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
@@ -269,16 +272,16 @@ public class AdminDao {
 		return count;
 	}
 	
-	public int boardAdd(BoardVo vo, int admin_sq) {	
+	public int boardAdd(BoardVo vo) {	
 		PreparedStatement pstmt = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, mber_sq, count) values (?,?,?,?,?,0)");
-			pstmt.setString(1, vo.getBoard_number());
-			pstmt.setString(2, vo.getGoods_info());
-			pstmt.setString(3, vo.getTitle());
-			pstmt.setString(4, vo.getContent());
-			pstmt.setInt(5, vo.getMber_sq());
+				pstmt = con.prepareStatement("insert into inf_board_tb (board_number, goods_info, title, content, count, mber_sq) values (?,?,?,?,0,?)");
+				pstmt.setInt(1, vo.getBoard_number());
+				pstmt.setString(2, vo.getGoods_info());
+				pstmt.setString(3, vo.getTitle());
+				pstmt.setString(4, vo.getContent());
+				pstmt.setInt(5, vo.getMber_sq());
 			
 			count = pstmt.executeUpdate();
 			
@@ -496,11 +499,12 @@ public class AdminDao {
 				vo.setBoard_sq(rs.getInt("board_sq"));
 				vo.setMber_id(rs.getString("id"));
 				vo.setDel_fl(rs.getBoolean("del_fl"));
-				vo.setBoard_number(rs.getString("board_number"));
+				vo.setBoard_number(rs.getInt("board_number"));
 				vo.setGoods_info(rs.getString("goods_info"));
 				vo.setTitle(rs.getString("title"));
 				vo.setContent(rs.getString(Parser.chgToHtml("content")));
 				vo.setDttm(rs.getString("dttm"));
+				vo.setComment(rs.getString("comment"));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -572,6 +576,24 @@ public class AdminDao {
 			pstmt.setBoolean(1, vo.isShow_fl());
 			pstmt.setInt(2, admin_sq);
 			pstmt.setInt(3, vo.getItem_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	public int increaseCount(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set count=count+1 where board_sq=?");
+			pstmt.setInt(1, vo.getBoard_sq());
 			
 			count = pstmt.executeUpdate();
 			
@@ -765,5 +787,189 @@ public class AdminDao {
 			close(pstmt);
 		}
 		return vo;
+	}
+	public int boardDel(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set del_fl=?, dttm=now() where board_sq=?");
+			pstmt.setBoolean(1, vo.isDel_fl());
+			pstmt.setInt(2, vo.getBoard_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int boardModify(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set board_number=?, goods_info=?, title=?, content=?, count=? where board_sq=?");
+			pstmt.setInt(1, vo.getBoard_number());
+			pstmt.setString(2, vo.getGoods_info());
+			pstmt.setString(3, vo.getTitle());
+			pstmt.setString(4, vo.getContent());
+			pstmt.setInt(5, vo.getCount());
+			pstmt.setInt(6, vo.getBoard_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int boardAnswer(BoardVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_board_tb set comment=? where board_sq=?");
+			pstmt.setString(1, vo.getComment());
+			pstmt.setInt(2, vo.getBoard_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+
+	public ArrayList<OrderVo> orderList() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrderVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement("select a.order_sq, a.mber_sq, a.item_sq, a.item_stok, a.price, a.shipping, a.order_payment_plan, a.nonmber, a.record_item, a.addr_form, a.addr_to, ifnull(a.name_form,c.name) as name_form, a.name_to, ifnull(a.name_form_phone,c.phone) as name_form_phone, a.name_to_phone, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm, b.item_name, b.filepath as item_img from inf_order_tb a inner join inf_goods_tb b on a.item_sq = b.item_sq left join inf_mber_privcy_tb c on a.mber_sq = c.mber_sq where shipping not in (6)");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				OrderVo vo = new OrderVo();
+				vo.setAddr_form(rs.getString("addr_form"));
+				vo.setAddr_to(rs.getString("addr_to"));
+				vo.setItem_img(rs.getString("item_img"));
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setItem_sq(rs.getInt("item_sq"));
+				vo.setItem_stok(rs.getInt("item_stok"));
+				vo.setMber_sq(rs.getInt("mber_sq"));
+				vo.setName_form(rs.getString("name_form"));
+				vo.setName_form_phone(rs.getString("name_form_phone"));
+				vo.setName_to(rs.getString("name_to"));
+				vo.setName_to_phone(rs.getString("name_to_phone"));
+				vo.setNonmber(rs.getString("nonmber"));
+				vo.setOrder_dttm(rs.getString("order_dttm"));
+				vo.setOrder_payment_plan(rs.getInt("order_payment_plan"));
+				vo.setOrder_sq(rs.getInt("order_sq"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setRecord_item(rs.getString("record_item"));
+				vo.setShipping(rs.getInt("shipping"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+
+	public ArrayList<OrderVo> itemDeleteList() {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ArrayList<OrderVo> list = new ArrayList<>();
+		try {
+			pstmt = con.prepareStatement("select a.order_sq, a.mber_sq, a.item_sq, a.item_stok, a.price, a.shipping, a.order_payment_plan, a.nonmber, a.record_item, a.addr_form, a.addr_to, ifnull(a.name_form,c.name) as name_form, a.name_to, ifnull(a.name_form_phone,c.phone) as name_form_phone, a.name_to_phone, date_format(a.order_dttm,'%Y-%c-%d') as order_dttm, b.item_name, b.filepath as item_img from inf_order_tb a inner join inf_goods_tb b on a.item_sq = b.item_sq left join inf_mber_privcy_tb c on a.mber_sq = c.mber_sq where a.shipping=6");
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				OrderVo vo = new OrderVo();
+				vo.setAddr_form(rs.getString("addr_form"));
+				vo.setAddr_to(rs.getString("addr_to"));
+				vo.setItem_img(rs.getString("item_img"));
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setItem_sq(rs.getInt("item_sq"));
+				vo.setItem_stok(rs.getInt("item_stok"));
+				vo.setMber_sq(rs.getInt("mber_sq"));
+				vo.setName_form(rs.getString("name_form"));
+				vo.setName_form_phone(rs.getString("name_form_phone"));
+				vo.setName_to(rs.getString("name_to"));
+				vo.setName_to_phone(rs.getString("name_to_phone"));
+				vo.setNonmber(rs.getString("nonmber"));
+				vo.setOrder_dttm(rs.getString("order_dttm"));
+				vo.setOrder_payment_plan(rs.getInt("order_payment_plan"));
+				vo.setOrder_sq(rs.getInt("order_sq"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setRecord_item(rs.getString("record_item"));
+				vo.setShipping(rs.getInt("shipping"));
+				list.add(vo);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return list;
+	}
+	
+	public int orderShipping(OrderVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_order_tb set shipping=? where order_sq=?");
+			pstmt.setInt(1, vo.getShipping());
+			pstmt.setInt(2, vo.getOrder_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int orderShippingDelete(OrderVo vo) {
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			
+			pstmt = con.prepareStatement("update inf_order_tb set shipping=7 where order_sq=?");
+			pstmt.setInt(1, vo.getOrder_sq());
+			
+			count = pstmt.executeUpdate();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
 	}
 }

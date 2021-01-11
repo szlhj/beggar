@@ -15,7 +15,7 @@
 <meta charset="UTF-8">
 <title>관리자 리스트</title>
 
-<link rel="stylesheet" href="/views/css/adminList.css" type="text/css">
+<link rel="stylesheet" href="/views/css/admin/adminList.css" type="text/css">
 
 </head>
 <body>

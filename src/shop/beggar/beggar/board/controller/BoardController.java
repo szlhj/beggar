@@ -8,13 +8,17 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import shop.beggar.beggar.board.action.BoardAction;
-import shop.beggar.beggar.board.action.FrequentlyAction;
+import shop.beggar.beggar.board.action.BoardAddAction;
+import shop.beggar.beggar.board.action.BoardAddProcAction;
+import shop.beggar.beggar.board.action.BoardDelAction;
+import shop.beggar.beggar.board.action.BoardDetailAction;
+import shop.beggar.beggar.board.action.BoardModifyProcAction;
+import shop.beggar.beggar.board.action.BoardModifyViewAction;
 import shop.beggar.beggar.board.action.MyQuestionAction;
+import shop.beggar.beggar.board.action.NoticeAction;
 import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
 import shop.beggar.beggar.board.action.ProductRelatedAction;
-import shop.beggar.beggar.board.action.WriteBoardAction;
 import shop.beggar.beggar.home.action.HomeAction;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
@@ -42,22 +46,6 @@ public class BoardController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/writeBoard")) { //글쓰기
-			Action action = new WriteBoardAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		} else if (command.equals("/frequently")) { //자주하는 질문
-			Action action = new FrequentlyAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
 		} else if (command.equals("/productRelated")) { //제품관련
 			Action action = new ProductRelatedAction();
 			
@@ -76,6 +64,62 @@ public class BoardController extends HttpServlet {
 			}
 		} else if (command.equals("/myQuestion")) { //내가 쓴 글 보기
 			Action action = new MyQuestionAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/notice")) { //내가 쓴 글 보기
+			Action action = new NoticeAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/addBoard")) { 
+			Action action = new BoardAddAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/addBoardProc")) { 
+			Action action = new BoardAddProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/detailBoard")) { 
+			Action action = new BoardDetailAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/modifyBoardView")) { 
+			Action action = new BoardModifyViewAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/delBoard")) { 
+			Action action = new BoardDelAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}else if (command.equals("/modifyBoardProc")) { 
+			Action action = new BoardModifyProcAction();
 			
 			try {
 				forward = action.execute(request, response);

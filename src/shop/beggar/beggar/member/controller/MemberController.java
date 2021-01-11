@@ -92,15 +92,6 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/mberShipAction")) {  //멤버십
-			Action action = new MemberShipAction();
-			
-			try {
-				forward = action.execute(request, response);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			
 		} else if (command.equals("/loginAction")) {  //로그인
 			Action action = new LoginAction();
 			
@@ -119,7 +110,7 @@ public class MemberController extends HttpServlet {
 				e.printStackTrace();
 			}
 			
-		} else if (command.equals("/logoutAction")) {  //로그인
+		} else if (command.equals("/logoutAction")) {  //로그아웃
 			Action action = new LogoutAction();
 			
 			try {
@@ -184,7 +175,7 @@ public class MemberController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/myPage")) {  //비밀번호 찾기
+		} else if (command.equals("/myPage")) {  //myPage
 			Action action = new MyPageAction();
 			
 			try {

@@ -22,7 +22,7 @@
 <title>BEGGAR</title>
 <link rel="stylesheet" href="/views/css/style.css" type="text/css">
 <link rel="stylesheet" href="/views/css/ress.css" type="text/css">
-<link rel="stylesheet" href="/views/css/adminNavbar.css" type="text/css">
+<link rel="stylesheet" href="/views/css/admin/adminNavbar.css" type="text/css">
 
 </head>
 <body>

@@ -20,7 +20,7 @@
 <title>관리자</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="/views/css/adminMain.css" type="text/css">
+<link rel="stylesheet" href="/views/css/admin/adminMain.css" type="text/css">
 
 <script type="text/javascript">
 	function adminLogin(){

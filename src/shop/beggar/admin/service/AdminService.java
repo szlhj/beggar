@@ -15,6 +15,7 @@ import shop.beggar.beggar.member.dao.MemberDao;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
+import shop.beggar.beggar.vo.OrderVo;
 import shop.beggar.common.Pagenation;
 
 import static shop.beggar.common.JdbcUtil.*;
@@ -59,11 +60,11 @@ public class AdminService {
 		return list;
 	}
 	
-	public int getArticleCount() {
+	public int getArticleCount(String query) {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.getArticleCount();
+		int count = dao.getArticleCount(query);
 		close(con);
 		return count;
 	}
@@ -76,11 +77,11 @@ public class AdminService {
 		close(con);
 		return count;
 	}
-	public int getBoardArticleCount() {
+	public int getBoardArticleCount(String query) {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.getBoardArticleCount();
+		int count = dao.getBoardArticleCount(query);
 		close(con);
 		return count;
 	}
@@ -115,14 +116,14 @@ public class AdminService {
 		return count;
 	}
 	
-	public boolean boardAdd(BoardVo vo, int admin_sq) {
+	public boolean boardAdd(BoardVo vo) {
 		boolean isSuccess = true;
 		
 		AdminDao dao = AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
 		
-		int count = dao.boardAdd(vo, 1);
+		int count = dao.boardAdd(vo);
 		
 		if (count > 0) {
 			commit(con);
@@ -136,6 +137,27 @@ public class AdminService {
 		return isSuccess;
 	}
 
+	public boolean increaseCount(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.increaseCount(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
 	public boolean registerAdmin(AdminVo vo) {
 		boolean isSuccess = true;
 		
@@ -292,7 +314,49 @@ public class AdminService {
 		Connection con = getConnection();
 		dao.setConnection(con);
 		
-		int count = 0;//dao.boardModify(vo);
+		int count = dao.boardModify(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
+	public boolean boardAnswer(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.boardAnswer(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
+	public boolean boardDel(BoardVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.boardDel(vo);
 		
 		if (count > 0) {
 			commit(con);
@@ -403,5 +467,69 @@ public class AdminService {
 		AdminVo infoVo = dao.getAdminDetail(vo);
 		close(con);
 		return infoVo;
+	}
+	
+	public ArrayList<OrderVo> orderList(){
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ArrayList<OrderVo> list = dao.orderList();
+		
+		close(con);
+		return list;
+	}
+	
+	public ArrayList<OrderVo> itemDeleteList(){
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ArrayList<OrderVo> list = dao.itemDeleteList();
+		
+		close(con);
+		return list;
+	}
+	
+	public boolean orderShipping(OrderVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.orderShipping(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
+	public boolean orderShippingDelete(OrderVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.orderShippingDelete(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
 	}
 }

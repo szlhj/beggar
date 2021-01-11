@@ -97,6 +97,9 @@ public class Parser {
 		case 6:
 			str = "주문 삭제";
 			break;
+		case 7:
+			str = "주문 삭제 완료";
+			break;
 		default:
 			str = "etc";
 			break;
@@ -109,6 +112,36 @@ public class Parser {
 		DecimalFormat format = new DecimalFormat("###,###");
 		
 		return format.format(price) + " 원";
+	}
+	
+	public static String stok(int stok) {
+		DecimalFormat format = new DecimalFormat("###,###");
+		
+		return format.format(stok) + " 개";
+	}
+	
+	public static String itemSumPrice(int stok, int price) {
+		DecimalFormat format = new DecimalFormat("###,###");
+		
+		int sumPrice = price * stok;
+		
+		return format.format(sumPrice) + " 원";
+	}	
+	
+	public static String payment(int payment) {
+		String str = "";
+		switch(payment) {
+		case 1:
+			str = "카드 결제";
+		case 2:
+			str = "무통장 입금";
+			break;
+		default:
+			str = "etc";
+			break;
+		}
+		
+		return str;
 	}
 	
 }

@@ -9,9 +9,11 @@ import javax.servlet.http.HttpSession;
 import shop.beggar.admin.service.AdminService;
 import shop.beggar.admin.vo.AdminVo;
 import shop.beggar.beggar.vo.BoardVo;
+import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
+import shop.beggar.common.LoginManager;
 import shop.beggar.common.Parser;
 
 /**
@@ -48,7 +50,7 @@ public class BoardAddProcAction implements Action{
 			sq = mberVo.getMber_sq();
 		}
 	    
-		String board_number = request.getParameter("board_number");
+		int board_number = Integer.parseInt(request.getParameter("board_number"));
 		String goods_info = request.getParameter("goods_info");
 		String title = request.getParameter("title");
 		String content = request.getParameter("content");  
@@ -63,7 +65,7 @@ public class BoardAddProcAction implements Action{
 		
 		
 		AdminService svc = new AdminService();
-		if (!svc.boardAdd(vo, 1)) {
+		if (!svc.boardAdd(vo)) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>alert('게시판등록에 실패하였습니다.');location.href='/';</script>");
@@ -72,7 +74,7 @@ public class BoardAddProcAction implements Action{
 		}
 		
 		ActionForward forward = new ActionForward();
-		forward.setPath("/admin/");
+		forward.setPath("/admin/boardList");
 		forward.setRedirect(true);
 		return forward;
 	}
