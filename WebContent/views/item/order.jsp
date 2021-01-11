@@ -126,69 +126,69 @@
 	<%if (orderList == null) { %>
 		결제할 내용이 없습니다.
 	<%} else { %>
-		<%for (int i = 0; i < orderList.size(); i++) { %>
-			<table border="1">
-				<tr>
-					<td class="imgTd" rowspan="2"><img style="width: 100px; height: 100px;" src="<%=orderList.get(i).getItem_img() %>"></td>
-					<td class="orderTd" colspan="2"><%=orderList.get(i).getItem_name() %></td>
-					<td class="priceTd" rowspan="2"><%=orderList.get(i).getPrice() * orderList.get(i).getItem_stok() %></td>
-				</tr>
-				<tr>
-					<td class="priceTd">
-						<%=orderList.get(i).getPrice() %>
-					</td>
-					<td class="stokTd">
-						<%=orderList.get(i).getItem_stok() %> EA
-					</td>
-				</tr>
-			</table>
-		<%} %>
+	<%for (int i = 0; i < orderList.size(); i++) { %>
+		<table border="1">
+			<tr>
+				<td class="imgTd" rowspan="2"><img style="width: 100px; height: 100px;" src="<%=orderList.get(i).getItem_img() %>"></td>
+				<td class="orderTd" colspan="2"><%=orderList.get(i).getItem_name() %></td>
+				<td class="priceTd" rowspan="2"><%=orderList.get(i).getPrice() * orderList.get(i).getItem_stok() %></td>
+			</tr>
+			<tr>
+				<td class="priceTd">
+					<%=orderList.get(i).getPrice() %>
+				</td>
+				<td class="stokTd">
+					<%=orderList.get(i).getItem_stok() %> EA
+				</td>
+			</tr>
+		</table>
+	<%} %>
 	
-		<form action="/item/orderProc" method="post" id="orderForm">
-			<table border="1">
-				<tr>
-					<td colspan="2">보내는 사람
-						<input type="hidden" id="mber_sq" name="mber_sq" value="<%=mber_sq %>">
-						<input type="hidden" id="payment" name="payment">
-						<input type="hidden" id="nonmber" name="nonmber" value="<%=nonmber %>">
-					</td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td><input type="text" id="formName" name="formName" value="<%=formName %>"></td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td><input type="text" id="formPhone" name="formPhone" value="<%=formPhone %>"></td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td><input type="text" id="formAddr" name="formAddr" value="<%=formAddr %>"></td>
-				</tr>
-				<tr>
-					<td colspan="2">받는 사람</td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td><input type="text" id="toName" name="toName" value="<%=toName %>"></td>
-				</tr>
-				<tr>
-					<td>전화번호</td>
-					<td><input type="text" id="toPhone" name="toPhone" value="<%=toPhone %>"></td>
-				</tr>
-				<tr>
-					<td>주소</td>
-					<td><input type="text" id="toAddr" name="toAddr" value="<%=toAddr %>"></td>
-				</tr>
-				<tr>
-					<td>요청사항</td>
-					<td><input type="text" id="record" name="record" value="<%=record %>"></td>
-				</tr>
-			</table>
-		</form>
-		
-		<button onclick="payment('card')">카드결제</button>
-		<button onclick="payment('cash')">무통장 입금</button>
+	<form action="/item/orderProc" method="post" id="orderForm">
+		<table border="1">
+			<tr>
+				<td colspan="2">보내는 사람
+					<input type="hidden" id="mber_sq" name="mber_sq" value="<%=mber_sq %>">
+					<input type="hidden" id="payment" name="payment">
+					<input type="hidden" id="nonmber" name="nonmber" value="<%=nonmber %>">
+				</td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" id="formName" name="formName" value="<%=formName %>"></td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td><input type="text" id="formPhone" name="formPhone" value="<%=formPhone %>"></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td><input type="text" id="formAddr" name="formAddr" value="<%=formAddr %>"></td>
+			</tr>
+			<tr>
+				<td colspan="2">받는 사람</td>
+			</tr>
+			<tr>
+				<td>이름</td>
+				<td><input type="text" id="toName" name="toName" value="<%=toName %>"></td>
+			</tr>
+			<tr>
+				<td>전화번호</td>
+				<td><input type="text" id="toPhone" name="toPhone" value="<%=toPhone %>"></td>
+			</tr>
+			<tr>
+				<td>주소</td>
+				<td><input type="text" id="toAddr" name="toAddr" value="<%=toAddr %>"></td>
+			</tr>
+			<tr>
+				<td>요청사항</td>
+				<td><input type="text" id="record" name="record" value="<%=record %>"></td>
+			</tr>
+		</table>
+	</form>
+	
+	<button onclick="payment('card')">카드결제</button>
+	<button onclick="payment('cash')">무통장 입금</button>
 	<%} %>
 	<button onclick="cancle()">취소</button>
 </body>

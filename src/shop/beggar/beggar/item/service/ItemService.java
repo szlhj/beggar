@@ -141,11 +141,60 @@ public class ItemService {
 		return list;
 	}
 	
+	public ItemVo getPurchasePage(int mber_sq , int item_sq) {
+		ItemDao dao= ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		ItemVo vo = dao.getPurchasePage(mber_sq , item_sq);
+		close(con);
+		return vo;
+	}
+	
 	public boolean changeCartStok(ItemVo ivo) {
 		ItemDao dao = ItemDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
 		int count = dao.changeCartStok(ivo);
+		boolean isSuccess = true;
+		if(count > 0) {
+			commit(con);//0보다 크면 커밋
+		} else {
+			rollback(con);  //작으면 롤백함
+			isSuccess = false;
+		}
+		close(con);
+		return isSuccess;
+	}
+	
+	public int countOrderInfo(int mber_sq) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.countOrderInfo(mber_sq);
+		if(count >= 0) {
+			commit(con);//0보다 크면 커밋
+			close(con);
+		}
+		return count;
+	}
+	
+	public OrderVo purchaseAddrInfo(int mber_sq) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		OrderVo voInfo = dao.purchaseAddrInfo(mber_sq);
+		
+		close(con);
+		
+		return voInfo;
+	}
+	
+	public boolean registerOrderInfo(OrderVo vo) {
+		ItemDao dao = ItemDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		int count = dao.registerOrderInfo(vo);
 		boolean isSuccess = true;
 		if(count > 0) {
 			commit(con);//0보다 크면 커밋

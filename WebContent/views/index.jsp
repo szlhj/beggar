@@ -25,8 +25,8 @@
 	<jsp:include page="/views/navbar.jsp" />
 	<jsp:include page="/views/item/navigation.jsp"></jsp:include>
 		
-<!-- 	<button onclick="location.href='/admin/'">╟Э╦╝юз х╗</button><br> -->
-<!-- 	<button onclick="location.href='/item/orderView?nonmber=1234'">аж╧╝а╤х╦</button> -->
+<!-- 	<button onclick="location.href='/admin/'">Й╢─К╕╛Л·░ М≥┬</button><br> -->
+<!-- 	<button onclick="location.href='/item/orderView?nonmber=1234'">Лё╪К╛╦Л║╟М ▄</button> -->
 	
 	<jsp:include page="/views/item/itemPage.jsp"></jsp:include>
 </body>
