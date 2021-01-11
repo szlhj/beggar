@@ -62,11 +62,7 @@ public class BoardDetailAction implements Action {
 		AdminService svc = new AdminService();
 		BoardVo vo = new BoardVo();
 		vo.setBoard_sq(Integer.parseInt(board_sq));
-		
-		if(mberVo!=null&&!mber_id.equals(mberVo.getId())) {
-			svc.increaseCount(vo);
-		}
-		
+			
 		BoardVo boardVo = svc.getBoardDetail(vo);
 		request.setAttribute("boardVo", boardVo);
 		request.setAttribute("pn", pn);
