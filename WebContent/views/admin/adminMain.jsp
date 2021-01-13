@@ -130,6 +130,7 @@
 				<input type="password" id="adminPwd" name="adminPwd" /><br><br><br>
 				<button class="main_button" onclick="adminLogin()">로그인</button>
 				<button class="main_button" onclick="/admin">취소</button>
+				<button class="main_button" onclick="/admin/">비밀번호변경</button>
 			</form>
 		<%} else { %>
 			<h1>슈퍼 관리자 등록</h1>

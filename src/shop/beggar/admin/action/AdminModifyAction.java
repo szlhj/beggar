@@ -1,5 +1,7 @@
 package shop.beggar.admin.action;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -30,14 +32,24 @@ public class AdminModifyAction implements Action {
 		HttpSession session = request.getSession();
 		AdminVo vo = (AdminVo) session.getAttribute("adminVo");
 		
+		if (vo == null) {
+			response.setContentType("text/html;charset=UTF-8;");
+			PrintWriter out = response.getWriter();
+			out.println("<script>alert('잘못된 접근입니다.');location.href='/admin/';</script>");
+			out.close();
+			return null;
+		}
+		
 		String admin_sq = request.getParameter("admin_sq");
+		
+		if (admin_sq == null) {
+			admin_sq = Integer.toString(vo.getAdmin_sq());
+		}
+		
+		vo.setAdmin_sq(Integer.parseInt(admin_sq));
 		
 		AdminService svc = new AdminService();
 		AdminVo infoVo = svc.adminInfoAll(vo);
-		
-		if (admin_sq != null) {
-			infoVo.setAdmin_sq(Integer.parseInt("admin_sq"));
-		}
 		
 		request.setAttribute("vo", infoVo);
 		

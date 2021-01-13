@@ -351,7 +351,7 @@ public class AdminDao {
 				vo.setAdminId(rs.getString("admin_id"));
 				vo.setAdmin_sq(rs.getInt("admin_sq"));
 				vo.setAdminPwd(rs.getString("admin_pwd"));
-				vo.setAdmin_supper(rs.getBoolean("admin_pwd"));
+				vo.setAdmin_supper(rs.getBoolean("admin_supper"));
 			}
 		} catch (Exception e) {
 			// TODO: handle exception

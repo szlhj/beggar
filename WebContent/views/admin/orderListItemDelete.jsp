@@ -13,6 +13,7 @@
 <meta charset="UTF-8">
 <title>주문 삭제</title>
 
+<script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
 <link rel="stylesheet" href="/views/css/admin/orderListItemDelete.css" type="text/css">
 
 <script type="text/javascript">
@@ -32,7 +33,7 @@
 		}
 	}
 	function itemDelete() {
-		var $form = $('#orderListForm');
+		var $form = $('#orderListDeleteForm');
 		var check_count = document.getElementsByName("order_sq").length;
 		var order_sq = "";
 		
@@ -41,7 +42,6 @@
                 order_sq += document.getElementsByName("order_sq")[i].value + ",";
             }
         }
-        alert(shipping);
         $('#orderSq').val(order_sq);
         
 		$form.submit();
@@ -53,7 +53,7 @@
 
 	<div class="orderListForm">
 		<div class="orderList">
-			<form action="/admin/orderListItemDeleteProc" method="post" id="orderListForm">
+			<form action="/admin/orderListItemDeleteProc" method="post" id="orderListDeleteForm">
 				<input type="hidden" id="orderSq" name="orderSq" />
 				<table>
 					<%if (list == null) { %>

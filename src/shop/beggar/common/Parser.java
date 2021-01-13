@@ -142,6 +142,25 @@ public class Parser {
 		}
 		
 		return str;
+	}	
+	
+	public static String Board_numberName(int Board_number) {
+		String str = "";
+		switch(Board_number) {
+		case 1:
+			str = "공지사항";
+		case 2:
+			str = "1:1문의";
+			break;
+		case 3:
+			str = "제품관련문의";
+			break;
+		default:
+			str = "etc";
+			break;
+		}
+		
+		return str;
 	}
 	
 }

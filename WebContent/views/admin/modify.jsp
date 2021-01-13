@@ -59,12 +59,6 @@
 			return;
 		}
 		
-		if (!$adminPwd.val()){
-			alert("비밀번호를 입력하세요.");
-			$adminPwd.focus;
-			return;
-		}
-		
 		if ($adminPwd.val() != $adminPwdc.val()){
 			alert("비밀번호가 동일하지 않습니다.");
 			return;
@@ -81,14 +75,36 @@
 	<div class="adminModify">
 		<div class="modify">
 			<form action="/admin/modifyAdminProc" method="post" id="marform">
-				<input type="text" id="adminId" name="adminId" placeholder="아이디" value="<%=adminId %>" readonly="readonly" /><br>
-				<input type="password" id="adminPwd" name="adminPwd" placeholder="비밀번호" /><br>
-				<input type="password" id="adminPwdc" name="adminPwdc" placeholder="비밀번호 확인" /><br>
-				<input type="text" id="adminName" name="adminName" placeholder="이름" value="<%=adminName %>" readonly="readonly" /><br>
-				<input type="email" id="adminEmail" name="adminEmail" placeholder="이메일" value="<%=adminEmail %>" /><br>
-				<input type="tel" id="adminPhone" name="adminPhone" placeholder="전화번호"  value="<%=adminPhone %>"/><br>
-		<!-- 		<input type="checkbox" id="adminSupper" name="adminSupper" /><label for="adminSupper">슈퍼관리자</label><br> -->
-				<textarea rows="10" cols="30" id="adminMemo" name="adminMemo" placeholder="메모 입력"><%=adminMemo %></textarea><br>
+				<table>
+					<tr>
+						<td class="td1">아이디</td>
+						<td class="td2"><input type="text" id="adminId" name="adminId" placeholder="아이디" value="<%=adminId %>" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td class="td1">비밀번호</td>
+						<td class="td2"><input type="password" id="adminPwd" name="adminPwd" placeholder="비밀번호" /></td>
+					</tr>
+					<tr>
+						<td class="td1">비밀번호 확인</td>
+						<td class="td2"><input type="password" id="adminPwdc" name="adminPwdc" placeholder="비밀번호 확인" /></td>
+					</tr>
+					<tr>
+						<td class="td1">이름</td>
+						<td class="td2"><input type="text" id="adminName" name="adminName" placeholder="이름" value="<%=adminName %>" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td class="td1">이메일</td>
+						<td class="td2"><input type="email" id="adminEmail" name="adminEmail" placeholder="이메일" value="<%=adminEmail %>" /></td>
+					</tr>
+					<tr>
+						<td class="td1">전화번호</td>
+						<td class="td2"><input type="tel" id="adminPhone" name="adminPhone" placeholder="전화번호"  value="<%=adminPhone %>"/></td>
+					</tr>
+					<tr>
+						<td class="td1">메모</td>
+						<td class="td2"><textarea rows="10" cols="30" id="adminMemo" name="adminMemo" placeholder="메모 입력"><%=adminMemo %></textarea></td>
+					</tr>
+				</table>
 			</form>
 			<button class="modify_button" onclick="adminModify()">수정</button>
 			<button class="modify_button" onclick="location.href='/admin'">취소</button>

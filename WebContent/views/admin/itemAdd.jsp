@@ -127,41 +127,79 @@
 		<div class="add">
 			<section>
 				<form action="/admin/itemAddProc" method="post" id="editorForm">
-					상품이름<input type="text" id="item_name" name="item_name" /><br>
-<!-- 					카테고리<input type="text" id="category" name="category" /><br> -->
-					카테고리
-					<select id="category" name="category">
-						<option value="1" selected>NEW IN(뉴어라이벌)</option>
-						<option value="2">EARRINGS(이어링)</option>
-						<option value="3">NECKLACES(네크리스)</option>
-						<option value="4">BRACELETS(브레이슬릿)</option>
-						<option value="5">RINGS(링)</option>
-						<option value="6">ANKLETS(앵클릿)</option>
-						<option value="7">BEST(베스트 셀러)</option>
-					</select>
-					<br>
-					상품코드<input type="text" id="code" name="code" /><br>
-					가격<input type="text" id="price" name="price" /><br>
-					상품 할인율<input type="text" id="discount" name="discount" /><br>
-					재고<input type="text" id="stok" name="stok" /><br>
-					상품컬러<input type="text" id="color" name="color" /><br>
-					상품넘버링<input type="text" id="item_number" name="item_number" /><br>
-					상품 등급<input type="text" id="item_rating" name="item_rating" /><br>
-					사이즈<input type="text" id="size" name="size" /><br>
-					<div>
-						<input type="file" id="input_img" />
-						<div class="img_wrap">
-							<img id="img" />
-						</div>
-					</div>
-					<div style="width: 1500px;">
-						<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
-					</div>
+					<table>
+						<tr>
+							<td class="td1">상품이름</td>
+							<td class="td2"><input type="text" id="item_name" name="item_name" /></td>
+						</tr>
+						<tr>
+							<td class="td1">카테고리</td>
+							<td class="td2">
+								<select id="category" name="category">
+									<option value="1" selected>NEW IN(뉴어라이벌)</option>
+									<option value="2">EARRINGS(이어링)</option>
+									<option value="3">NECKLACES(네크리스)</option>
+									<option value="4">BRACELETS(브레이슬릿)</option>
+									<option value="5">RINGS(링)</option>
+									<option value="6">ANKLETS(앵클릿)</option>
+									<option value="7">BEST(베스트 셀러)</option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td class="td1">상품코드</td>
+							<td class="td2"><input type="text" id="code" name="code" /></td>
+						</tr>
+						<tr>
+							<td class="td1">가격</td>
+							<td class="td2"><input type="text" id="price" name="price" /></td>
+						</tr>
+						<tr>
+							<td class="td1">상품 할인율</td>
+							<td class="td2"><input type="text" id="discount" name="discount" /></td>
+						</tr>
+						<tr>
+							<td class="td1">재고</td>
+							<td class="td2"><input type="text" id="stok" name="stok" /></td>
+						</tr>
+						<tr>
+							<td class="td1">상품컬러</td>
+							<td class="td2"><input type="text" id="color" name="color" /></td>
+						</tr>
+						<tr>
+							<td class="td1">상품넘버링</td>
+							<td class="td2"><input type="text" id="item_number" name="item_number" /></td>
+						</tr>
+						<tr>
+							<td class="td1">상품 등급</td>
+							<td class="td2"><input type="text" id="item_rating" name="item_rating" /></td>
+						</tr>
+						<tr>
+							<td class="td1">사이즈</td>
+							<td class="td2"><input type="text" id="size" name="size" /></td>
+						</tr>
+						<tr>
+							<td class="td1">이미지</td>
+							<td class="td2">
+								<input type="file" id="input_img" />
+								<div class="img_wrap">
+									<img id="img" />
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td class="td1" colspan="2">
+								<div>
+									<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
+								</div>
+							</td>
+						</tr>
+					</table>
 				</form>
 				<br>
-				<button class="add_button" onclick="join()">등록</button>
-				<button class="add_button" onclick="cancle()">취소</button>
 			</section>
+			<button class="add_button" onclick="join()">등록</button>
+			<button class="add_button" onclick="cancle()">취소</button>
 		</div>
 	</div>
 	<jsp:include page="/views/admin/adminNavigation.jsp" />
