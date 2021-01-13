@@ -20,15 +20,16 @@
 	
 	boardVo.setMber_id(mber_id);
 	
-	if(memberVo == null && adminVo == null){
-		memberVo = new MemberVo();
-		memberVo.setId("");
-	}
-	
 	if(adminVo != null){
 		memberVo = new MemberVo();
 		memberVo.setId("관리자");
 	}
+	
+	if(memberVo == null && adminVo == null){
+		memberVo = new MemberVo();
+		memberVo.setId("비회원");
+	}
+	
 	
 	if(boardVo.getMber_id()==null||boardVo.getMber_id().equals("")){
 		boardVo.setMber_id("관리자");

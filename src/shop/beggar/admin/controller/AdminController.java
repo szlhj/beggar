@@ -37,23 +37,11 @@ import shop.beggar.admin.action.ItemModifyViewAction;
 import shop.beggar.admin.action.ItemShowAction;
 import shop.beggar.admin.action.LoginAdminProcAction;
 import shop.beggar.admin.action.LogoutAdminAction;
-import shop.beggar.admin.action.AdminRegisterAction;
 import shop.beggar.admin.action.MemberManagementAction;
-import shop.beggar.admin.action.AdminRegisterProcAction;
-import shop.beggar.admin.action.BoardAddAction;
-import shop.beggar.admin.action.BoardAddProcAction;
-import shop.beggar.admin.action.BoardDelAction;
-import shop.beggar.admin.action.BoardDetailAction;
-import shop.beggar.admin.action.BoardListAction;
-import shop.beggar.admin.action.BoardModifyProcAction;
-import shop.beggar.admin.action.BoardModifyViewAction;
-import shop.beggar.admin.action.EditCheckAction;
-import shop.beggar.admin.action.FileExAction;
-import shop.beggar.admin.action.FileUploadAction;
-import shop.beggar.beggar.board.action.MyQuestionAction;
-import shop.beggar.beggar.board.action.OneAndOneQuestionAction;
-import shop.beggar.beggar.board.action.ProductRelatedAction;
-import shop.beggar.beggar.home.action.HomeAction;
+import shop.beggar.admin.action.OrderListAction;
+import shop.beggar.admin.action.OrderListItemDeleteAction;
+import shop.beggar.admin.action.OrderListProcAction;
+import shop.beggar.admin.action.orderListItemDeleteProcAction;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 
@@ -240,7 +228,7 @@ private static final long serialVersionUID = 1L;
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/boardDetail")) {
+		}	else if (command.equals("/boardDetail")) {
 			Action action = new BoardDetailAction();
 			
 			try {
@@ -306,6 +294,38 @@ private static final long serialVersionUID = 1L;
 			}
 		}else if (command.equals("/boardProcAnswer")) { 
 			Action action = new BoardAnswerProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderList")) { //주문현황 
+			Action action = new OrderListAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderListProc")) { //주문현황
+			Action action = new OrderListProcAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderListItemDelete")) { //주문 현황 삭제
+			Action action = new OrderListItemDeleteAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/orderListItemDeleteProc")) { //주문 현황 삭제
+			Action action = new orderListItemDeleteProcAction();
 			
 			try {
 				forward = action.execute(request, response);

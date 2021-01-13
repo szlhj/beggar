@@ -47,10 +47,8 @@ public class BoardListAction implements Action {
 		int mber_sq;
 		
 		if(mberVo == null) {
-			id="관리자";
 			mber_sq=0;
 		}else {
-			id=mberVo.getId();
 			mber_sq=mberVo.getMber_sq();
 		}
 		

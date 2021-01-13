@@ -18,7 +18,7 @@
 <head>
 <meta charset="UTF-8">
 <title>adminNavigationBar</title>
-<link rel="stylesheet" href="/views/css/adminNavigation.css" type="text/css">
+<link rel="stylesheet" href="/views/css/admin/adminNavigation.css" type="text/css">
 </head>
 <body>
 	<ul class="ct" id="navi">
@@ -54,6 +54,13 @@
             <ul class="sub">
                 <li><a href="/admin/boardList">게시판리스트</a></li>
                 <li><a href="/admin/boardAdd">게시판작성</a></li>
+            </ul>
+        </li>       
+        <li class="group">
+            <div class="title">주문 관리</div>
+            <ul class="sub">
+                <li><a href="/admin/orderList">주문 리스트</a></li>
+                <li><a href="/admin/orderListItemDelete">주문 삭제</a></li>
             </ul>
         </li>
     </ul>

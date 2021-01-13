@@ -1,0 +1,64 @@
+@charset "UTF-8";
+
+.changePwdForm{
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+	
+.changePwdForm .changePwd{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -30%;
+	margin-top: 150px;
+	font-size: 20px;
+}
+
+.changePwd input{
+	font-size: 1.8rem;
+	padding: .8em;
+	width: 100%;
+	background-color: #fff;
+	border: 1px solid #ced4da;
+	border-radius: .4em;
+}
+
+.changePwd_button {
+	display: inline-block;
+	padding: .3em;
+	border-radius: .4em;
+	font-size: 1.8rem;
+	width: 10%;
+	background-color: silver;
+	align-items: center;
+	color: black;
+/* 	margin-top: .5em; */
+	border-color: white;
+}
+
+.changePwd_button2 {
+	display: inline-block;
+	padding: .3em;
+	border-radius: .4em;
+	font-size: 1.8rem;
+	width: 15%;
+	background-color: silver;
+	align-items: center;
+	color: black;
+/* 	margin-top: .5em; */
+	border-color: white;
+}
+
+.td1{
+	width: 200px;
+	height: 50px;
+}
+
+.td2{
+	width: 300px;
+	height: 50px;
+	margin-left: 30px;
+}

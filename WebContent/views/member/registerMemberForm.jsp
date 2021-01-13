@@ -6,9 +6,7 @@
 <meta charset="UTF-8">
 <title>회원가입</title>
 
-<link rel="stylesheet" href="/views/css/registerMember.css" type="text/css">
-<link rel="stylesheet" href="/views/css/ress.css" type="text/css">
-<link rel="stylesheet" href="/views/css/navbar.css" type="text/css">
+<link rel="stylesheet" href="/views/css/member/registerMember.css" type="text/css">
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
 
@@ -108,26 +106,57 @@
 
 </head>
 <body>
-<div>
-	<div>
-		<jsp:include page="/views/navbar.jsp"></jsp:include>
-	</div>
-	<div>
-		<section>
+	<jsp:include page="/views/navbar.jsp"></jsp:include>
+	
+	<div class="registerForm">
+		<div class="register">
 			<form action="/member/RegisterProcAction" method="post" id="reform">
-				<input type="text" id="id" name="id" placeholder="아이디"/><span id="idMessage"></span><br>
-				<input type="password" id="pwd" name="pwd" placeholder="비밀번호"/><span id="pwdMessage"></span><br>
-				<input type="password" id="pwdc" name="pwdc" placeholder="비밀번호 확인"/><span id="pwdcMessage"></span><br>
-				<input type="text" id="name" name="name" placeholder="이름"/><br>
-				<input type="tel" id="tel" name="tel" placeholder="전화번호"/><br>
-				<input type="email" id="email" name="email" placeholder="이메일"/><br>
-				<input type="checkbox" id="email_fl" name="email_fl" />이메일체크<br>
-				<input type="checkbox" id="sms_fl" name="sms_fl" />SMS체크<br>
+				<table>
+					<tr>
+						<td class="td1">아이디</td>
+						<td class="td2"><input type="text" id="id" name="id" /></td>
+						<td class="td2"><span id="idMessage"></span></td>
+					</tr>
+					<tr>
+						<td class="td1">비밀번호</td>
+						<td class="td2"><input type="password" id="pwd" name="pwd" /></td>
+						<td class="td2"><span id="pwdMessage"></span></td>
+					</tr>
+					<tr>
+						<td class="td1">비밀번호 확인</td>
+						<td class="td2"><input type="password" id="pwdc" name="pwdc" /></td>
+						<td class="td2"><span id="pwdcMessage"></span></td>
+					</tr>
+					<tr>
+						<td class="td1">이름</td>
+						<td class="td2"><input type="text" id="name" name="name" /></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="td1">전화번호</td>
+						<td class="td2"><input type="tel" id="tel" name="tel" /></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="td1">이메일</td>
+						<td class="td2"><input type="email" id="email" name="email" /></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="td1">이메일수신여부</td>
+						<td class="td2"><input type="checkbox" id="email_fl" name="email_fl" /></td>
+						<td></td>
+					</tr>
+					<tr>
+						<td class="td1">SMS수신여부</td>
+						<td class="td2"><input type="checkbox" id="sms_fl" name="sms_fl" /></td>
+						<td></td>
+					</tr>
+				</table>
 			</form>
-			<button onclick="join()">가입</button>
-			<button onclick="cancle()">취소</button>
-		</section>
+			<button class="register_button" onclick="join()">가입</button>
+			<button class="register_button" onclick="cancle()">취소</button>
+		</div>
 	</div>
-</div>
 </body>
 </html>

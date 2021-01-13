@@ -15,6 +15,7 @@ import shop.beggar.beggar.member.dao.MemberDao;
 import shop.beggar.beggar.vo.BoardVo;
 import shop.beggar.beggar.vo.ItemVo;
 import shop.beggar.beggar.vo.MemberVo;
+import shop.beggar.beggar.vo.OrderVo;
 import shop.beggar.common.Pagenation;
 
 import static shop.beggar.common.JdbcUtil.*;
@@ -466,5 +467,69 @@ public class AdminService {
 		AdminVo infoVo = dao.getAdminDetail(vo);
 		close(con);
 		return infoVo;
+	}
+	
+	public ArrayList<OrderVo> orderList(){
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ArrayList<OrderVo> list = dao.orderList();
+		
+		close(con);
+		return list;
+	}
+	
+	public ArrayList<OrderVo> itemDeleteList(){
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		ArrayList<OrderVo> list = dao.itemDeleteList();
+		
+		close(con);
+		return list;
+	}
+	
+	public boolean orderShipping(OrderVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.orderShipping(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
+	}
+	
+	public boolean orderShippingDelete(OrderVo vo) {
+		boolean isSuccess = true;
+		
+		AdminDao dao = AdminDao.getInstance();
+		Connection con = getConnection();
+		dao.setConnection(con);
+		
+		int count = dao.orderShippingDelete(vo);
+		
+		if (count > 0) {
+			commit(con);
+		} else {
+			rollback(con);
+			isSuccess = false;
+		}
+		
+		close(con);
+		
+		return isSuccess;
 	}
 }

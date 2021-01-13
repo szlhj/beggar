@@ -38,6 +38,7 @@ public class MemberDao {
 		this.con = con;
 	}
 	
+	@SuppressWarnings("resource")
 	public int registerMember(MemberVo vo) {
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -201,6 +202,7 @@ public class MemberDao {
 		return vo;
 	}
 	
+	@SuppressWarnings("resource")
 	public int modifyMember(MemberVo vo) { //이름 정보 수정 함
 		PreparedStatement pstmt = null;
 		int count = 0;

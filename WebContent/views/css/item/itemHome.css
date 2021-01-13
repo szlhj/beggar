@@ -1,0 +1,73 @@
+@charset "UTF-8";
+.pagenations {
+	width: 960px;
+	margin : 0 auto;
+}
+
+.item {
+	width: 500px;
+	text-align : center;
+}
+.card-img-top {
+	height: 200px;
+}
+
+.item_full {
+	width: 960px;
+	margin : 0 auto;
+	text-align : center;
+}
+
+.ul_ct {
+	display : flex;
+	justify-content: space-evenly;
+	margin: 0 auto;
+	width: 1200px;
+	list-style: none;
+	padding-left: 0px;
+	padding : 20px;
+	
+}
+.ct {
+	font-size: 20px;
+	color: black;
+}
+.ct_one {
+	padding : 40px;
+}
+.ct_two {
+	padding : 40px;
+}
+.ct_three {
+	padding : 40px;
+}
+.ct_four {
+	padding : 40px;
+}
+.ct_five {
+	padding : 40px;
+}
+.ct_six {
+	padding : 40px;
+}
+.ct_seven {
+	padding : 40px;
+}
+
+.page_prev {
+	font-size: 20px;
+	padding : 10px;
+}
+.page_frt {
+	display: inline;
+	font-size: 20px;
+	padding : 10px;
+}
+.page_num {
+	font-size: 20px;
+	padding : 10px;
+}
+.page_next {
+	font-size: 20px;
+	padding : 10px;
+}

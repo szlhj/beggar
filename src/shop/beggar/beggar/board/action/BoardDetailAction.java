@@ -48,23 +48,24 @@ public class BoardDetailAction implements Action {
 		
 		//관리자 회원인 경우
 		if (mberVo == null && adminVo!=null) {
-				sq = 0;//adminVo.getAdmin_sq();	
+			sq = 0;//adminVo.getAdmin_sq();	
 		} else if(mberVo!=null){
 			sq = mberVo.getMber_sq();
-		} else {
-			sq = 0;//비 로그인 회원
 		}
 		
-		if(sq==0) {
+		if(adminVo!=null) {
 			mberVo = new MemberVo();
 			mberVo.setId("관리자");
+		}else if(adminVo==null&&mberVo==null) {
+			mberVo = new MemberVo();
+			mberVo.setId("비회원");
 		}
 		
 		AdminService svc = new AdminService();
 		BoardVo vo = new BoardVo();
 		vo.setBoard_sq(Integer.parseInt(board_sq));
 		
-		if(mberVo!=null&&!mber_id.equals(mberVo.getId())) {
+		if(mberVo!=null&&(!mber_id.equals(mberVo.getId())&&!mberVo.getId().equals("비회원")&&!mberVo.getId().equals("관리자"))) {
 			svc.increaseCount(vo);
 		}
 		

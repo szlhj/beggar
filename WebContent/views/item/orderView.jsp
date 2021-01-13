@@ -53,7 +53,7 @@
 <title>Insert title here</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="/views/css/orderView.css" type="text/css">
+<link rel="stylesheet" href="/views/css/item/orderView.css" type="text/css">
 
 <script type="text/javascript">
 	function cancle() {
@@ -116,8 +116,8 @@
 				</td>
 			</tr>
 			<tr>
-				<td calss="orderName">이름</td>
-				<td><input calss="orderName" type="text" id="formName" name="formName" value="<%=formName %>"></td>
+				<td class="orderName">이름</td>
+				<td><input class="orderName" type="text" id="formName" name="formName" value="<%=formName %>"></td>
 			</tr>
 			<tr>
 				<td>전화번호</td>

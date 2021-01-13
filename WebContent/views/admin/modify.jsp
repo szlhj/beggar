@@ -25,7 +25,7 @@
 <title>관리자 회원 수정</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="/views/css/adminModify.css" type="text/css">
+<link rel="stylesheet" href="/views/css/admin/adminModify.css" type="text/css">
 
 <script type="text/javascript">
 	function adminModify() {

@@ -12,7 +12,7 @@
 		
 		if(memberVo == null && adminVo == null){
 			memberVo = new MemberVo();
-			memberVo.setId("");
+			memberVo.setId("비회원");
 		}
 		
 		if(adminVo != null){

@@ -25,6 +25,9 @@
 <meta charset="UTF-8">
 <title>회원정보 수정</title>
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
+
+<link rel="stylesheet" href="/views/css/member/modifyForm.css" type="text/css">
+
 <script>
 
 	function modifyInfo(){
@@ -92,18 +95,53 @@
 </script>
 </head>
 <body>
-	<h1>회원정보 수정</h1>
-	<form action="/member/modifyProc" method="post" id="mfForm">
-		아이디 <%=mvo.getId() %> <br/>
-		새로운비밀번호<input type="password" id="pwd" name="pwd"/><br/>
-		새로운비밀번호 확인 <input type="password" id="pwdc" name="pwdc" /> <br/>
-		이름 <%=mvo.getName() %> <br/>
-		휴대전화<input type="tel" id="tel" name="tel" value="<%=mvo.getPhone() %>"/> <br/>
-		SMS 수신여부 <input type="checkbox" id="sms_fl" name="sms_fl"  <%=sms_fl.equals("true")?"checked":"" %> /> <br/>
-		이메일<input type="email" id="email" name="email" value="<%=mvo.getEmail()%>"/> <br/>
-		이메일 수신여부 <input type="checkbox" id="email_fl" name="email_fl" <%=email_fl.equals("true")?"checked":"" %> /> <br/>
-	</form>
-	<button type="button" onclick="modifyInfo()">정보수정</button>
-	<button type="button" onclick="cancle()">취소</button>
+	<jsp:include page="/views/navbar.jsp" />
+	<jsp:include page="/views/member/myPageNavigation.jsp" />
+	
+	<div class="modifyForm">
+		<div class="modify">
+			<h3>회원정보 수정</h3>
+			<form action="/member/modifyProc" method="post" id="mfForm">
+				
+				<table>
+					<tr>
+						<td class="td1">아이디</td>
+						<td class="td2"><input type="text" id="id" name="id" value="<%=mvo.getId() %>" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td class="td1">비밀번호</td>
+						<td class="td2"><input type="password" id="pwd" name="pwd"/></td>
+					</tr>
+					<tr>
+						<td class="td1">비밀번호 확인</td>
+						<td class="td2"><input type="password" id="pwdc" name="pwdc" /></td>
+					</tr>
+					<tr>
+						<td class="td1">이름</td>
+						<td class="td2"><input type="text" id="name" name="name" value="<%=mvo.getName() %>" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td class="td1">전화번호</td>
+						<td class="td2"><input type="tel" id="tel" name="tel" value="<%=mvo.getPhone() %>"/></td>
+					</tr>
+					<tr>
+						<td class="td1">이메일</td>
+						<td class="td2"><input type="email" id="email" name="email" value="<%=mvo.getEmail()%>"/></td>
+					</tr>
+					<tr>
+						<td class="td1">SNS 수신여부</td>
+						<td class="td2"><input type="checkbox" id="sms_fl" name="sms_fl"  <%=sms_fl.equals("true")?"checked":"" %> /></td>
+					</tr>
+					<tr>
+						<td class="td1">이메일 수신여부</td>
+						<td class="td2"><input type="checkbox" id="email_fl" name="email_fl" <%=email_fl.equals("true")?"checked":"" %> /></td>
+					</tr>
+				</table>
+			</form>
+			<br>
+			<button class="modify_button" type="button" onclick="modifyInfo()">정보수정</button>
+			<button class="modify_button" type="button" onclick="cancle()">취소</button>
+		</div>
+	</div>
 </body>
 </html>
