@@ -46,7 +46,7 @@
 				files.delete();
 				out.write("업로드할 수 없는 확장자입니다.");
 			} else{
-				new FileDAO().upload(fileName, fileRealName);
+// 				new FileDAO().upload(fileName, fileRealName);
 				out.write("파일명 : " + fileName + "<br>");
 				out.write("실제파일명 : " + fileRealName + "<br>");
 			}
