@@ -5,10 +5,10 @@
 <head>
 <meta charset="UTF-8">
 <title>navigationBar</title>
-<link rel="stylesheet" href="/views/css/item/itemHome.css" type="text/css">
+<link rel="stylesheet" href="/views/css/itemHome.css" type="text/css">
 </head>
 <body>
-	<ul class="ul_ct">
+<ul class="ul_ct">
 		<li><a class="ct ct_one" href="/?category=1">NEW IN</a></li>
 		<li><a class="ct ct_two" href="/?category=2">EARRINGS</a></li>
 		<li><a class="ct ct_three" href="/?category=3">NECKLACES</a></li>

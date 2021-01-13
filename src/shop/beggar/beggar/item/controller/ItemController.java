@@ -19,6 +19,7 @@ import shop.beggar.beggar.item.action.OrderInquiryAction;
 import shop.beggar.beggar.item.action.OrderProcAction;
 import shop.beggar.beggar.item.action.OrderViewAction;
 import shop.beggar.beggar.item.action.PurchaseAction;
+import shop.beggar.beggar.item.action.PurchaseProcAction;
 import shop.beggar.beggar.item.action.ShopBasketAction;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
@@ -86,8 +87,16 @@ public class ItemController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		} else if (command.equals("/purchase")) { //장바구니상세화면
+		} else if (command.equals("/purchase")) { //주문상세화면
 			Action action = new PurchaseAction();
+			
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		} else if (command.equals("/purchaseProc")) { //주문 완료 화면
+			Action action = new PurchaseProcAction();
 			
 			try {
 				forward = action.execute(request, response);

@@ -312,6 +312,36 @@ public class ItemDao {
 		return list;
 	}
 	
+	public ItemVo getPurchasePage(int mber_sq,int item_sq) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		ItemVo vo = null;
+		try {
+			pstmt = con.prepareStatement("select b.filepath,b.item_name,b.price,b.discount,b.stok,a.item_stok,a.item_sq from inf_cart_tb a INNER JOIN inf_goods_tb b where a.item_sq = b.item_sq and a.mber_sq=? and b.item_sq=?");
+			pstmt.setInt(1, mber_sq);
+			pstmt.setInt(2, item_sq);
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				vo = new ItemVo();
+				vo.setFilepath(rs.getString("filepath"));
+				vo.setItem_name(rs.getString("item_name"));
+				vo.setPrice(rs.getInt("price"));
+				vo.setDiscount(rs.getInt("discount"));
+				vo.setStok(rs.getInt("stok"));
+				vo.setItem_stok(rs.getInt("item_stok"));
+				vo.setItem_sq(rs.getInt("item_sq"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return vo;
+	}
+	
 	public int changeCartStok(ItemVo ivo) {  //장바구니 정보를 db 테이블에 저장
 		PreparedStatement pstmt = null;
 		int count = 0;
@@ -321,6 +351,83 @@ public class ItemDao {
 			pstmt.setInt(1, ivo.getItem_stok());
 			pstmt.setInt(2, ivo.getItem_sq());	
 			pstmt.setInt(3, ivo.getMber_sq());
+			count = pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public int countOrderInfo(int mber_sq) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement("select count(*) from inf_order_tb where mber_sq=?");
+			pstmt.setInt(1, mber_sq);
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt(1);
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return count;
+	}
+	
+	public OrderVo purchaseAddrInfo(int mber_sq) {
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		OrderVo ovo = null;
+		try {
+				pstmt = con.prepareStatement("select addr_form,addr_to,name_form,name_to,name_form_phone,name_to_phone,record_item from inf_order_tb where mber_sq=? order by order_dttm desc limit 1");
+				pstmt.setInt(1, mber_sq);
+				rs = pstmt.executeQuery();
+			while(rs.next()) {
+				ovo = new OrderVo();
+				ovo.setAddr_form(rs.getString("addr_form"));
+				ovo.setAddr_to(rs.getString("addr_to"));
+				ovo.setName_form(rs.getString("name_form"));
+				ovo.setName_to(rs.getString("name_to"));
+				ovo.setName_form_phone(rs.getString("name_form_phone"));
+				ovo.setName_to_phone(rs.getString("name_to_phone"));
+				ovo.setRecord_item(rs.getString("record_item"));
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		finally {
+			close(rs);
+			close(pstmt);
+		}
+		
+		return ovo;
+	}
+	
+	public int registerOrderInfo(OrderVo vo) {  //주문 정보를 db 테이블에 저장
+		PreparedStatement pstmt = null;
+		int count = 0;
+		try {
+			pstmt = con.prepareStatement    
+					("insert into inf_order_tb(mber_sq,item_sq,item_stok,price,order_payment_plan,nonmber,record_item,addr_form,addr_to,name_form,name_to,name_form_phone,name_to_phone) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+			pstmt.setInt(1, vo.getMber_sq());
+			pstmt.setInt(2, vo.getItem_sq());
+			pstmt.setInt(3, vo.getItem_stok());
+			pstmt.setInt(4, vo.getPrice());
+			pstmt.setInt(5, vo.getOrder_payment_plan());
+			pstmt.setString(6, vo.getNonmber());
+			pstmt.setString(7, vo.getRecord_item());
+			pstmt.setString(8, vo.getAddr_form());
+			pstmt.setString(9, vo.getAddr_to());
+			pstmt.setString(10, vo.getName_form());
+			pstmt.setString(11, vo.getName_to());
+			pstmt.setString(12, vo.getName_form_phone());
+			pstmt.setString(13, vo.getName_to_phone());
 			count = pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
