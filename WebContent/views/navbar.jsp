@@ -26,12 +26,12 @@
 <body>
 	<nav class="navbar">
 		<div class="navbar_logo">
-			<a href="/"><img class="logo" alt="X" src="/views/img/logo.png" style="width: 200px; height: 200px"></a>
+			<a href="/"><img class="logo" alt="X" src="/views/img/logo.png"></a>
 		</div>
 		<div class="navbar_banner">
 			<a href="/"><img class="banner" alt="X" src="/views/img/banner.png"></a>
 		</div>
-		<div>
+		<div class="navbar_menu">
 			<ul class="navbar_sideMenu">
 				<%
 					if (mber_sq == 0) {
@@ -48,7 +48,7 @@
 					}
 				%>
 				<li><a class="sideMenu" href="/item/cartForm">장바구니</a></li>
-				<li><a class="sideMenu" href="/board/">게시판</a></li>
+				<li><a class="sideMenu" href="/board/notice">게시판</a></li>
 			</ul>
 		</div>
 	</nav>

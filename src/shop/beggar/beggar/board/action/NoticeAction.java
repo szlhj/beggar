@@ -42,13 +42,7 @@ public class NoticeAction implements Action {
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
 		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 		
-		String id="0";
 		
-		if(mberVo == null) {
-			id="관리자";
-		}else {
-			id=mberVo.getId();
-		}
 		
 		if (pn == null) {
 			pn = "1";
@@ -92,8 +86,6 @@ public class NoticeAction implements Action {
 		filter = "1";//필터값지정
 		if (filter == null || filter.equals("")) {
 			board_numberQuery = "";
-		}else if(filter.equals("4")) {
-			board_numberQuery = " and (id= '" + id + "')";
 		}else{
 			board_numberQuery = " and (board_number= '" + filter + "')";
 		}

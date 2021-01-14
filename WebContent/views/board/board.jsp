@@ -34,29 +34,9 @@ function boardAdd() {
 <meta charset="UTF-8">
 <title>게시판 메인</title>
 
-<!-- <link rel="stylesheet" href="/views/css/board.css" type="text/css"> -->
-<!-- <link rel="stylesheet" href="/views/css/ress.css" type="text/css"> -->
-<!-- <link rel="stylesheet" href="/views/css/navbar.css" type="text/css"> -->
-
 </head>
 <body>
-<!-- 	<div> -->
-<%-- 		<jsp:include page="/views/navbar.jsp"></jsp:include> --%>
-<!-- 	</div> -->
-	<div>
-		<ul class="board_sideMenu">
-			<li><a href="/board/notice">공지사항</a></li>
-			<li><a href="/board/oneAndOneQuestion">1:1문의</a>
-			<li><a href="/board/productRelated">제품관련문의</a></li>
-			<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
-			<li><a href="/board/myQuestion">내가쓴글보기</a></li>
-			<%} %>
-		</ul>
-	</div>
-	<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
-	<button onclick="boardAdd()">글작성</button>
-	<br>
-	<%}%>
-	<button onclick="location.href='/'">취소</button>
+	<jsp:include page="/views/navbar.jsp"></jsp:include>
+	<jsp:include page="/views/board/boardNavigation.jsp"></jsp:include>
 </body>
 </html>

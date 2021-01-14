@@ -9,10 +9,10 @@
 </head>
 <body>
 	<ul class="ul_ct">
-		<li><a class="ct ct_one" href="#">자주하는 질문</a></li>
-		<li><a class="ct ct_two" href="#">제품관련 문의</a></li>
-		<li><a class="ct ct_three" href="#">1:1문의</a></li>
-		<li><a class="ct ct_four" href="#">내가쓴글 보기</a></li>
+		<li><a class="ct ct_one" href="/board/notice">공지사항</a></li>
+		<li><a class="ct ct_two" href="/board/productRelated">제품관련 문의</a></li>
+		<li><a class="ct ct_three" href="/board/oneAndOneQuestion">1:1문의</a></li>
+		<li><a class="ct ct_four" href="/board/myQuestion">내가쓴글 보기</a></li>
 	</ul>
 </body>
 </html>

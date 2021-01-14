@@ -1,56 +1,48 @@
 @charset "UTF-8";
 
-.itemAdd{
+.cartForm{
 	width: 100%;
 	height: 100%;
 	position: relative;
 }
 	
-.itemAdd .add{
+.cartForm .cart{
 	width: 100%;
 	height: 100%;
 	position: absolute;
 	left: 50%;
 	top: 50%;
 	margin-left: -30%;
-	margin-top: 30px;
+	margin-top: 150px;
 	font-size: 20px;
 }
 
-.add input{
+.cart .input_sumPrice{
 	font-size: 1.8rem;
 	padding: .8em;
-	width: 100%;
+	width: 60%;
+	height: 30px;
 	background-color: #fff;
 	border: 1px solid #ced4da;
 	border-radius: .4em;
 }
 
-.add textarea{
+.cart .input_price{
 	font-size: 1.8rem;
 	padding: .8em;
-	width: 100%;
+	width: 30%;
+	height: 30px;
 	background-color: #fff;
 	border: 1px solid #ced4da;
 	border-radius: .4em;
 }
 
-.add select{
-	font-size: 1.8rem;
-	padding: .8em;
-	width: 100%;
-	background-color: #fff;
-	border: 1px solid #ced4da;
-	border-radius: .4em;
-	background: url('/views/img/arrow.jpg') no-repeat 95% 50%; /* 화살표 모양의 이미지 */ 
-}
-
-.add_button {
+.cart_button {
 	display: inline-block;
 	padding: .3em;
 	border-radius: .4em;
 	font-size: 1.8rem;
-	width: 10%;
+	width: 30%;
 	background-color: silver;
 	align-items: center;
 	color: black;
@@ -58,13 +50,26 @@
 	border-color: white;
 }
 
+.cart_button_pix {
+	display: inline-block;
+	padding: .3em;
+	border-radius: .4em;
+	font-size: 1.8rem;
+	width: 30px;
+	background-color: white;
+	align-items: center;
+	color: black;
+/* 	margin-top: .5em; */
+	border-color: white;
+}
+
 .td1{
-	width: 150px;
+	width: 100px;
 	height: 50px;
 }
 
 .td2{
-	width: 500px;
+	width: 300px;
 	height: 50px;
 	margin-left: 30px;
 }

@@ -32,3 +32,8 @@ img.logo{
 .navbar_sideMenu li {
 	padding: 1em .4em;
 }
+
+.navbar_logo img {
+	width: 60%;
+	height: 30%;
+}

@@ -126,7 +126,7 @@ public class AdminDao {
 		ResultSet rs = null;
 		ArrayList<BoardVo> list = new ArrayList<>();
 		try {
-			pstmt = con.prepareStatement("select * from(select a.*, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select *, '' as id from inf_board_tb) as board where 1=1 "+query+" group by board_sq LIMIT ?,?");
+			pstmt = con.prepareStatement("select * from(select a.board_sq, a.mber_sq, a.board_number, a.count, a.del_fl, date_format(a.dttm,'%Y-%m-%d') as dttm, a.goods_info, a.title, a.content, a.comment, b.id from inf_board_tb a, inf_mber_tb b where a.mber_sq = b.mber_sq UNION ALL select a.board_sq, a.mber_sq, a.board_number, a.count, a.del_fl, date_format(a.dttm,'%Y-%m-%d') as dttm, a.goods_info, a.title, a.content, a.comment, '' as id from inf_board_tb a) as board where 1=1 "+query+" group by board_sq order by board_number, dttm desc LIMIT ?,?");
 			//select * from (inf_board_tb a, inf_mber_tb b a.mber_sq=b.mber_sq) 
 			pstmt.setInt(1, pagenation.getStartArticleNumber());
 			pstmt.setInt(2, pagenation.getARTICLE_COUNT_PER_PAGE());

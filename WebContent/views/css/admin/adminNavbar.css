@@ -6,35 +6,17 @@ body{
 .navbar {
 	display: flex;
 	justify-content: space-between;
-	align-items: center;
-	background-color: black;
+/* 	align-items: center; */
+	background-color: #0f0f0f;
 }
 
-img .logo{
-	padding: .8em;
-	padding-left: .4em;
-}
-
-.navbar_menu {
-	font-size: 2rem;
-	display: flex;
-	list-style: none;
-}
-
-.navbar_menu li {
-	padding: 1em .8em;
-}
-
-.navbar_sideMenu {
-	font-size: 1.5rem;
-	list-style: none;
-	display: flex;
-	color: black;
-	padding-right: .8em;
-}
-
-.navbar_sideMenu li {
-	padding: 1em .4em;
+div {
+/* 	position: absolute; */
+	top: 0;
+	bottom: 0;
+	left:0;
+	right: 0;
+	margin: auto;
 }
 
 .navbar_banner img {

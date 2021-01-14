@@ -149,6 +149,7 @@ public class Parser {
 		switch(Board_number) {
 		case 1:
 			str = "공지사항";
+			break;
 		case 2:
 			str = "1:1문의";
 			break;
@@ -158,6 +159,33 @@ public class Parser {
 		default:
 			str = "etc";
 			break;
+		}
+		
+		return str;
+	}	
+	
+	public static String Board_Member_Admin(int Board_member, String mber_id) {
+		String str = "";
+		switch(Board_member) {
+		case 0:
+			str = "관리자";
+		case 1:
+			str = mber_id;
+			break;
+		default:
+			str = "etc";
+			break;
+		}
+		
+		return str;
+	}	
+	
+	public static String Board_Comment(String comment) {
+		String str = "";
+		if (comment == null || comment.equals("")) {
+			str = "X";
+		} else {
+			str = "O";
 		}
 		
 		return str;

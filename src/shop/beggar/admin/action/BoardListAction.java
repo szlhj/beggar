@@ -16,7 +16,6 @@ import shop.beggar.beggar.vo.MemberVo;
 import shop.beggar.common.Action;
 import shop.beggar.common.ActionForward;
 import shop.beggar.common.Pagenation;
-import shop.beggar.common.ActionForward;
 import shop.beggar.common.RegExp;
 
 /**
@@ -48,10 +47,8 @@ public class BoardListAction implements Action {
 		int mber_sq;
 		
 		if(mberVo == null) {
-			id="관리자";
 			mber_sq=0;
 		}else {
-			id=mberVo.getId();
 			mber_sq=mberVo.getMber_sq();
 		}
 		

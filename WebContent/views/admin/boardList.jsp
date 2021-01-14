@@ -15,7 +15,7 @@
 		
 		if(memberVo == null && adminVo == null){
 			memberVo = new MemberVo();
-			memberVo.setId("");
+			memberVo.setId("비회원");
 		}
 		
 		if(adminVo != null){
@@ -88,7 +88,7 @@
 					<th>생성일자</th>
 					<th>조회수</th>
 			<th>삭제여부</th>
-			<%if(filter.equals("2")){ %>
+			<%if((filter.equals("2"))||(filter.equals("3"))){ %>
 			<th>답변상황</th>
 			<%} %>
 				</tr>
@@ -111,7 +111,7 @@
 				<td><%=list.get(i).getDttm() %></td>
 				<td><%=list.get(i).getCount() %></td>
 				<td><%=list.get(i).getDel_fl() %></td>
-				<%if(filter.equals("2")){ %>
+				<%if((filter.equals("2"))||(filter.equals("3"))){ %>
 					<% String CommentTF = "";%>
 					<%if(list.get(i).getComment()==null||list.get(i).getComment().equals("")) {%>
 					<% 		CommentTF= " X ";	%>
