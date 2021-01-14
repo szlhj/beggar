@@ -27,15 +27,9 @@
 </head>
 <body>
 	<nav class="navbar">
-<!-- 		<div class="navbar_logo"> -->
-<!-- 			<a href="/"><img class="logo" alt="X" src="/views/img/logo.png" style="width: 200px; height: 200px"></a> -->
-<!-- 		</div> -->
 		<div class="navbar_banner">
 			<a href="/"><img class="banner" alt="X" src="/views/img/banner.png"></a>
 		</div>
-<!-- 		<div class="navbar_logo"> -->
-<!-- 			<a href="/"><img class="logo" alt="X" src="/views/img/logo.png" style="width: 200px; height: 200px"></a> -->
-<!-- 		</div> -->
 	</nav>
 </body>
 </html>

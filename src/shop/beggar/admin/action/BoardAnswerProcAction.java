@@ -57,7 +57,7 @@ public class BoardAnswerProcAction implements Action {
 		if (!svc.boardAnswer(vo)) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>alert('게시판등록에 실패하였습니다.');location.href='/';</script>");
+			out.println("<script>alert('답글등록에 실패하였습니다.');location.href='/';</script>");
 			out.close();
 			return null;
 		}

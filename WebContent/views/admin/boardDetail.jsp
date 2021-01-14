@@ -47,7 +47,7 @@
 <title>보드 디테일</title>
 
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="/views/css/boardDetail.css" type="text/css">
+<link rel="stylesheet" href="/views/css/board/boardDetail.css" type="text/css">
 
 <script type="text/javascript">
 	var content = '<%=content%>';
@@ -73,26 +73,36 @@
 	<div class="boardDetail">
 		<div class="detail">
 			<section>
-				게시판번호<input type="text" id="board_sq" name="board_sq" value="<%=boardVo.getBoard_sq() %>" readonly="readonly" /><br>
-				
-				<%String Board_numberName ="";
-			if(boardVo.getBoard_number()==1){ 
-				Board_numberName = "공지사항";
-			}else if(boardVo.getBoard_number()==2){ 
-				Board_numberName = "1:1문의";
-			}else if(boardVo.getBoard_number()==3){ 
-				Board_numberName = "제품관련문의";
-				} %>
-				
-				카테고리<input type="text" id="board_number" name="board_number" value="<%=Board_numberName %>" readonly="readonly"/><br>
-				상품번호<input type="text" id="goods_info" name="goods_info" value="<%=boardVo.getGoods_info() %>" readonly="readonly"/><br>
-				제목<input type="text" id="title" name="title" value="<%=boardVo.getTitle() %>" readonly="readonly"/><br>
-				내용
-				<div readonly="readonly">
-				<%=content %>
-				</div>
+				<table>
+					<tr>
+						<td class="td1">게시판번호</td>
+						<td class="td2"><input type="text" id="board_sq" name="board_sq" value="<%=boardVo.getBoard_sq() %>" readonly="readonly" /></td>
+					</tr>
+					<tr>
+						<td class="td1">카테고리</td>
+						<td class="td2"><input type="text" id="board_number" name="board_number" value="<%=Parser.Board_numberName(boardVo.getBoard_number()) %>" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td class="td1">상품번호</td>
+						<td class="td2"><input type="text" id="goods_info" name="goods_info" value="<%=boardVo.getGoods_info() %>" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td class="td1">제목</td>
+						<td class="td2"><input type="text" id="title" name="title" value="<%=boardVo.getTitle() %>" readonly="readonly"/></td>
+					</tr>
+					<tr>
+						<td class="td1">내용</td>
+						<td class="td2"><%=content %></td>
+					</tr>
+					<%if (!boardVo.getComment().equals("")){ %>
+					<tr>
+						<td class="td1">답변</td>
+						<td class="td2"><input type="text" id="comment" name="comment" value="<%=boardVo.getComment() %>" readonly="readonly"/></td>
+					</tr>
+					<%} %>
+				</table>
 			<%if (!boardVo.getComment().equals("")){ %>
-			답변<input type="text" id="comment" name="comment" value="<%=boardVo.getComment() %>" readonly="readonly"/><br>
+			<br>
 			<%} %>
 				<%if (memberVo!=null&&boardVo.getMber_id().equals(memberVo.getId())) {%>
 				<button class="detail_button" onclick="modify()">수정하기</button>
@@ -102,7 +112,7 @@
 					<button class="detail_button" onclick="del(true)">삭제하기</button>
 				<%} %>
 			<%} %>
-			<%if((adminVo!=null)&&(Board_numberName.equals("1:1문의")&&(boardVo.getComment().equals("")))) {%>
+			<%if(adminVo!=null&&((board_number==2)||(board_number==3))) {%>
 			<button onclick="answer()">답변하기</button>
 			<%} %>
 				<button class="detail_button" onclick="cancle()">취소</button>

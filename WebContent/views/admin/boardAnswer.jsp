@@ -25,6 +25,14 @@
 
 <script type="text/javascript">
 	function modify() {
+		var $comment = $('#comment');
+
+		if (!$comment.val()) {
+ 			alert('답변을 입력하세요.');
+ 			$comment.focus;
+ 			return;
+ 		}
+		
 		$('#answer').submit();
 	}
 	function cancle() {

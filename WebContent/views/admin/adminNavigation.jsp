@@ -22,6 +22,7 @@
 </head>
 <body>
 	<ul class="ct" id="navi">
+        <%if (vo.isAdmin_supper() == true) { %>
         <li class="group">
             <div class="title">관리자 등록</div>
             <ul class="sub">
@@ -29,6 +30,7 @@
                 <li><a href="/admin/listAdmin">관리자 리스트</a></li>
             </ul>
         </li>
+        <%} %>
         <li class="group">
             <div class="title">관리</div>
             <ul class="sub">

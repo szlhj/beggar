@@ -1,3 +1,4 @@
+<%@page import="shop.beggar.common.Parser"%>
 <%@page import="shop.beggar.beggar.vo.MemberVo"%>
 <%@page import="shop.beggar.admin.vo.AdminVo"%>
 <%@page import="shop.beggar.beggar.vo.BoardVo"%>
@@ -37,9 +38,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>게시판 리스트</title>
 <script type="text/javascript" src="/views/js/jquery-3.5.1.js"></script>
-<link rel="stylesheet" href="/views/css/boardList.css" type="text/css">
+<link rel="stylesheet" href="/views/css/admin/boardList.css" type="text/css">
 
 <script type="text/javascript">
 	
@@ -62,8 +63,8 @@
 </head>
 <body>
 	<jsp:include page="/views/admin/adminNavbar.jsp" />
-	<div class="boardList">
-		<div class="list">
+	<div class="boardListForm">
+		<div class="boardList">
 			<h3>게시판리스트</h3>
 			<select name="filter" id="filter" onchange="onChangeEvent();">
 				<option value="" <%="".equals(filter)?"selected":"" %>></option> 
@@ -87,7 +88,7 @@
 					<th>생성일자</th>
 					<th>조회수</th>
 			<th>삭제여부</th>
-			<%if(filter.equals("2")){ %>
+			<%if((filter.equals("2"))||(filter.equals("3"))){ %>
 			<th>답변상황</th>
 			<%} %>
 				</tr>
@@ -97,16 +98,7 @@
 						<%list.get(i).setMber_id("관리자"); %>
 						<%} %>
 				
-				<%String Board_numberName =""; %>
-				<%if(list.get(i).getBoard_number()==1){ %>
-					<%Board_numberName = "공지사항";%>
-				<%}else if(list.get(i).getBoard_number()==2){ %>
-					<%Board_numberName = "1:1문의";%>
-				<%}else if(list.get(i).getBoard_number()==3){ %>
-					<%Board_numberName = "제품관련문의";%>
-				<%} %>
-				
-				<td><%=Board_numberName %></td>
+				<td><%=Parser.Board_numberName(list.get(i).getBoard_number()) %></td>
 				<td><%=list.get(i).getBoard_sq() %></td>
 				<td><%=list.get(i).getTitle() %></td>
 				<td>
@@ -119,7 +111,7 @@
 				<td><%=list.get(i).getDttm() %></td>
 				<td><%=list.get(i).getCount() %></td>
 				<td><%=list.get(i).getDel_fl() %></td>
-				<%if(filter.equals("2")){ %>
+				<%if((filter.equals("2"))||(filter.equals("3"))){ %>
 					<% String CommentTF = "";%>
 					<%if(list.get(i).getComment()==null||list.get(i).getComment().equals("")) {%>
 					<% 		CommentTF= " X ";	%>

@@ -1,4 +1,4 @@
-﻿package shop.beggar.admin.action;
+package shop.beggar.admin.action;
 
 import java.io.PrintWriter;
 

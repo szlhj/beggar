@@ -78,29 +78,60 @@
 		<div class="add">
 			<section>
 				<form action="/admin/boardAddProc" method="post" id="editorForm">
-					게시판목차
-					<select id="board_number" name="board_number">
-						<option value="0" selected></option>
-						<%if(adminVo!=null){%>
-						<option value="1">공지사항</option>
-						<%}%>
-						<option value="2">1:1문의</option>
-						<option value="3">제품관련문의</option>
-					</select>
-					<br>
-					상품번호<input type="text" id="goods_info" name="goods_info" /><br>
-					제목<input type="text" id="title" name="title" /><br>
-					내용<div style="width: 1000px;">
-						<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
-					</div>
-
+					<table>
+						<tr>
+							<td class="td1">게시판목차</td>
+							<td class="td2">
+								<select class="selectbox" id="board_number" name="board_number">
+									<option value="0" selected></option>
+									<%if(adminVo!=null){%>
+									<option value="1">공지사항</option>
+									<%}%>
+									<option value="2">1:1문의</option>
+									<option value="3">제품관련문의</option>
+								</select>
+							</td>
+						</tr>
+						<tr class="goods" hidden>
+							<td class="td1">상품번호</td>
+							<td class="td2">
+								<input type="text" id="goods_info" name="goods_info" />
+							</td>
+						</tr>
+						<tr>
+							<td class="td1">제목</td>
+							<td class="td2">
+								<input type="text" id="title" name="title" />
+							</td>
+						</tr>
+						<tr>
+							<td class="td1">내용</td>
+							<td class="td2">
+								<div style="width: 1000px;">
+									<jsp:include page="/editor/editorSkinForRegister.jsp" flush="false" />
+								</div>
+							</td>
+						</tr>
+					</table>
 				</form>
-				<br>
-				<button class="add_button" onclick="join()">등록</button>
-				<button class="add_button" onclick="cancle()">취소</button>
 			</section>
+			<button class="add_button" onclick="join()">등록</button>
+			<button class="add_button" onclick="cancle()">취소</button>
 		</div>
 	</div>
 	<jsp:include page="/views/admin/adminNavigation.jsp" />
+
+<script type="text/javascript">
+	$('#board_number').change(function() {
+		var state = $('#board_number option:selected').val();
+		
+		if (state == 3) {
+			$('.goods').show();
+		} else {
+			$('.goods').hide();
+		}
+	});
+</script>
+
 </body>
 </html>
