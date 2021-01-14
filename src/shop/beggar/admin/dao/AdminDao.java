@@ -156,8 +156,6 @@ public class AdminDao {
 		
 		return list;
 	}
-	
-	
 
 	public int getArticleCount(String query) {
 		PreparedStatement pstmt = null;
