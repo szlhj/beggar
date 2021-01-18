@@ -8,8 +8,8 @@
 	Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
 	String pn = request.getParameter("pn");
 	
-	String filter = request.getParameter("filter");
-	String keyword = request.getParameter("keyword");
+	String filter = (String)request.getAttribute("filter");
+	String keyword = (String)request.getAttribute("keyword");
 	
 	if (keyword == null) {
 		keyword = "";
@@ -20,6 +20,8 @@
 	if (pn == null) {
 		pn = "1";
 	}
+	String firstTime = (String)request.getAttribute("firstTime");
+	String lastTime = (String)request.getAttribute("lastTime");
 %>
 <!DOCTYPE html>
 <html>
@@ -52,11 +54,11 @@
 				<option value="id" selected>아이디</option>
 				<option value="name">이름</option>
 			</select>
-			<input name="keyword" id="keyword">
+			<input name="keyword" id="keyword" value=<%=keyword%>>
 			<br>
 			<h4>날짜</h4>
-			<input type="date" name="firstTime" id="firstTime"> ~
-			<input type="date" name="lastTime" id="lastTime">
+			<input type="date" name="firstTime" id="firstTime" value=<%=firstTime %>> ~
+			<input type="date" name="lastTime" id="lastTime" value=<%=lastTime %>>
 			<button class="memberViews_button" onclick="searchArticle()">검색</button>
 			<br>
 		
@@ -84,7 +86,7 @@
 				if (pagenation.getStartPageNumber() != 1) {
 			%>
 			<a
-				href="/admin/memberManagement?pn=<%=pagenation.getStartPageNumber() - 1%>"><</a>
+				href="/admin/memberManagement?pn=<%=pagenation.getStartPageNumber()-1%>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>&keyword=<%=keyword%>"><</a>
 			<%
 				}
 			%>
@@ -92,7 +94,7 @@
 				for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) {
 				if (i != Integer.parseInt(pn)) {
 			%>
-			<a href="/admin/memberManagement?pn=<%=i%> "><%=i%></a>
+			<a href="/admin/memberManagement?pn=<%=i%>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>&keyword=<%=keyword%>"><%=i%></a>
 			<%
 				} else {
 			%>
@@ -105,7 +107,7 @@
 				if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {
 			%>
 			<a
-				href="/admin/memberManagement?pn=<%=pagenation.getEndPageNumber() + 10%>">></a>
+				href="/admin/memberManagement?pn=<%=pagenation.getEndPageNumber()+1%>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>&keyword=<%=keyword%>">></a>
 			<%
 				}
 			%>

@@ -19,6 +19,7 @@ ArrayList<ItemVo> list = (ArrayList<ItemVo>) request.getAttribute("list");
 	crossorigin="anonymous">
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="stylesheet" href="/views/css/item/cartForm.css" type="text/css">
 <script>
 	function cartCount(type, ths) {
 		var $input = $(ths).parents("td").find("input[name='i_stok']"); //부모부분인 td의 자식 name i_stok 부분을 넣어줌
@@ -47,60 +48,66 @@ ArrayList<ItemVo> list = (ArrayList<ItemVo>) request.getAttribute("list");
 </script>
 </head>
 <body>
+	<jsp:include page="/views/navbar.jsp" />
 
-	<form action="/item/purchase" method="post">
-		<table>
-			<tr>
-				<th></th>
-				<th>이미지</th>
-				<th>상품정보</th>
-				<th>판매가</th>
-				<th>수량</th>
-				<th>합계</th>
-			</tr>
-			<%if (ivo != null) { %>
-				<tr>
-					<td><input type="checkbox" id="cart_ck" value="<%=ivo.getItem_sq()%>" name="ck_item_sq" /></td>
-					<td><img src="<%=ivo.getFilepath()%>" alt="" width="50px" height="50px" /></td>
-					<td><%=ivo.getItem_name()%></td>
-					<td><%=ivo.getPrice()%></td>
-					<td>
-						<button type="button" onclick="cartCount('m',this)">-</button>
-						<input type="text" name="i_stok" value="1" readonly="readonly" />
-						<button type="button" onclick="cartCount('p',this)">+</button>
-						<input type="hidden" id="sell_price" value="<%=Parser.disPrice(ivo.getPrice(), ivo.getDiscount())%>" />
-						<input type="hidden" id="total_stok" value="<%=ivo.getStok()%>" />
-						<input type="hidden" id="item_sq" name="item_sq" value="<%=ivo.getItem_sq()%>" />
-					</td>
-					<td><input type="text" value="<%=Parser.disPrice(ivo.getPrice(), ivo.getDiscount())%>" id="sumPrice" readonly /></td>
-				</tr>
-			<%} else if (list != null) { %>
-				<%for (int i = 0; i < list.size(); i++) { %>
+	<div class="cartForm">
+		<div class="cart">
+			<form action="/item/purchase" method="post">
+				<table>
 					<tr>
-						<td><input type="checkbox" id="cart_ck" value="<%=list.get(i).getItem_sq()%>" name="ck_item_sq" /></td>
-						<td><img src="<%=list.get(i).getFilepath()%>" alt="" width="50px" height="50px" /></td>
-						<td><%=list.get(i).getItem_name()%></td>
-						<td><%=Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount())%></td>
-						<td>
-							<button type="button" onclick="location.href='/item/cartForm?item_stok=<%=list.get(i).getItem_stok() - 1%>&item_sq=<%=list.get(i).getItem_sq()%>&stok=<%=list.get(i).getStok()%>'">-</button>
-							<input type="text" name="i_stok" value="<%=list.get(i).getItem_stok()%>" readonly="readonly" />
-							<button type="button" onclick="location.href='/item/cartForm?item_stok=<%=list.get(i).getItem_stok() + 1%>&item_sq=<%=list.get(i).getItem_sq()%>&stok=<%=list.get(i).getStok()%>'">+</button>
-							<input type="hidden" id="sell_price" value="<%=Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount())%>" />
-							<input type="hidden" id="total_stok" value="<%=list.get(i).getStok()%>" />
-						</td>
-						<td><input type="text" value="<%=Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount()) * list.get(i).getItem_stok()%>" id="sumPrice" readonly /></td>
+						<th></th>
+						<th>이미지</th>
+						<th>상품정보</th>
+						<th>판매가</th>
+						<th>수량</th>
+						<th>합계</th>
 					</tr>
-				<%}	%>
-			<%} else { %>
-				<tr>
-					<td colspan="6">장바구니가 비었습니다.</td>
-				</tr>
-			<%}	%>
-			<tr>
-				<td colspan="6" style="text-align: end;"><button onclick="submit">선택상품 주문하기</button></td>
-			</tr>
-		</table>
-	</form>
-
+					<%if (ivo != null) { %>
+						<tr>
+							<td><input type="checkbox" id="cart_ck" value="<%=ivo.getItem_sq()%>" name="ck_item_sq" /></td>
+							<td><img src="<%=ivo.getFilepath()%>" alt="" width="50px" height="50px" /></td>
+							<td><%=ivo.getItem_name()%></td>
+							<td><%=Parser.comma(ivo.getPrice())%></td>
+							<td>
+								<button class="cart_button_pix" type="button" onclick="cartCount('m',this)">-</button>
+								<input class="input_price" type="text" name="i_stok" value="1" readonly="readonly" />
+								<button class="cart_button_pix" type="button" onclick="cartCount('p',this)">+</button>
+								<input type="hidden" id="sell_price" value="<%=Parser.disPrice(ivo.getPrice(), ivo.getDiscount())%>" />
+								<input type="hidden" id="total_stok" value="<%=ivo.getStok()%>" />
+								<input type="hidden" id="item_sq" name="item_sq" value="<%=ivo.getItem_sq()%>" />
+							</td>
+							<td><input class="input_sumPrice" type="text" value="<%=Parser.comma(Parser.disPrice(ivo.getPrice(), ivo.getDiscount()))%>" id="sumPrice" readonly /></td>
+						</tr>
+					<%} else if (list != null) { %>
+						<%for (int i = 0; i < list.size(); i++) { %>
+							<tr>
+								<td><input type="checkbox" id="cart_ck" value="<%=list.get(i).getItem_sq()%>" name="ck_item_sq" /></td>
+								<td><img src="<%=list.get(i).getFilepath()%>" alt="" width="50px" height="50px" /></td>
+								<td><%=list.get(i).getItem_name()%></td>
+								<td><%=Parser.comma(Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount()))%></td>
+								<td>
+									<button class="cart_button_pix" type="button" onclick="location.href='/item/cartForm?item_stok=<%=list.get(i).getItem_stok() - 1%>&item_sq=<%=list.get(i).getItem_sq()%>&stok=<%=list.get(i).getStok()%>'">-</button>
+									<input class="input_price" type="text" name="i_stok" value="<%=list.get(i).getItem_stok()%>" readonly="readonly" />
+									<button class="cart_button_pix" type="button" onclick="location.href='/item/cartForm?item_stok=<%=list.get(i).getItem_stok() + 1%>&item_sq=<%=list.get(i).getItem_sq()%>&stok=<%=list.get(i).getStok()%>'">+</button>
+									<input type="hidden" id="sell_price" value="<%=Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount())%>" />
+									<input type="hidden" id="total_stok" value="<%=list.get(i).getStok()%>" />
+								</td>
+								<td><input class="input_sumPrice" type="text" value="<%=Parser.comma(Parser.disPrice(list.get(i).getPrice(), list.get(i).getDiscount()) * list.get(i).getItem_stok())%>" id="sumPrice" readonly /></td>
+							</tr>
+						<%}	%>
+					<%} else { %>
+						<tr>
+							<td colspan="6">장바구니가 비었습니다.</td>
+						</tr>
+					<%}	%>
+					<tr>
+						<td colspan="6" style="text-align: end;">
+							<button class="cart_button" onclick="submit">선택상품 주문하기</button>
+						</td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

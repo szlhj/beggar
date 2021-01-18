@@ -74,6 +74,7 @@ public class ProductRelatedAction implements Action {
 		}
 		
 		if(firstTime == null || firstTime.equals("")) {
+			firstTime="";
 			firstTimeQuery = "";
 		}
 		else {
@@ -81,6 +82,7 @@ public class ProductRelatedAction implements Action {
 		}
 		
 		if(lastTime == null || lastTime.equals("")) {
+			lastTime="";
 			lastTimeQuery="";
 		}
 		else {
@@ -110,6 +112,8 @@ public class ProductRelatedAction implements Action {
 		ArrayList<BoardVo> list = svc.getBoardArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
 		request.setAttribute("list", list);
+		request.setAttribute("firstTime", firstTime);
+		request.setAttribute("lastTime", lastTime);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);
 		request.setAttribute("adminVo", adminVo);

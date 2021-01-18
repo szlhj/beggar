@@ -52,6 +52,9 @@ public class ItemListAction implements Action{
 		
 		String filter = request.getParameter("filter");
 		String keyword = request.getParameter("keyword");
+		String firstTime= request.getParameter("firstTime");
+		String lastTime= request.getParameter("lastTime");
+		
 		String query="";
 		if(filter == null || filter.equals("")) {
 			filter="code";
@@ -71,7 +74,7 @@ public class ItemListAction implements Action{
 		}
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page,svc.getItemArticleCount());
+		Pagenation pagenation = new Pagenation(page,svc.getItemArticleCount(query));
 		if(page>pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -87,6 +90,8 @@ public class ItemListAction implements Action{
 		request.setAttribute("filter", filter);
 		request.setAttribute("keyword", keyword);
 		request.setAttribute("pn", pn);
+		request.setAttribute("firstTime", firstTime);
+		request.setAttribute("lastTime", lastTime);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/itemList.jsp");//경로

@@ -113,7 +113,7 @@
 				<%} %>
 			<%} %>
 			<%if(adminVo!=null&&((board_number==2)||(board_number==3))) {%>
-			<button onclick="answer()">답변하기</button>
+			<button class="detail_button" onclick="answer()">답변하기</button>
 			<%} %>
 				<button class="detail_button" onclick="cancle()">취소</button>
 			</section>

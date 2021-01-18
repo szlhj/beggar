@@ -53,7 +53,6 @@
 		private String title; //제목
 		private String content; // 내용 */
 		var $board_number = $('#board_number');
-		var $goods_info = $('#goods_info');
 		var $title = $('#title');
 
 		if($board_number.val()=="0"){
@@ -61,11 +60,6 @@
 			return;
 			}
  		
- 		if (!$goods_info.val()) {
- 			alert('상품번호를 입력하세요.');
- 			$goods_info.focus;
- 			return;
- 		}
  		if (!$title.val()) {
  			alert('제목을 입력하세요.');
  			$title.focus;

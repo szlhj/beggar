@@ -71,6 +71,7 @@ public class NoticeAction implements Action {
 			filter = "0";
 		}
 		if(firstTime == null || firstTime.equals("")) {
+			firstTime="";
 			firstTimeQuery = "";
 		}
 		else {
@@ -78,11 +79,13 @@ public class NoticeAction implements Action {
 		}
 		
 		if(lastTime == null || lastTime.equals("")) {
+			lastTime="";
 			lastTimeQuery="";
 		}
 		else {
 			lastTimeQuery = " and dttm<='"+lastTime+"'";
 		}
+		
 		filter = "1";//필터값지정
 		if (filter == null || filter.equals("")) {
 			board_numberQuery = "";
@@ -105,6 +108,8 @@ public class NoticeAction implements Action {
 		ArrayList<BoardVo> list = svc.getBoardArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
 		request.setAttribute("list", list);
+		request.setAttribute("firstTime", firstTime);
+		request.setAttribute("lastTime", lastTime);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);
 		request.setAttribute("adminVo", adminVo);

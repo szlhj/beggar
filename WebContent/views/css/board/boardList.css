@@ -1,23 +1,32 @@
 @charset "UTF-8";
 
-.boardList{
+.boardListForm {
 	width: 100%;
 	height: 100%;
 	position: relative;
 }
-	
-.boardList .list{
+
+.boardListForm .boardList {
 	width: 100%;
 	height: 100%;
-	position: absolute;
+	position: inherit;
 	left: 50%;
 	top: 50%;
-	margin-left: -30%;
+	margin-left: -48%;
 	margin-top: 30px;
 	font-size: 20px;
 }
 
-.list input{
+.boardList input {
+	font-size: 1.8rem;
+	padding: .8em;
+	width: 200px;
+	background-color: #fff;
+	border: 1px solid #ced4da;
+	border-radius: .4em;
+}
+
+.boardList textarea {
 	font-size: 1.8rem;
 	padding: .8em;
 	width: 30%;
@@ -26,16 +35,7 @@
 	border-radius: .4em;
 }
 
-.list textarea{
-	font-size: 1.8rem;
-	padding: .8em;
-	width: 30%;
-	background-color: #fff;
-	border: 1px solid #ced4da;
-	border-radius: .4em;
-}
-
-.list_button {
+.boardList_button {
 	display: inline-block;
 	padding: .3em;
 	border-radius: .4em;
@@ -44,6 +44,96 @@
 	background-color: silver;
 	align-items: center;
 	color: black;
-/* 	margin-top: .5em; */
+	/* 	margin-top: .5em; */
 	border-color: white;
 }
+
+.boardList_button_pagination {
+	display: inline-block;
+	padding: .3em;
+	border-radius: .4em;
+	font-size: 1.8rem;
+	width: 20%;
+	background-color: silver;
+	align-items: center;
+	color: black;
+	/* 	margin-top: .5em; */
+	border-color: white;
+}
+
+/* 테이블 css 시작 */
+table.boardList {
+	border-collapse: separate;
+	border-spacing: 1px;
+	text-align: center;
+	line-height: 1.5;
+	/* 	margin: 20px 10px; */
+}
+
+table.boardList .thCol {
+	padding: 10px;
+	font-weight: bold;
+	vertical-align: top;
+	color: #fff;
+	background: #6E6E6E;
+}
+
+table.boardList .tdCol {
+	padding: 10px;
+	vertical-align: top;
+	border-bottom: 1px solid #ccc;
+	background: #FFFFFF;
+}
+/* 테이블 css 종료 */
+
+/* 페이지 네이션 css시작 */
+.pagenations {
+	width: 960px;
+	margin: 0 auto;
+	padding: 0;
+	text-align: center;
+}
+
+.pagenations a {
+	display: inline-block;
+	padding: 5px 10px;
+	color: #000;
+	border-radius: 5px;
+	-webkit-transition: background-color 0.3s;
+	transition: background-color 0.3s
+}
+
+.pagenations a:hover:not(.active) {
+	background-color: #ddd;
+}
+
+.board {
+	width: 500px;
+	text-align: center;
+}
+
+.page_prev {
+	font-size: 20px;
+	padding: 10px;
+}
+
+.page_frt {
+	display: inline;
+	font-size: 20px;
+	padding: 10px;
+	border-radius: 5px;
+	background-color: #8C8C8C;
+	color: #fff;
+}
+
+.page_num {
+	font-size: 20px;
+	padding: 10px;
+	text-decoration: none;
+}
+
+.page_next {
+	font-size: 20px;
+	padding: 10px;
+}
+/* 페이지 네이션 css종료 */

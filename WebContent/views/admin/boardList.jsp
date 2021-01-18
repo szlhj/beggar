@@ -32,7 +32,8 @@
 		if (pn == null) {
 			pn = "1";
 		}
-		
+		String firstTime = (String)request.getAttribute("firstTime");
+		String lastTime = (String)request.getAttribute("lastTime");
     %>
 <!DOCTYPE html>
 <html>
@@ -124,24 +125,24 @@
 		<%} %>
 	</table>
 	
-	<%if(adminVo!=null||!memberVo.getId().equals("")){ %>
+	<%if(adminVo!=null||!memberVo.getId().equals("비회원")){ %>
 	<button onclick="boardAdd()">글작성</button>
 	<br>
 	<%}%>
 	
 	<%if (pagenation.getStartPageNumber() != 1) {%>
-		<a href="/admin/boardList?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
+		<a href="/admin/boardList?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> << </a>
 	<% } %>
 	
 	<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
 		<%if (i != Integer.parseInt(pn)) {%>
-			<a href="/admin/boardList?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
+			<a href="/admin/boardList?pn=<%=i %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> <%=i%> </a>
 		<%} else  {%>
 			<%=i %>
 		<%} %>
 	<%} %>
 	<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-		<a href="/admin/boardList?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
+		<a href="/admin/boardList?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> >> </a>
 	<%} %>
 		</div>
 	</div>

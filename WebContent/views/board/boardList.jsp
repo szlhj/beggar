@@ -1,3 +1,4 @@
+<%@page import="shop.beggar.common.Parser"%>
 <%@page import="shop.beggar.beggar.vo.MemberVo"%>
 <%@page import="shop.beggar.admin.vo.AdminVo"%>
 <%@page import="shop.beggar.beggar.vo.BoardVo"%>
@@ -35,6 +36,8 @@
 		if(yesOrNo == null){
 			yesOrNo = "false";
 		}
+		String firstTime = (String)request.getAttribute("firstTime");
+		String lastTime = (String)request.getAttribute("lastTime");
     %>
 <!DOCTYPE html>
 <html>
@@ -83,6 +86,9 @@
 
 </head>
 <body>
+	<jsp:include page="/views/navbar.jsp"></jsp:include>
+	<jsp:include page="/views/board/boardNavigation.jsp"></jsp:include>
+	
 	<div class="boardListForm">
 		<div class="boardList">
 			<%if(filter.equals("1")){ %>
@@ -98,141 +104,132 @@
 			날짜
 			<input type="date" name="firstTime" id="firstTime"> ~
 			<input type="date" name="lastTime" id="lastTime">
-			<button onclick="searchArticle()">검색</button>
+			<button class="boardList_button" onclick="searchArticle()">검색</button>
 			<br>
 			<%if(adminVo != null) {%>
-				<button onclick="location.href='/admin/'">관리자 홈으로</button>
+				<button class="boardList_button" onclick="location.href='/admin/'">관리자 홈으로</button>
 			<%} %>
-			<button onclick="location.href='/'">홈으로</button>
+			<button class="boardList_button" onclick="location.href='/'">홈으로</button>
 		
-			<table border="1">
+			<table class="boardList">
 				<tr>
-					<th>구분</th>
-					<th>글번호</th>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>생성일자</th>
-					<th>조회수</th>
-			<%if((filter.equals("2"))||(filter.equals("3"))){ %>
-					<th>답변상황</th>
+					<th class="thCol" style="width: 100px;">구분</th>
+					<th class="thCol" style="width: 80px;">글번호</th>
+					<th class="thCol" style="width: 350px;">제목</th>
+					<th class="thCol" style="width: 80px;">작성자</th>
+					<th class="thCol" style="width: 100px;">생성일자</th>
+					<th class="thCol" style="width: 80px;">조회수</th>
+					<%if((filter.equals("2"))||(filter.equals("3"))){ %>
+					<th class="thCol" style="width: 80px;">답변상황</th>
 					<%} %>
 				</tr>
 				<%for (int i = 0; i < list.size(); i++) { %>
 					<tr onclick="location.href='/board/detailBoard?board_sq=<%=list.get(i).getBoard_sq() %>&pn=<%=pn %>&mber_id=<%=list.get(i).getMber_id()%>&yesOrNo=<%=yesOrNo%>&filter=<%=filter%>'">
 						
-						<%String Board_numberName =""; %>
-						<%if(list.get(i).getBoard_number()==1){ %>
-							<%Board_numberName = "공지사항";%>
-						<%}else if(list.get(i).getBoard_number()==2){ %>
-							<%Board_numberName = "1:1문의";%>
-						<%}else if(list.get(i).getBoard_number()==3){ %>
-							<%Board_numberName = "제품관련문의";%>
-						<%} %>
-						
-						<td><%=Board_numberName %></td>
-						<td><%=list.get(i).getBoard_sq() %></td>
-						<td><%=list.get(i).getTitle() %></td>
-						<td>
-							<%if (list.get(i).getMber_sq() == 0) { %>
-								관리자
-							<%} else { %>
-								<%=list.get(i).getMber_id() %>
-							<%} %>
+						<td class="tdCol"><%=Parser.Board_numberName(list.get(i).getBoard_number()) %></td>
+						<td class="tdCol"><%=list.get(i).getBoard_sq() %></td>
+						<td class="tdCol"><%=list.get(i).getTitle() %></td>
+						<td class="tdCol">
+							<%=Parser.Board_Member_Admin(list.get(i).getBoard_number(), list.get(i).getMber_id()) %>
 						</td>
-						<td><%=list.get(i).getDttm() %></td>
-						<td><%=list.get(i).getCount() %></td>
-				<%if((filter.equals("2"))||(filter.equals("3"))){ %>
-							<% String CommentTF = "";%>
-							<%if(list.get(i).getComment()==null||list.get(i).getComment().equals("")) {%>
-							<% 		CommentTF= " X ";	%>
-							<%}else{ %>
-							<% 		CommentTF= " O ";%>
-							<%} %>
-							<td><%=CommentTF %></td>
+						<td class="tdCol"><%=list.get(i).getDttm() %></td>
+						<td class="tdCol"><%=list.get(i).getCount() %></td>
+						<%if((filter.equals("2"))||(filter.equals("3"))){ %>
+							<td class="tdCol"><%=Parser.Board_Comment(list.get(i).getComment())%></td>
 						<%} %>
 					</tr>
 				<%} %>
 			</table>
-			<%if(filter.equals("1")){ %>
-				<button onclick="location.href='/board/'">뒤로가기</button>
-				<br>
-				<%if (pagenation.getStartPageNumber() != 1) {%>
-				<a href="/board/notice?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
-				<% } %>
-			
-				<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
-				<%if (i != Integer.parseInt(pn)) {%>
-					<a href="/board/notice?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
-				<%} else  {%>
-					<%=i %>
-				<%} %>
-				<%} %>
-				<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-					<a href="/board/notice?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
-				<%} %>	
-			<%}else if(filter.equals("2")||filter.equals("")){ %>
-				<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
-				<button onclick="boardAdd()">글작성</button>
-				<%}%>
-				<button onclick="location.href='/board/'">뒤로가기</button>
-				<br>
-				<%if (pagenation.getStartPageNumber() != 1) {%>
-				<a href="/board/oneAndOneQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
-				<% } %>
-			
-				<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
-				<%if (i != Integer.parseInt(pn)) {%>
-					<a href="/board/oneAndOneQuestion?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
-				<%} else  {%>
-					<%=i %>
-				<%} %>
-				<%} %>
-				<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-					<a href="/board/oneAndOneQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
-				<%} %>
+			<div class="pagination board">
+				<%if(filter.equals("1")){ %>
+					<div>
+						<button class="boardList_button_pagination" onclick="location.href='/board/'">뒤로가기</button>
+						<br><br>
+					</div>
+					<div>
+						<%if (pagenation.getStartPageNumber() != 1) {%>
+							<a class="page_prev" href="/board/notice?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> << </a>
+						<% } %>
+					
+						<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
+							<%if (i != Integer.parseInt(pn)) {%>
+								<a class="page_num" href="/board/notice?pn=<%=i %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> <%=i%> </a>
+							<%} else  {%>
+								<p class="page_frt"><%=i %></p>
+							<%} %>
+						<%} %>
+						
+						<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
+							<a class="page_next" href="/board/notice?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> >> </a>
+						<%} %>
+					</div>
+				<%} else if(filter.equals("2")||filter.equals("")){ %>
+					<%if((adminVo!=null)||!(memberVo.getId().equals("비회원"))){ %>
+						<button class="boardList_button_pagination" onclick="boardAdd()">글작성</button>
+					<%}%>
+						<button class="boardList_button_pagination" onclick="location.href='/board/'">뒤로가기</button>
+						<br>
+					<%if (pagenation.getStartPageNumber() != 1) {%>
+						<a class="page_prev" href="/board/oneAndOneQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> << </a>
+					<% } %>
 				
-			<%}else if(filter.equals("3")){ %>
-				<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
-				<button onclick="boardAdd()">글작성</button>
-				<%}%>
-				<button onclick="location.href='/board/'">뒤로가기</button>
-				<br>
-				<%if (pagenation.getStartPageNumber() != 1) {%>
-				<a href="/board/productRelated?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
-				<% } %>
-			
-				<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
-				<%if (i != Integer.parseInt(pn)) {%>
-					<a href="/board/productRelated?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
-				<%} else  {%>
-					<%=i %>
-				<%} %>
-				<%} %>
-				<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-					<a href="/board/productRelated?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
-				<%} %>
+					<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
+						<%if (i != Integer.parseInt(pn)) {%>
+							<a class="page_num" href="/board/oneAndOneQuestion?pn=<%=i %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> <%=i%> </a>
+						<%} else  {%>
+							<p class="page_frt"><%=i %></p>
+						<%} %>
+					<%} %>
+					
+					<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
+						<a class="page_next" href="/board/oneAndOneQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> >> </a>
+					<%} %>
+					
+				<%}else if(filter.equals("3")){ %>
+					<%if((adminVo!=null)||!(memberVo.getId().equals("비회원"))){ %>
+						<button class="boardList_button_pagination" onclick="boardAdd()">글작성</button>
+					<%}%>
+						<button class="boardList_button_pagination" onclick="location.href='/board/'">뒤로가기</button>
+						<br>
+					<%if (pagenation.getStartPageNumber() != 1) {%>
+						<a class="page_prev" href="/board/productRelated?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> << </a>
+					<% } %>
 				
-			<%}else if(filter.equals("4")){ %>
-				<%if((adminVo!=null)||!(memberVo.getId().equals(""))){ %>
-				<button onclick="boardAdd()">글작성</button>
+					<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
+						<%if (i != Integer.parseInt(pn)) {%>
+							<a class="page_num" href="/board/productRelated?pn=<%=i %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> <%=i%> </a>
+						<%} else  {%>
+							<p class="page_frt"><%=i %></p>
+						<%} %>
+					<%} %>
+					
+					<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
+						<a class="page_next" href="/board/productRelated?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> >> </a>
+					<%} %>
+					
+				<%}else if(filter.equals("4")){ %>
+					<%if((adminVo!=null)||!(memberVo.getId().equals("비회원"))){ %>
+						<button class="boardList_button_pagination" onclick="boardAdd()">글작성</button>
+					<%}%>
+						<button class="boardList_button_pagination" onclick="location.href='/board/'">뒤로가기</button>
+						<br>
+					<%if (pagenation.getStartPageNumber() != 1) {%>
+						<a class="page_prev" href="/board/myQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> << </a>
+					<% } %>
+				
+					<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
+						<%if (i != Integer.parseInt(pn)) {%>
+							<a class="page_num" href="/board/myQuestion?pn=<%=i %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> <%=i%> </a>
+						<%} else  {%>
+							<p class="page_frt"><%=i %></p>
+						<%} %>
+					<%} %>
+					
+					<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
+						<a class="page_next" href="/board/myQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>&firstTime=<%=firstTime%>&lastTime=<%=lastTime%>"> >> </a>
+					<%} %>
 				<%}%>
-				<button onclick="location.href='/board/'">뒤로가기</button>
-				<br>
-				<%if (pagenation.getStartPageNumber() != 1) {%>
-				<a href="/board/myQuestion?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>"> << </a>
-				<% } %>
-			
-				<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
-				<%if (i != Integer.parseInt(pn)) {%>
-					<a href="/board/myQuestion?pn=<%=i %>&filter=<%=filter%>"> <%=i%> </a>
-				<%} else  {%>
-					<%=i %>
-				<%} %>
-				<%} %>
-				<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-					<a href="/board/myQuestion?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>"> >> </a>
-				<%} %>
-			<%}%>
+			</div>
 		</div>
 	</div>
 </body>

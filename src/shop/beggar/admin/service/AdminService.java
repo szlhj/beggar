@@ -69,11 +69,11 @@ public class AdminService {
 		return count;
 	}
 	
-	public int getItemArticleCount() {
+	public int getItemArticleCount(String query) {
 		AdminDao dao= AdminDao.getInstance();
 		Connection con = getConnection();
 		dao.setConnection(con);
-		int count = dao.getItemArticleCount();
+		int count = dao.getItemArticleCount(query);
 		close(con);
 		return count;
 	}

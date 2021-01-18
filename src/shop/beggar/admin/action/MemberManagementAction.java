@@ -41,8 +41,7 @@ public class MemberManagementAction implements Action{
 		
 		int page = Integer.parseInt(pn);
 		
-		if(!RegExp.isValidExp(pn, REGEXP_NUMBER)
-				|| page < 1) {
+		if (!RegExp.isValidExp(pn, REGEXP_NUMBER) || page < 1) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			out.println("<script>location.href='/admin/memberManagement?pn=1';</script>");
@@ -60,19 +59,29 @@ public class MemberManagementAction implements Action{
 		String lastTimeQuery="";
 		String idQuery="";
 		String nameQuery="";
+		String conutFirstTimeQuery="";
+		String conutLastTimeQuery="";
+		String countQuery="";
 		
-		if(firstTime == null || firstTime.equals("")) {
+		
+		if(firstTime == null || firstTime.equals("")||firstTime.equals(null)) {
 			firstTimeQuery = "";
+			firstTime = "";
+			conutFirstTimeQuery="";
 		}
 		else {
 			firstTimeQuery = " and '"+firstTime+"'<=a.dttm";
+			conutFirstTimeQuery = " and '"+firstTime+"'<=dttm";
 		}
 		
 		if(lastTime == null || lastTime.equals("")) {
 			lastTimeQuery="";
+			lastTime="";
+			conutLastTimeQuery="";
 		}
 		else {
 			lastTimeQuery = " and a.dttm<='"+lastTime+"'";
+			conutLastTimeQuery = " and dttm<='"+lastTime+"'";
 		}
 		
 		if(filter == null || filter.equals("")) {
@@ -94,13 +103,14 @@ public class MemberManagementAction implements Action{
 		}
 		
 		query = firstTimeQuery+lastTimeQuery+idQuery+nameQuery;
+		countQuery = conutFirstTimeQuery+conutLastTimeQuery+idQuery+nameQuery;
 		
 		AdminService svc = new AdminService();
-		Pagenation pagenation = new Pagenation(page,svc.getArticleCount(query));
-		if(page>pagenation.getTotalPageCount()) {
+		Pagenation pagenation = new Pagenation(page,svc.getArticleCount(countQuery));
+		if (page > pagenation.getTotalPageCount()) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.println("<script>location.href='/admin/memberManagement?pn="+pagenation.getTotalPageCount()+"';</script>");
+			out.println("<script>location.href='/admin/memberManagement?pn=" + pagenation.getTotalPageCount() + "';</script>");
 			out.close();
 			return null;
 		}
@@ -109,8 +119,11 @@ public class MemberManagementAction implements Action{
 		ArrayList<MemberVo> list = svc.getArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
 		request.setAttribute("list", list);
+		request.setAttribute("firstTime", firstTime);
+		request.setAttribute("lastTime", lastTime);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);
+		request.setAttribute("keyword", keyword);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/memberViews.jsp");//경로

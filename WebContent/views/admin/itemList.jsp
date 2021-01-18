@@ -7,8 +7,8 @@
 	    ArrayList<ItemVo> list = (ArrayList<ItemVo>) request.getAttribute("list");
 		Pagenation pagenation = (Pagenation) request.getAttribute("pagenation");
 		String pn = request.getParameter("pn");
-		String filter = request.getParameter("filter");
-		String keyword = request.getParameter("keyword");
+		String filter = (String)request.getAttribute("filter");
+		String keyword = (String)request.getAttribute("keyword");
 		
 		if (keyword == null) {
 			keyword = "";
@@ -19,6 +19,7 @@
 		if (pn == null) {
 			pn = "1";
 		}
+		
 		
     %>
 <!DOCTYPE html>
@@ -34,7 +35,7 @@
 	function searchArticle() {
 		var filter = $('#filter option:selected');
 		var keyword = $('#keyword');
-		location.href = "/admin/memberManagement?pn=1&filter=" + filter.val()
+		location.href = "/admin/itemList?pn=1&filter=" + filter.val()
 				+ "&keyword=" + encodeURI(keyword.val());
 	}
 </script>
@@ -49,7 +50,7 @@
 				<option value="code" <%="code".equals("filter")?"selected":"" %>>상품코드</option>
 				<option value="name" <%="name".equals("filter")?"selected":"" %>>상품명</option>
 			</select>
-			<input name="keyword" id="keyword" value="<%=keyword %>">
+			<input name="keyword" id="keyword" value=<%=keyword %> >
 			<button class="list_button" onclick="searchArticle()">검색</button>
 			
 <!-- 			<button onclick="location.href='/admin/'">관리자 홈으로</button> -->
@@ -76,7 +77,7 @@
 					</tr>
 				<%} else { %>
 					<%for (int i = 0; i < list.size(); i++) { %>
-						<tr onclick="location.href='/admin/itemDetail?item_sq=<%=list.get(i).getItem_sq() %>&pn=<%=pn %>'">
+						<tr onclick="location.href='/admin/itemDetail?item_sq=<%=list.get(i).getItem_sq() %>&pn=<%=pn %>&filter=<%=filter%>'">
 							<td><%=list.get(i).getCategory() %></td>
 							<%if (list.get(i).getCategory().equals("1")) { %>
 								<td>NEW IN(뉴어라이벌)</td>
@@ -121,18 +122,18 @@
 			</table>
 			
 			<%if (pagenation.getStartPageNumber() != 1) {%>
-				<a href="/admin/itemList?pn=<%=pagenation.getStartPageNumber() - 1 %>"> << </a>
+				<a href="/admin/itemList?pn=<%=pagenation.getStartPageNumber() - 1 %>&filter=<%=filter%>&keyword=<%=keyword%>"> << </a>
 			<% } %>
 			
 			<% for (int i = pagenation.getStartPageNumber(); i <= pagenation.getEndPageNumber(); i++) { %>
 				<%if (i != Integer.parseInt(pn)) {%>
-					<a href="/admin/itemList?pn=<%=i %>"> <%=i%> </a>
+					<a href="/admin/itemList?pn=<%=i %>&filter=<%=filter%>&keyword=<%=keyword%>"> <%=i%> </a>
 				<%} else  {%>
 					<%=i %>
 				<%} %>
 			<%} %>
 			<%if (pagenation.getTotalPageCount() != pagenation.getEndPageNumber()) {%>
-				<a href="/admin/itemList?pn=<%=pagenation.getEndPageNumber() + 1 %>"> >> </a>
+				<a href="/admin/itemList?pn=<%=pagenation.getEndPageNumber() + 1 %>&filter=<%=filter%>&keyword=<%=keyword%>"> >> </a>
 			<%} %>
 			
 		</div>

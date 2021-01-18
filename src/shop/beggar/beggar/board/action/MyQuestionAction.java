@@ -45,13 +45,21 @@ public class MyQuestionAction implements Action {
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
 		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 		
-		String id="0";
+		String id;
 		int mber_sq;
 		
 		if(mberVo == null) {
 			mber_sq=0;
 		}else {
 			mber_sq=mberVo.getMber_sq();
+		}
+		
+		if(adminVo!=null) {
+			mberVo = new MemberVo();
+			mberVo.setId("관리자");
+		}else if(adminVo==null&&mberVo==null) {
+			mberVo = new MemberVo();
+			mberVo.setId("비회원");
 		}
 		
 		if (pn == null) {
@@ -81,6 +89,7 @@ public class MyQuestionAction implements Action {
 		}
 		
 		if(firstTime == null || firstTime.equals("")) {
+			firstTime="";
 			firstTimeQuery = "";
 		}
 		else {
@@ -88,6 +97,7 @@ public class MyQuestionAction implements Action {
 		}
 		
 		if(lastTime == null || lastTime.equals("")) {
+			lastTime="";
 			lastTimeQuery="";
 		}
 		else {
@@ -119,6 +129,8 @@ public class MyQuestionAction implements Action {
 
 		ArrayList<BoardVo> list = svc.getBoardArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
+		request.setAttribute("firstTime", firstTime);
+		request.setAttribute("lastTime", lastTime);
 		request.setAttribute("list", list);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);

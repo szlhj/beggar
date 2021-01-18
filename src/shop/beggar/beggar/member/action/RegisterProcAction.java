@@ -73,7 +73,7 @@ public class RegisterProcAction implements Action{
 		vo.setEmail_fl(email_fl);
 		vo.setSms_fl(sms_fl);
 		
-		MemberService svc = new MemberService();
+		MemberService svc = new MemberService();	
 		if (!svc.registerMember(vo)) {
 			response.setContentType("text/html;charset=UTF-8");
 			PrintWriter out = response.getWriter();
@@ -81,7 +81,6 @@ public class RegisterProcAction implements Action{
 			out.close();
 			return null;
 		}
-		
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/");

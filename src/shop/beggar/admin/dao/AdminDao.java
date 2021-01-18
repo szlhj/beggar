@@ -162,7 +162,7 @@ public class AdminDao {
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("select count(*) from inf_mber_tb where 1=1 "+ query);
+			pstmt = con.prepareStatement("select count(*) from inf_mber_tb a inner join inf_mber_privcy_tb b on a.mber_sq=b.mber_sq where 1=1 "+ query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);
@@ -176,12 +176,12 @@ public class AdminDao {
 		return count;
 	}
 
-	public int getItemArticleCount() {
+	public int getItemArticleCount(String query) {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int count = 0;
 		try {
-			pstmt = con.prepareStatement("select count(*) from inf_goods_tb");
+			pstmt = con.prepareStatement("select count(*) from inf_goods_tb where 1=1 "+ query);
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				count = rs.getInt(1);

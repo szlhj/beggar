@@ -30,6 +30,16 @@ public class BoardAction implements Action{
 		AdminVo adminVo = (AdminVo) session.getAttribute("adminVo");
 		MemberVo mberVo = (MemberVo) session.getAttribute("vo");
 		
+		//일반 회원인 경우
+		
+		if(adminVo!=null) {
+			mberVo = new MemberVo();
+			mberVo.setId("관리자");
+		}else if(adminVo==null&&mberVo==null) {
+			mberVo = new MemberVo();
+			mberVo.setId("비회원");
+		}
+		
 		request.setAttribute("adminVo", adminVo);
 		request.setAttribute("vo", mberVo);
 		

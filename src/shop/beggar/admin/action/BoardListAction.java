@@ -69,6 +69,7 @@ public class BoardListAction implements Action {
 		String filter = request.getParameter("filter");
 		String firstTime= request.getParameter("firstTime");
 		String lastTime= request.getParameter("lastTime");
+		String keyword= request.getParameter("keyword");
 		
 		String query = "";
 		String firstTimeQuery="";
@@ -76,7 +77,12 @@ public class BoardListAction implements Action {
 		String board_numberQuery="";
 		
 		
+		if(keyword==null||keyword.equals("")){
+			keyword="";
+		}
+		
 		if(firstTime == null || firstTime.equals("")) {
+			firstTime="";
 			firstTimeQuery = "";
 		}
 		else {
@@ -84,6 +90,7 @@ public class BoardListAction implements Action {
 		}
 		
 		if(lastTime == null || lastTime.equals("")) {
+			lastTime="";
 			lastTimeQuery="";
 		}
 		else {
@@ -114,10 +121,13 @@ public class BoardListAction implements Action {
 		ArrayList<BoardVo> list = svc.getBoardArticleList(pagenation, query);
 		request.setAttribute("pagenation", pagenation);
 		request.setAttribute("list", list);
+		request.setAttribute("firstTime", firstTime);
+		request.setAttribute("lastTime", lastTime);
 		request.setAttribute("filter", filter);
 		request.setAttribute("pn", pn);
 		request.setAttribute("adminVo", adminVo);
 		request.setAttribute("vo", mberVo);
+		request.setAttribute("keyword", keyword);
 		
 		ActionForward forward = new ActionForward();
 		forward.setPath("/views/admin/boardList.jsp");// 경로
